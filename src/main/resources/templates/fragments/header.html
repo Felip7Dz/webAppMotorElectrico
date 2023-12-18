@@ -1,0 +1,22 @@
+<header>
+	<div class="row mt-2 ml-2">
+		<div class="col-12">
+			<a th:href="@{/change-locale(lang='es')}"><img id="langIMG" src="/images/esp.png"></a>
+			<span> | </span>
+			<a th:href="@{/change-locale(lang='en')}"><img id="langIMG" src="/images/eng.png"></a>
+		</div>
+	</div>
+	<div class="row align-items-center" id="headID">
+		<div class="col-8">
+			<a href="/home" style="color: black;">
+				<h1 class="responsive-h1" th:text="#{view.home.main}"></h1>
+			</a>
+		</div>
+		<div class="col-2 d-flex justify-content-center align-items-center">
+			<img src="/images/Cranfield.png" style="width: 75%;">
+		</div>
+		<div class="col-2 d-flex justify-content-center align-items-center">
+			<img src="/images/Uniovi.png" style="width: 75%;">
+		</div>
+	</div>
+</header>

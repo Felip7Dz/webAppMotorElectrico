@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout/layout-error}">
+<body>
+    <div layout:fragment="content">
+    	<h1 th:text="${pageTitle}">[Error title]</h1>
+    	<p th:text="${pageMainDescription}">[Error description]</p>
+    </div>
+</body>
+</html>

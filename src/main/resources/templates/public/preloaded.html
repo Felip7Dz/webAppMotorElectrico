@@ -1,0 +1,221 @@
+<th:block th:insert="~{/fragments/head}"></th:block>
+<title th:text="#{view.pre.title}"></title>
+
+<body>
+	<th:block th:insert="~{/fragments/header :: header}"></th:block>
+	<br>
+	<main>
+		<div th:if="${errors}">
+			<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDiv">
+				<span class="material-symbols-outlined">warning </span>
+				<h4 th:text="${errors}" style="margin-bottom: 0; margin-left: 1%;"></h4>
+			</div>
+		</div>
+		<div class="row justify-content-center" id="mi-div">
+			<div class="col-12">
+				<h4 style="text-align: center;" th:text="${selectedModel}"></h4>
+			</div>
+		</div>
+		<div class="row justify-content-between mt-4">
+			<div class="col-2" id="mi-div">
+				<form id="formData" name="formData" th:object="${formData}">
+					<label style="font-weight: bold;" th:text="#{view.load.in.info.static}">:</label>
+					<div class="row align-items-center mt-4">
+						<div class="col-5">
+							<span th:text="#{view.load.in.shaft}">:</span>
+						</div>
+						<div class="col-5">
+							<input type="hidden" th:field="*{id}">
+							<input type="hidden" th:field="*{nombre}">
+							<input type="text" class="readonly-input" th:field="*{shaft_frequency}" readonly style="text-align: center;">
+						</div>
+						<div class="col-1 d-flex justify-content-center align-items-center">
+							<span>Hz</span>
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-5">
+							<span th:text="#{view.load.in.sampling}">:</span>
+						</div>
+						<div class="col-5">
+							<input type="text" class="readonly-input" th:field="*{sampling_frequency}" readonly style="text-align: center;">
+						</div>
+						<div class="col-1 d-flex justify-content-center align-items-center">
+							<span>Hz</span>
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-5">
+							<span th:text="#{view.load.in.load}">:</span>
+						</div>
+						<div class="col-5">
+							<input type="text" class="readonly-input" th:field="*{carga}" readonly style="text-align: center;">
+						</div>
+						<div class="col-1 d-flex justify-content-center align-items-center">
+							<span>Kn</span>
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-5">
+							<span th:text="#{view.load.in.bearing}">:</span>
+						</div>
+						<div class="col-7">
+							<input type="text" class="readonly-input" th:field="*{bearing_type}" readonly style="text-align: center;">
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-5">
+							<span th:text="#{view.load.in.bpfo}">:</span>
+						</div>
+						<div class="col-5">
+							<input type="text" class="readonly-input" th:field="*{bpfo}" readonly style="text-align: center;">
+						</div>
+						<div class="col-1 d-flex justify-content-center align-items-center">
+							<span>Hz</span>
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-5">
+							<span th:text="#{view.load.in.bpfi}">:</span>
+						</div>
+						<div class="col-5">
+							<input type="text" class="readonly-input" th:field="*{bpfi}" readonly style="text-align: center;">
+						</div>
+						<div class="col-1 d-flex justify-content-center align-items-center">
+							<span>Hz</span>
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-5">
+							<span th:text="#{view.load.in.bsf}">:</span>
+						</div>
+						<div class="col-5">
+							<input type="text" class="readonly-input" th:field="*{bsf}" readonly style="text-align: center;">
+						</div>
+						<div class="col-1 d-flex justify-content-center align-items-center">
+							<span>Hz</span>
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-5">
+							<span th:text="#{view.load.in.ftf}">:</span>
+						</div>
+						<div class="col-5">
+							<input type="text" class="readonly-input" th:field="*{ftf}" readonly style="text-align: center;">
+						</div>
+						<div class="col-1 d-flex justify-content-center align-items-center">
+							<span>Hz</span>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-9">
+				<div class="row">
+					<div class="col-12" id="mi-div">
+						<div class="row" style="text-align: center;">
+							<div class="col-6">
+								<img src="/images/test_graf.png" style="width: 55%;">
+							</div>
+							<div class="col-6">
+								<img src="/images/test_graf.png" style="width: 55%;">
+							</div>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row mt-3">
+					<div class="col-12" id="mi-div">
+						<div class="row">
+							<div class="col-3">
+								<div class="circle" id="colorCircle1"></div>
+							</div>
+							<div class="col-3">
+								<div class="circle" id="colorCircle2"></div>
+							</div>
+							<div class="col-3">
+								<div class="circle" id="colorCircle3"></div>
+							</div>
+							<div class="col-3">
+								<div class="circle" id="colorCircle4"></div>
+							</div>
+						</div>
+						<div class="row" style="text-align: center;">
+							<div class="col-3">
+								<span style="font-weight: bold;" th:text="#{view.load.tl.outer}"></span>
+							</div>
+							<div class="col-3">
+								<span style="font-weight: bold;" th:text="#{view.load.tl.inner}"></span>
+							</div>
+							<div class="col-3">
+								<span style="font-weight: bold;" th:text="#{view.load.tl.bear}"></span>
+							</div>
+							<div class="col-3">
+								<span style="font-weight: bold;" th:text="#{view.load.tl.cage}"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="row align-items-center justify-content-between">
+			<div class="col-5" id="mi-div">
+				<form id="formDataCheck" name="formDataCheck" th:object="${formDataCheck}">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-4">
+							<span th:text="#{view.load.select.check}"></span>
+						</div>
+						<div class="col-3">
+							<input type="text" th:field="*{min_to_check}" style="text-align: center;">
+						</div>
+						<div class="col-1 d-flex justify-content-center align-items-center">
+							<span th:text="#{view.load.select.to}"></span>
+						</div>
+						<div class="col-3">
+							<input type="text" th:field="*{max_to_check}" style="text-align: center;">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-5">
+				<div class="row justify-content-end mb-2">
+					<form id="runPreform" action="/runPreloaded" method="post">
+						<input type="hidden" id="nombre_req" name="nombre_req" th:value="${nombre_req}" />
+						<input type="hidden" id="sampling_frequency_req" name="sampling_frequency_req"
+							th:value="${sampling_frequency_req}" />
+						<input type="hidden" id="bpfo_req" name="bpfo_req" th:value="${bpfo_req}" />
+						<input type="hidden" id="bpfi_req" name="bpfi_req" th:value="${bpfi_req}" />
+						<input type="hidden" id="bsf_req" name="bsf_req" th:value="${bsf_req}" />
+						<input type="hidden" id="ftf_req" name="ftf_req" th:value="${ftf_req}" />
+						<input type="hidden" id="first_sample_req" name="first_sample_req"
+							th:value="${first_sample_req}" />
+						<input type="hidden" id="analyzed_number_req" name="analyzed_number_req"
+							th:value="${analyzed_number_req}" />
+						<button id="runPre" type="submit" th:text="#{view.load.run.btt}"></button>
+						<a class="back-btt" href="/home" th:text="#{view.load.bck.btt}"></a>
+					</form>
+				</div>
+				<div class="row justify-content-end mb-2">
+					<button type="button" style="display: none;">
+						<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
+						<span th:text="#{view.load.exp.btt}" style="vertical-align: middle;"></span>
+					</button>
+					<button type="button" style="display: none;">
+						<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
+						<span th:text="#{view.load.int.btt}" style="vertical-align: middle;"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</main>
+	<th:block th:insert="~{/fragments/footer}"></th:block>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<th:block th:insert="~{/fragments/head}"></th:block>
+<title th:text="#{view.home.title}"></title>
+
+<body>
+	<th:block th:insert="~{/fragments/header :: header}"></th:block>
+	<br>
+	<main>
+		<div class="row">
+			<div class="col-8">
+				<div class="row justify-content-center" style="text-align: center;">
+					<div class="col-10" id="mi-div">
+						<label th:text="#{view.home.table.tittle}"></label>
+					</div>
+				</div>
+				<div class="row justify-content-center mt-2" style="text-align: center;">
+					<div class="col-5 mr-1" id="mi-div">
+						<label th:text="#{view.home.table.pre}"></label>
+						<form id="formDataset" name="formDataset" method="get" action="/preloaded">
+							<div id="mi-div" class="mb-2">
+								<div th:each="model, iterStat : ${resultDatatest.modelsList}"
+									style="text-align: start;">
+									<label th:for="${'checkbox_' + iterStat.index}">
+										<input type="checkbox" th:id="${'dataset_' + iterStat.index}"
+											th:value="${model}" name="selectedModel" class="single-checkbox" />
+										<span th:text="${resultDatatest.modelsNames[iterStat.index]}"></span>
+									</label>
+								</div>
+							</div>
+							<div th:if="${#lists.size(resultDatatest) > 0}">
+								<button id="submitButton" type="submit">OK</button>
+							</div>
+						</form>
+					</div>
+					<div class="col-5 ml-1" id="mi-div">
+						<label th:text="#{view.home.table.saved}"></label>
+						<form id="formSavedDataset" name="formSavedDataset" method="get" action="/newload">
+							<div id="mi-div" class="mb-2">
+								<div th:each="modelS, iterStat : ${resultSavedDatatest.modelsList}"
+									style="text-align: start;">
+									<div class="row justify-content-between align-items-center mb-2">
+										<div class="col-6">
+											<label th:for="${'checkbox_' + iterStat.index}">
+												<input type="checkbox" th:id="${'savedDataset_' + iterStat.index}"
+													th:value="${modelS}" name="selectedSavedModel"
+													class="saved-single-checkbox" />
+												<span
+													th:text="${resultSavedDatatest.modelsNames[iterStat.index]}"></span>
+											</label>
+										</div>
+										<div class="col-6 d-flex justify-content-end align-items-center">
+											<button type="button" th:onclick="eliminarItem(/*[[${modelS}]]*/)">
+												<span class="material-symbols-outlined"
+													style="vertical-align: middle;">close</span>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div th:if="${#lists.size(resultSavedDatatest.modelsList) > 0}">
+								<button id="savedSubmitButton" type="submit">OK</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-4 align-items-center">
+				<div th:if="${errorsH}">
+					<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDiv">
+						<span class="material-symbols-outlined">warning </span>
+						<h4 th:text="${errorsH}" style="margin-bottom: 0; margin-left: 1%;"></h4>
+					</div>
+				</div>
+				<form id="formUpload" method="post" action="/uploadDataset" enctype="multipart/form-data">
+					<div class="row">
+						<div class="col-12">
+							<label for="images" class="drop-container" id="dropcontainer">
+								<span class="drop-title" th:text="#{view.home.drop.upload}"></span>
+								<input type="file" id="file" name="model2Save">
+							</label>
+						</div>
+					</div>
+					<div class="row justify-content-center">
+						<button type="submit" th:text="#{view.home.save.btt}"></button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+	<th:block th:insert="~{/fragments/footer}"></th:block>
+</body>
+
+</html>

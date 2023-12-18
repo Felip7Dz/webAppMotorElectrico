@@ -1,0 +1,190 @@
+/* custom CSS */
+
+header {
+	display: block;
+	max-height: 275px;
+	box-shadow: -5px 10px 8px #888888;
+}
+
+body {
+	margin: 15px;
+	overflow-x: hidden;
+}
+
+#langIMG {
+	width: 37.59px;
+	height: 22.55px;
+}
+
+main {
+	margin: 0 27px;
+}
+
+#headID {
+	max-height: 250px;
+	margin: 0 20px;
+}
+
+h1.responsive-h1 {
+	font-size: 32px;
+}
+
+@media screen and (max-width: 768px) {
+	h1.responsive-h1 {
+		font-size: 28px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	h1.responsive-h1 {
+		font-size: 24px;
+	}
+}
+
+.responsive-h4 {
+	font-size: 18px;
+}
+
+@media (max-width: 768px) {
+	.responsive-h4 {
+		font-size: 16px;
+	}
+}
+
+@media (max-width: 480px) {
+	.responsive-h4 {
+		font-size: 14px;
+	}
+}
+
+input[type=file],
+input[type=text],
+button[type=submit],
+button[type=button] {
+	width: auto;
+	max-width: 100%;
+	color: #444;
+	padding: 5px;
+	background: #fff;
+	border-radius: 10px;
+	border: 1px solid #555;
+}
+
+input[type=file]::file-selector-button,
+button[type=submit],
+button[type=button] {
+	margin-right: 20px;
+	border: none;
+	background: #084cdf;
+	padding: 10px 20px;
+	border-radius: 10px;
+	color: #fff;
+	cursor: pointer;
+	transition: background .2s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover,
+button[type=submit]:hover,
+button[type=button]:hover {
+	background: #0d45a5;
+}
+
+.drop-container {
+	position: relative;
+	display: flex;
+	gap: 10px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 200px;
+	padding: 20px;
+	border-radius: 10px;
+	border: 2px dashed #555;
+	color: #444;
+	cursor: pointer;
+	transition: background .2s ease-in-out, border .2s ease-in-out;
+}
+
+.drop-container:hover {
+	background: #eee;
+	border-color: #111;
+}
+
+.drop-container:hover .drop-title {
+	color: #222;
+}
+
+.drop-title {
+	color: #444;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	transition: color .2s ease-in-out;
+}
+
+.drop-container.drag-active {
+	background: #eee;
+	border-color: #111;
+}
+
+.drop-container.drag-active .drop-title {
+	color: #222;
+}
+
+#mi-div {
+	border: 2px solid #555;
+	border-radius: 10px;
+	width: auto;
+	height: auto;
+	padding: 5px;
+}
+
+.circle {
+	width: 100px;
+	height: 100px;
+	background-color: green;
+	border-radius: 50%;
+	margin: 20px auto;
+}
+
+.readonly-input {
+	cursor: not-allowed;
+}
+
+.head-new-input {
+	text-align: center;
+	font-size: 30px;
+	border: 0 !important;
+}
+
+select {
+	width: 100%;
+	color: #444;
+	padding: 5px;
+	background: #fff;
+	border-radius: 10px;
+	border: 1px solid #555;
+}
+
+a:hover,
+h1:hover {
+	text-decoration: none !important;
+}
+
+a.back-btt {
+	margin-right: 20px;
+	border: none;
+	background: #084cdf;
+	padding: 10px 20px;
+	border-radius: 10px;
+	color: #fff;
+	cursor: pointer;
+	transition: background .2s ease-in-out;
+}
+
+#warningsDiv {
+	background-color: lightyellow;
+	padding: 1%;
+	border: 2px solid yellow;
+	border-radius: 10px;
+}

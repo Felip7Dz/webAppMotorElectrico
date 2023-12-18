@@ -1,0 +1,209 @@
+<th:block th:insert="~{/fragments/head}"></th:block>
+<title th:text="#{view.new.title}"></title>
+
+<body>
+	<th:block th:insert="~{/fragments/header :: header}"></th:block>
+	<br>
+	<main>
+		<form id="formData" name="formData" th:object="${formData}" action="/saveDataset" method="get">
+			<div th:if="${formData.id == null}">
+				<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDiv">
+					<span class="material-symbols-outlined">warning </span>
+					<h4 th:text="#{view.load.check.exists}" style="margin-bottom: 0; margin-left: 1%;"></h4>
+				</div>
+			</div>
+			<div class="row align-items-center" id="mi-div">
+				<div class="col-11 d-flex justify-content-center align-items-center">
+					<input type="hidden" th:field="*{id}">
+					<input type="text" class="head-new-input" th:field="*{nombre}">
+				</div>
+				<div class="col-1 align-self-end">
+					<button type="submit" th:text="#{view.load.save.btt}"></button>
+				</div>
+			</div>
+			<div class="row justify-content-between mt-4">
+				<div class="col-2" id="mi-div">
+					<label style="font-weight: bold;" th:text="#{view.load.in.info}">:</label>
+					<div class="row align-items-center mt-4">
+						<div class="col-6">
+							<span th:text="#{view.load.in.shaft}">:</span>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{shaft_frequency}" pattern="[0-9]*\.?[0-9]*">
+						</div>
+						<div class="col-1">
+							<span>Hz</span>
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-6">
+							<span th:text="#{view.load.in.sampling}">:</span>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{sampling_frequency}" pattern="[0-9]*\.?[0-9]*">
+						</div>
+						<div class="col-1">
+							<span>Hz</span>
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-6">
+							<span th:text="#{view.load.in.load}">:</span>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{carga}" pattern="[0-9]*\.?[0-9]*">
+						</div>
+						<div class="col-1">
+							<span>Kn</span>
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-6">
+							<span th:text="#{view.load.in.bearing}">:</span>
+						</div>
+						<div class="col-6">
+							<input type="text" th:field="*{bearing_type}">
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-6">
+							<span th:text="#{view.load.in.bpfo}">:</span>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{bpfo}" pattern="[0-9]*\.?[0-9]*">
+						</div>
+						<div class="col-1">
+							<span>Hz</span>
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-6">
+							<span th:text="#{view.load.in.bpfi}">:</span>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{bpfi}" pattern="[0-9]*\.?[0-9]*">
+						</div>
+						<div class="col-1">
+							<span>Hz</span>
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-6">
+							<span th:text="#{view.load.in.bsf}">:</span>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{bsf}" pattern="[0-9]*\.?[0-9]*">
+						</div>
+						<div class="col-1">
+							<span>Hz</span>
+						</div>
+					</div>
+					<br>
+					<div class="row align-items-center">
+						<div class="col-6">
+							<span th:text="#{view.load.in.ftf}">:</span>
+						</div>
+						<div class="col-4">
+							<input type="text" th:field="*{ftf}" pattern="[0-9]*\.?[0-9]*">
+						</div>
+						<div class="col-1">
+							<span>Hz</span>
+						</div>
+					</div>
+
+				</div>
+				<div class="col-9">
+					<div class="row">
+						<div class="col-12" id="mi-div">
+							<div class="row" style="text-align: center;">
+								<div class="col-6">
+									<img src="/images/test_graf.png" style="width: 55%;">
+								</div>
+								<div class="col-6">
+									<img src="/images/test_graf.png" style="width: 55%;">
+								</div>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="row mt-3">
+						<div class="col-12" id="mi-div">
+							<div class="row">
+								<div class="col-3">
+									<div class="circle" id="colorCircle1"></div>
+								</div>
+								<div class="col-3">
+									<div class="circle" id="colorCircle2"></div>
+								</div>
+								<div class="col-3">
+									<div class="circle" id="colorCircle3"></div>
+								</div>
+								<div class="col-3">
+									<div class="circle" id="colorCircle4"></div>
+								</div>
+							</div>
+							<div class="row" style="text-align: center;">
+								<div class="col-3">
+									<span style="font-weight: bold;" th:text="#{view.load.tl.outer}"></span>
+								</div>
+								<div class="col-3">
+									<span style="font-weight: bold;" th:text="#{view.load.tl.inner}"></span>
+								</div>
+								<div class="col-3">
+									<span style="font-weight: bold;" th:text="#{view.load.tl.bear}"></span>
+								</div>
+								<div class="col-3">
+									<span style="font-weight: bold;" th:text="#{view.load.tl.cage}"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<br>
+		<div class="row align-items-center justify-content-between">
+			<div class="col-4">
+				<div class="row align-items-center">
+					<div class="col-6">
+						<label for="healthyData" class="drop-container" id="dropcontainer">
+							<span class="drop-title" th:text="#{view.load.health.btt}"></span>
+							<input type="file" id="file">
+						</label>
+					</div>
+					<div class="col-6">
+						<label for="newData" class="drop-container" id="dropcontainer">
+							<span class="drop-title" th:text="#{view.load.new.btt}"></span>
+							<input type="file" id="file">
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col-5">
+				<div class="row justify-content-end mb-2">
+					<button type="button" th:text="#{view.load.run.btt}"></button>
+					<a class="back-btt" href="/home" th:text="#{view.load.bck.btt}"></a>
+				</div>
+				<div class="row justify-content-end mb-2">
+					<button type="button" style="display: none;">
+						<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
+						<span th:text="#{view.load.exp.btt}" style="vertical-align: middle;"></span>
+					</button>
+					<button type="button" style="display: none;">
+						<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
+						<span th:text="#{view.load.int.btt}" style="vertical-align: middle;"></span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</main>
+	<th:block th:insert="~{/fragments/footer}"></th:block>
+</body>
+
+</html>
