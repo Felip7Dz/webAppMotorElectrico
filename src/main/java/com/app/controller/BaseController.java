@@ -86,7 +86,7 @@ public class BaseController {
 		try {
 			if (!archivo.isEmpty()) {
 				String extension = StringUtils.getFilenameExtension(archivo.getOriginalFilename());
-				if ("h5".equalsIgnoreCase(extension)) {
+				if ("csv".equalsIgnoreCase(extension)) {
 					electricService.uploadDataset(archivo);
 				} else {
 					if ("en".equals(this.language)) {
@@ -134,19 +134,19 @@ public class BaseController {
 
 		try {
 			info = electricService.getDatasetInfo(data2Run.getNombre_req());
-			if (info.getMax_to_check() >= data2Run.getAnalyzed_number_req().intValue()) {
-				info.setMin_to_check(data2Run.getFirst_sample_req().intValue());
-				info.setMax_to_check(data2Run.getAnalyzed_number_req().intValue());
+			if (info.getMax_to_check() >= data2Run.getAnalyzed_number_req()) {
+				info.setMin_to_check(data2Run.getFirst_sample_req());
+				info.setMax_to_check(data2Run.getAnalyzed_number_req());
 			} else {
 				if ("en".equals(this.language)) {
-					errors = "Value " + data2Run.getAnalyzed_number_req().intValue()
+					errors = "Value " + data2Run.getAnalyzed_number_req()
 							+ " out of range. Should be equal or lower than " + info.getMax_to_check();
 				} else {
-					errors = "Valor " + data2Run.getAnalyzed_number_req().intValue()
+					errors = "Valor " + data2Run.getAnalyzed_number_req()
 							+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
 				}
-				info.setMin_to_check(data2Run.getFirst_sample_req().intValue());
-				info.setMax_to_check(data2Run.getAnalyzed_number_req().intValue());
+				info.setMin_to_check(data2Run.getFirst_sample_req());
+				info.setMax_to_check(data2Run.getAnalyzed_number_req());
 			}
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());

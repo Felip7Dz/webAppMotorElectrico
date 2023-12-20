@@ -165,10 +165,18 @@
 			</div>
 		</div>
 		<br>
-		<div class="row align-items-center justify-content-between">
+		<div class="row align-items-center justify-content-between mb-4">
 			<div class="col-5" id="mi-div">
 				<form id="formDataCheck" name="formDataCheck" th:object="${formDataCheck}">
-					<div class="row justify-content-between align-items-center">
+					<div class="row align-items-center">
+						<div class="col-4">
+							<span th:text="#{view.load.select.healthy}"></span>
+						</div>
+						<div class="col-3 d-flex justify-content-start align-items-center ml-4">
+							<input type="text" placeholder="0" id="n_healthy_data" style="text-align: center;">
+						</div>
+					</div>
+					<div class="row justify-content-between align-items-center mt-2">
 						<div class="col-4">
 							<span th:text="#{view.load.select.check}"></span>
 						</div>
@@ -198,6 +206,8 @@
 							th:value="${first_sample_req}" />
 						<input type="hidden" id="analyzed_number_req" name="analyzed_number_req"
 							th:value="${analyzed_number_req}" />
+							<input type="hidden" id="healthy_number_req" name="healthy_number_req"
+							th:value="${healthy_number_req}" />
 						<button id="runPre" type="submit" th:text="#{view.load.run.btt}"></button>
 						<a class="back-btt" href="/home" th:text="#{view.load.bck.btt}"></a>
 					</form>

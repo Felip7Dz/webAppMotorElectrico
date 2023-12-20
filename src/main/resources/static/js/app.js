@@ -80,6 +80,7 @@ $("#runPre").click(function() {
 	var ftf = $("#ftf").val();
 	var firstSample = $("#min_to_check").val();
 	var analyzedNumber = $("#max_to_check").val();
+	var n_healthy = $("#n_healthy_data").val();
 
 	$("#nombre_req").val(nombre);
 	$("#sampling_frequency_req").val(samplingFrequency);
@@ -88,5 +89,6 @@ $("#runPre").click(function() {
 	$("#bsf_req").val(bsf);
 	$("#ftf_req").val(ftf);
 	$("#first_sample_req").val(firstSample);
-	$("#analyzed_number_req").val(analyzedNumber);
+	$("#analyzed_number_req").val(analyzedNumber - firstSample);
+	$("#healthy_number_req").val(n_healthy);
 });

@@ -7,9 +7,9 @@ public class RunRequestDTO {
 	private Double bpfi_req;
 	private Double bsf_req;
 	private Double ftf_req;
-	private Double healthy_number_req;
-	private Double analyzed_number_req;
-	private Double first_sample_req;
+	private int healthy_number_req;
+	private int analyzed_number_req;
+	private int first_sample_req;
 
 	public String getNombre_req() {
 		return nombre_req;
@@ -59,27 +59,27 @@ public class RunRequestDTO {
 		this.ftf_req = ftf_req;
 	}
 
-	public Double getHealthy_number_req() {
+	public int getHealthy_number_req() {
 		return healthy_number_req;
 	}
 
-	public void setHealthy_number_req(Double healthy_number_req) {
+	public void setHealthy_number_req(int healthy_number_req) {
 		this.healthy_number_req = healthy_number_req;
 	}
 
-	public Double getAnalyzed_number_req() {
+	public int getAnalyzed_number_req() {
 		return analyzed_number_req;
 	}
 
-	public void setAnalyzed_number_req(Double analyzed_number_req) {
+	public void setAnalyzed_number_req(int analyzed_number_req) {
 		this.analyzed_number_req = analyzed_number_req;
 	}
 
-	public Double getFirst_sample_req() {
+	public int getFirst_sample_req() {
 		return first_sample_req;
 	}
 
-	public void setFirst_sample_req(Double first_sample_req) {
+	public void setFirst_sample_req(int first_sample_req) {
 		this.first_sample_req = first_sample_req;
 	}
 }
