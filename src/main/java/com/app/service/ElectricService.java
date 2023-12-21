@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.DatasetInformationDTO;
 import com.app.dto.DatasetsResponseDTO;
+import com.app.dto.RunRequestDTO;
+import com.app.dto.RunResponseDTO;
 
 @Service
 public class ElectricService {
@@ -192,4 +194,26 @@ public class ElectricService {
 			System.err.println("Error al actualizar el dataset: " + e.getMessage());
 		}
 	}
+
+	public RunResponseDTO run(RunRequestDTO data2Run) {
+	    String url = "http://127.0.0.1:5000/analyze_data";
+
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+
+	    HttpEntity<RunRequestDTO> requestEntity = new HttpEntity<>(data2Run, headers);
+
+	    RestTemplate restTemplate = new RestTemplate();
+	    RunResponseDTO responseDTO = null;
+
+	    try {
+	        ResponseEntity<RunResponseDTO> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, RunResponseDTO.class);
+	        responseDTO = responseEntity.getBody();
+	    } catch (Exception e) {
+	        System.err.println("Error al actualizar el dataset: " + e.getMessage());
+	    }
+
+	    return responseDTO;
+	}
+
 }

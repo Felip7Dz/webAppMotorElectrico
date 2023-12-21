@@ -44,6 +44,7 @@ $(document).ready(function() {
 		var alMenosUnaSeleccionada = $('.saved-single-checkbox:checked').length > 0;
 		$('#savedSubmitButton').prop('disabled', !alMenosUnaSeleccionada);
 	});
+
 	$('#formSavedDataset').submit(function() {
 		if ($('.saved-single-checkbox:checked').length > 0) {
 			return true;
@@ -52,6 +53,24 @@ $(document).ready(function() {
 			return false;
 		}
 	});
+
+	if ($("#fault_type").val() != null || $("#fault_type").val() != "") {
+		var faultTypes = $("#fault_type").val();
+
+		var faultTypesArray = faultTypes.split(',');
+
+		$(".circle").each(function() {
+			var circleId = $(this).attr("id");
+			var circleType = getCircleType(circleId);
+
+			if (faultTypesArray.includes(circleType)) {
+				$(this).css("background-color", "red");
+			}
+		});
+		
+		$("#pdf1").css("display", "inline");
+		$("#pdf2").css("display", "inline");
+	}
 });
 
 function eliminarItem(item) {
@@ -92,3 +111,18 @@ $("#runPre").click(function() {
 	$("#analyzed_number_req").val(analyzedNumber - firstSample);
 	$("#healthy_number_req").val(n_healthy);
 });
+
+function getCircleType(circleId) {
+	switch (circleId) {
+		case "colorCircle1":
+			return "Outer-race";
+		case "colorCircle2":
+			return "Inner-race";
+		case "colorCircle3":
+			return "Bearing balls";
+		case "colorCircle4":
+			return "Cage";
+		default:
+			return "";
+	}
+}

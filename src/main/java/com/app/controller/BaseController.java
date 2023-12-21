@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.app.dto.DatasetInformationDTO;
 import com.app.dto.DatasetsResponseDTO;
 import com.app.dto.RunRequestDTO;
+import com.app.dto.RunResponseDTO;
 import com.app.service.ElectricService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -130,13 +131,15 @@ public class BaseController {
 	@PostMapping("/runPreloaded")
 	public String runPreloaded(RunRequestDTO data2Run, Model model) {
 		DatasetInformationDTO info = new DatasetInformationDTO();
+		RunResponseDTO response = new RunResponseDTO();
 		String errors = "";
-
+		
 		try {
 			info = electricService.getDatasetInfo(data2Run.getNombre_req());
 			if (info.getMax_to_check() >= data2Run.getAnalyzed_number_req()) {
 				info.setMin_to_check(data2Run.getFirst_sample_req());
-				info.setMax_to_check(data2Run.getAnalyzed_number_req());
+				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
+				response = electricService.run(data2Run);
 			} else {
 				if ("en".equals(this.language)) {
 					errors = "Value " + data2Run.getAnalyzed_number_req()
@@ -146,7 +149,7 @@ public class BaseController {
 							+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
 				}
 				info.setMin_to_check(data2Run.getFirst_sample_req());
-				info.setMax_to_check(data2Run.getAnalyzed_number_req());
+				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
 			}
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
@@ -157,6 +160,11 @@ public class BaseController {
 			model.addAttribute("formData", info);
 			model.addAttribute("formDataCheck", info);
 		}
+		
+		if(response != null) {
+			model.addAttribute("runResForm", response);
+		}
+		
 		if (!errors.isEmpty()) {
 			model.addAttribute("errors", errors);
 		}

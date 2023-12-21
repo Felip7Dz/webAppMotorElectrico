@@ -196,34 +196,39 @@
 				<div class="row justify-content-end mb-2">
 					<form id="runPreform" action="/runPreloaded" method="post">
 						<input type="hidden" id="nombre_req" name="nombre_req" th:value="${nombre_req}" />
-						<input type="hidden" id="sampling_frequency_req" name="sampling_frequency_req"
-							th:value="${sampling_frequency_req}" />
+						<input type="hidden" id="sampling_frequency_req" name="sampling_frequency_req" th:value="${sampling_frequency_req}" />
 						<input type="hidden" id="bpfo_req" name="bpfo_req" th:value="${bpfo_req}" />
 						<input type="hidden" id="bpfi_req" name="bpfi_req" th:value="${bpfi_req}" />
 						<input type="hidden" id="bsf_req" name="bsf_req" th:value="${bsf_req}" />
 						<input type="hidden" id="ftf_req" name="ftf_req" th:value="${ftf_req}" />
-						<input type="hidden" id="first_sample_req" name="first_sample_req"
-							th:value="${first_sample_req}" />
-						<input type="hidden" id="analyzed_number_req" name="analyzed_number_req"
-							th:value="${analyzed_number_req}" />
-							<input type="hidden" id="healthy_number_req" name="healthy_number_req"
-							th:value="${healthy_number_req}" />
+						<input type="hidden" id="first_sample_req" name="first_sample_req" th:value="${first_sample_req}" />
+						<input type="hidden" id="analyzed_number_req" name="analyzed_number_req" th:value="${analyzed_number_req}" />
+						<input type="hidden" id="healthy_number_req" name="healthy_number_req" th:value="${healthy_number_req}" />
 						<button id="runPre" type="submit" th:text="#{view.load.run.btt}"></button>
 						<a class="back-btt" href="/home" th:text="#{view.load.bck.btt}"></a>
 					</form>
 				</div>
 				<div class="row justify-content-end mb-2">
-					<button type="button" style="display: none;">
+					<button type="button" id="pdf1" style="display: none;">
 						<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
 						<span th:text="#{view.load.exp.btt}" style="vertical-align: middle;"></span>
 					</button>
-					<button type="button" style="display: none;">
+					<button type="button" id="pdf2" style="display: none;">
 						<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
 						<span th:text="#{view.load.int.btt}" style="vertical-align: middle;"></span>
 					</button>
 				</div>
 			</div>
 		</div>
+		<form id="runResForm" name="runResForm" th:object="${runResForm}">
+			<div th:if="${runResForm}">
+				<input type="hidden" id="fault_detected" name="fault_detected" th:field="*{fault_detected}"/>
+				<input type="hidden" id="fault_info" name="fault_info" th:field="*{fault_info}"/>
+				<input type="hidden" id="fault_type" name="fault_type" th:field="*{fault_type}"/>
+				<input type="hidden" id="fault_details" name="fault_details" th:field="*{fault_details}"/>
+				<input type="hidden" id="analysis_result" name="analysis_result" th:field="*{analysis_result}"/>
+			</div>
+		</form>
 	</main>
 	<th:block th:insert="~{/fragments/footer}"></th:block>
 </body>
