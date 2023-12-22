@@ -54,7 +54,7 @@ $(document).ready(function() {
 		}
 	});
 
-	if ($("#fault_type").val() != null || $("#fault_type").val() != "") {
+	if ($("#fault_type").val() != null && $("#fault_type").val() != "") {
 		var faultTypes = $("#fault_type").val();
 
 		var faultTypesArray = faultTypes.split(',');
@@ -70,6 +70,9 @@ $(document).ready(function() {
 		
 		$("#pdf1").css("display", "inline");
 		$("#pdf2").css("display", "inline");
+		
+		$("#imgph1").hide();
+		$("#imgph2").hide();
 	}
 });
 

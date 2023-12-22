@@ -1,10 +1,16 @@
 package com.app.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.ConnectException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +35,7 @@ public class BaseController {
 	private final ElectricService electricService;
 	private String errorsH = "";
 	private String language = "";
+	private String sessionActual = "";
 
 	public BaseController(ElectricService electricService) {
 		this.electricService = electricService;
@@ -37,6 +44,7 @@ public class BaseController {
 	@GetMapping("/home")
 	public String home(Model model, HttpServletRequest request) {
 		Locale currentLocale = RequestContextUtils.getLocale(request);
+		this.sessionActual = request.getRequestedSessionId();
 		this.language = currentLocale.getLanguage();
 
 		try {
@@ -129,17 +137,30 @@ public class BaseController {
 	}
 
 	@PostMapping("/runPreloaded")
-	public String runPreloaded(RunRequestDTO data2Run, Model model) {
+	public String runPreloaded(RunRequestDTO data2Run, Model model) throws IOException {
 		DatasetInformationDTO info = new DatasetInformationDTO();
 		RunResponseDTO response = new RunResponseDTO();
 		String errors = "";
-		
+		BufferedImage img1 = null;
+		BufferedImage img2 = null;
+
 		try {
 			info = electricService.getDatasetInfo(data2Run.getNombre_req());
 			if (info.getMax_to_check() >= data2Run.getAnalyzed_number_req()) {
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
-				response = electricService.run(data2Run);
+				response = electricService.run(data2Run, this.sessionActual);
+				img1 = electricService.getImage1(this.sessionActual);
+				img2 = electricService.getImage2(this.sessionActual);
+
+				if (img1 != null && img2 != null) {
+					String img2Front1Encoded = encodeImageToBase64(img1);
+					String img2Front2Encoded = encodeImageToBase64(img2);
+
+					model.addAttribute("img2Front1Encoded", img2Front1Encoded);
+					model.addAttribute("img2Front2Encoded", img2Front2Encoded);
+				}
+
 			} else {
 				if ("en".equals(this.language)) {
 					errors = "Value " + data2Run.getAnalyzed_number_req()
@@ -160,16 +181,23 @@ public class BaseController {
 			model.addAttribute("formData", info);
 			model.addAttribute("formDataCheck", info);
 		}
-		
-		if(response != null) {
+
+		if (response != null) {
 			model.addAttribute("runResForm", response);
 		}
-		
+
 		if (!errors.isEmpty()) {
 			model.addAttribute("errors", errors);
 		}
 
 		return "public/preloaded";
+	}
+
+	private String encodeImageToBase64(BufferedImage image) throws IOException {
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		ImageIO.write(image, "png", byteArrayOutputStream);
+		byte[] bytes = byteArrayOutputStream.toByteArray();
+		return Base64.getEncoder().encodeToString(bytes);
 	}
 
 	@GetMapping("/newload")

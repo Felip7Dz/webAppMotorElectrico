@@ -121,10 +121,16 @@
 					<div class="col-12" id="mi-div">
 						<div class="row" style="text-align: center;">
 							<div class="col-6">
-								<img src="/images/test_graf.png" style="width: 55%;">
+								<img src="/images/test_graf.png" style="width: 66%;" id="imgph1">
+								<div th:if="${img2Front1Encoded}">
+									<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1" style="width: 66%;" id="img1">
+								</div>
 							</div>
 							<div class="col-6">
-								<img src="/images/test_graf.png" style="width: 55%;">
+								<img src="/images/test_graf.png" style="width: 66%;" id="imgph2">
+								<div th:if="${img2Front1Encoded}">
+									<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2" style="width: 66%;" id="img2">
+								</div>
 							</div>
 						</div>
 					</div>

@@ -1,9 +1,14 @@
 package com.app.service;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.util.Collections;
 import java.util.List;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpEntity;
@@ -195,10 +200,10 @@ public class ElectricService {
 		}
 	}
 
-	public RunResponseDTO run(RunRequestDTO data2Run) {
-	    String url = "http://127.0.0.1:5000/analyze_data";
+	public RunResponseDTO run(RunRequestDTO data2Run, String sess) {
+		String url = "http://127.0.0.1:5000/analyze_data/" + sess;
 
-	    HttpHeaders headers = new HttpHeaders();
+		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 
 	    HttpEntity<RunRequestDTO> requestEntity = new HttpEntity<>(data2Run, headers);
@@ -210,10 +215,41 @@ public class ElectricService {
 	        ResponseEntity<RunResponseDTO> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, RunResponseDTO.class);
 	        responseDTO = responseEntity.getBody();
 	    } catch (Exception e) {
-	        System.err.println("Error al actualizar el dataset: " + e.getMessage());
+	        System.err.println("Error al correr la appt: " + e.getMessage());
 	    }
 
 	    return responseDTO;
 	}
+	
+	public BufferedImage getImage1(String sessionID) {
+		String url = "http://127.0.0.1:5000/get_image1/" + sessionID;
 
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<byte[]> responseEntity = restTemplate.getForEntity(url, byte[].class);
+			byte[] imageBytes = responseEntity.getBody();
+
+			InputStream inputStream = new ByteArrayInputStream(imageBytes);
+			return ImageIO.read(inputStream);
+		} catch (IOException e) {
+			System.err.println("Error al recuperar las imagenes: " + e.getMessage());
+			return null;
+		}
+	}
+
+	public BufferedImage getImage2(String sessionID) {
+		String url = "http://127.0.0.1:5000/get_image2/" + sessionID;
+
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<byte[]> responseEntity = restTemplate.getForEntity(url, byte[].class);
+			byte[] imageBytes = responseEntity.getBody();
+
+			InputStream inputStream = new ByteArrayInputStream(imageBytes);
+			return ImageIO.read(inputStream);
+		} catch (IOException e) {
+			System.err.println("Error al recuperar las imagenes: " + e.getMessage());
+			return null;
+		}
+	}
 }
