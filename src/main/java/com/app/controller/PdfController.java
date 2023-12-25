@@ -51,7 +51,7 @@ public class PdfController {
 		PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
 		contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
-		String texto = "Test PDF";
+		String texto = data.getFault_info();
 		float textWidth = PDType1Font.HELVETICA_BOLD.getStringWidth(texto) / 1000 * 12;
 		float startX = (page.getMediaBox().getWidth() - textWidth) / 2;
 		contentStream.beginText();
@@ -64,14 +64,24 @@ public class PdfController {
 		PDImageXObject pdImage1 = LosslessFactory.createFromImage(document, img1);
 		float image1Width = pdImage1.getWidth() * scale;
 		float image1Height = pdImage1.getHeight() * scale;
-		contentStream.drawImage(pdImage1, 50, 700 - image1Height, image1Width, image1Height);
+		contentStream.drawImage(pdImage1, 50, 700 - image1Height - 3, image1Width, image1Height);
 
-		float yPosition = 700 - image1Height - 20; // Ajusta la posición vertical según tus necesidades
+		float yPositionImage2 = 700 - image1Height - 20;
 		PDImageXObject pdImage2 = LosslessFactory.createFromImage(document, img2);
 		float image2Width = pdImage2.getWidth() * scale;
 		float image2Height = pdImage2.getHeight() * scale;
-		contentStream.drawImage(pdImage2, 50, yPosition - image2Height, image2Width, image2Height);
+		contentStream.drawImage(pdImage2, 50, yPositionImage2 - image2Height, image2Width, image2Height);
 
+		float yPositionText = yPositionImage2 - image2Height - 20;
+		contentStream.setFont(PDType1Font.HELVETICA, 12);
+
+		for (int i = 0; i < data.getFault_type().size(); i++) {
+		    contentStream.beginText();
+		    contentStream.newLineAtOffset(50, yPositionText - (i + 1) * 12);
+		    contentStream.showText(data.getFault_type().get(i) + " bearing failure detected.");
+		    contentStream.endText();
+		}
+		
 		contentStream.close();
 
 		document.save(baos);

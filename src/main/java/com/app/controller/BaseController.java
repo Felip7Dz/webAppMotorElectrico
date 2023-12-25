@@ -190,6 +190,10 @@ public class BaseController {
 
 		if (response != null) {
 			model.addAttribute("runResForm", response);
+			model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
+			for(int i=0; i < response.getFault_details().size(); i++) {
+				model.addAttribute("dataList" + i, response.getFault_details().get(i));
+			}
 		}
 
 		if (!errors.isEmpty()) {

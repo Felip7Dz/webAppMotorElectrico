@@ -62,7 +62,7 @@ $(document).ready(function() {
 		$(this).val(newValue);
 	});
 
-	if ($("#fault_type").val() != null && $("#fault_type").val() != "") {
+	if ($("#analysis_result").val() != null && $("#analysis_result").val() != "") {
 		var faultTypes = $("#fault_type").val();
 
 		var faultTypesArray = faultTypes.split(',');
@@ -76,16 +76,19 @@ $(document).ready(function() {
 			}
 		});
 
-		$("#pdf1").css("display", "inline");
-		$("#pdf2").css("display", "inline");
-
+		if ($("#fault_detected").val() == "true") {
+			$("#pdf1").css("display", "inline");
+			$("#pdf2").css("display", "inline");
+		}
+		
 		$("#imgph1").hide();
 		$("#imgph2").hide();
+		
+		$("#n_healthy_data").val($("#n_healthy_used").val());
 	}
 });
 
 function eliminarItem(item) {
-	//window.alert(item);
 	if (item != null) {
 		jQuery.ajax({
 			url: '/deleteDataset',

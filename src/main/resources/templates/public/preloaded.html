@@ -232,7 +232,7 @@
 					</form>
 				</div>
 				<div class="row justify-content-end mb-2">
-					<button type="button" id="pdf1" >
+					<button type="button" id="pdf1" style="display: none;">
 						<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
 						<span th:text="#{view.load.exp.btt}" style="vertical-align: middle;"></span>
 					</button>
@@ -245,11 +245,15 @@
 		</div>
 		<form id="runResForm" name="runResForm" th:object="${runResForm}">
 			<div th:if="${runResForm}">
+				<input type="hidden" id="n_healthy_used" name="n_healthy_used" th:value="${n_healthy_used}" />
 				<input type="hidden" id="fault_detected" name="fault_detected" th:field="*{fault_detected}" />
 				<input type="hidden" id="fault_info" name="fault_info" th:field="*{fault_info}" />
 				<input type="hidden" id="fault_type" name="fault_type" th:field="*{fault_type}" />
-				<input type="hidden" id="fault_details" name="fault_details" th:field="*{fault_details}" />
 				<input type="hidden" id="analysis_result" name="analysis_result" th:field="*{analysis_result}" />
+				<input type="hidden" id="fault_details_0" name="fault_details_0" th:value="${dataList0}" />
+				<input type="hidden" id="fault_details_1" name="fault_details_1" th:value="${dataList1}" />
+				<input type="hidden" id="fault_details_2" name="fault_details_2" th:value="${dataList2}" />
+				<input type="hidden" id="fault_details_3" name="fault_details_3" th:value="${dataList3}" />
 			</div>
 		</form>
 	</main>
