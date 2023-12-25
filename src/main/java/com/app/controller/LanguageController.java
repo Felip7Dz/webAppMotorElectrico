@@ -13,17 +13,14 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class LanguageController {
 
-    @GetMapping("/change-locale")
-    public String changeLocale(HttpServletRequest request, HttpServletResponse response,
-                               @RequestParam(defaultValue = "es") String lang) {
+	@GetMapping("/change-locale")
+	public String changeLocale(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(defaultValue = "es") String lang) {
 
-        // Establecer el idioma en la sesión
-        request.getSession().setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, new Locale(lang));
+		request.getSession().setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, new Locale(lang));
 
-        // Obtener la URL de referencia (página de origen)
-        String referer = request.getHeader("Referer");
+		String referer = request.getHeader("Referer");
 
-        // Redirigir de vuelta a la página de origen
-        return "redirect:" + referer;
-    }
+		return "redirect:" + referer;
+	}
 }

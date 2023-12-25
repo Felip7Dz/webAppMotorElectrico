@@ -15,7 +15,7 @@
 			<div class="row align-items-center" id="mi-div">
 				<div class="col-11 d-flex justify-content-center align-items-center">
 					<input type="hidden" th:field="*{id}">
-					<input type="text" class="head-new-input" th:field="*{nombre}">
+					<input type="text" class="head-new-input" th:field="*{nombre}" maxlength="15">
 				</div>
 				<div class="col-1 align-self-end">
 					<button type="submit" th:text="#{view.load.save.btt}"></button>
@@ -25,94 +25,94 @@
 				<div class="col-2" id="mi-div">
 					<label style="font-weight: bold;" th:text="#{view.load.in.info}">:</label>
 					<div class="row align-items-center mt-4">
-						<div class="col-6">
+						<div class="col-5">
 							<span th:text="#{view.load.in.shaft}">:</span>
 						</div>
-						<div class="col-4">
-							<input type="text" th:field="*{shaft_frequency}" pattern="[0-9]*\.?[0-9]*">
+						<div class="col-5">
+							<input type="text" th:field="*{shaft_frequency}" pattern="[0-9]*\.?[0-9]*" class="onlyNums" style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1">
+						<div class="col-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-6">
+						<div class="col-5">
 							<span th:text="#{view.load.in.sampling}">:</span>
 						</div>
-						<div class="col-4">
-							<input type="text" th:field="*{sampling_frequency}" pattern="[0-9]*\.?[0-9]*">
+						<div class="col-5">
+							<input type="text" th:field="*{sampling_frequency}" pattern="[0-9]*\.?[0-9]*" class="onlyNums" style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1">
+						<div class="col-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-6">
+						<div class="col-5">
 							<span th:text="#{view.load.in.load}">:</span>
 						</div>
-						<div class="col-4">
-							<input type="text" th:field="*{carga}" pattern="[0-9]*\.?[0-9]*">
+						<div class="col-5">
+							<input type="text" th:field="*{carga}" pattern="[0-9]*\.?[0-9]*" class="onlyNums" style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1">
+						<div class="col-1 d-flex justify-content-center align-items-center">
 							<span>Kn</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-6">
+						<div class="col-5">
 							<span th:text="#{view.load.in.bearing}">:</span>
 						</div>
-						<div class="col-6">
-							<input type="text" th:field="*{bearing_type}">
+						<div class="col-7">
+							<input type="text" th:field="*{bearing_type}" style="text-align: center;" maxlength="15">
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-6">
+						<div class="col-5">
 							<span th:text="#{view.load.in.bpfo}">:</span>
 						</div>
-						<div class="col-4">
-							<input type="text" th:field="*{bpfo}" pattern="[0-9]*\.?[0-9]*">
+						<div class="col-5">
+							<input type="text" th:field="*{bpfo}" pattern="[0-9]*\.?[0-9]*" class="onlyNums" style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1">
+						<div class="col-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-6">
+						<div class="col-5">
 							<span th:text="#{view.load.in.bpfi}">:</span>
 						</div>
-						<div class="col-4">
-							<input type="text" th:field="*{bpfi}" pattern="[0-9]*\.?[0-9]*">
+						<div class="col-5">
+							<input type="text" th:field="*{bpfi}" pattern="[0-9]*\.?[0-9]*" class="onlyNums" style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1">
+						<div class="col-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-6">
+						<div class="col-5">
 							<span th:text="#{view.load.in.bsf}">:</span>
 						</div>
-						<div class="col-4">
-							<input type="text" th:field="*{bsf}" pattern="[0-9]*\.?[0-9]*">
+						<div class="col-5">
+							<input type="text" th:field="*{bsf}" pattern="[0-9]*\.?[0-9]*" class="onlyNums" style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1">
+						<div class="col-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-6">
+						<div class="col-5">
 							<span th:text="#{view.load.in.ftf}">:</span>
 						</div>
-						<div class="col-4">
-							<input type="text" th:field="*{ftf}" pattern="[0-9]*\.?[0-9]*">
+						<div class="col-5">
+							<input type="text" th:field="*{ftf}" pattern="[0-9]*\.?[0-9]*" class="onlyNums" style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1">
+						<div class="col-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
@@ -123,10 +123,10 @@
 						<div class="col-12" id="mi-div">
 							<div class="row" style="text-align: center;">
 								<div class="col-6">
-									<img src="/images/test_graf.png" style="width: 55%;">
+									<img src="/images/test_graf.png" style="width: 66%;">
 								</div>
 								<div class="col-6">
-									<img src="/images/test_graf.png" style="width: 55%;">
+									<img src="/images/test_graf.png" style="width: 66%;">
 								</div>
 							</div>
 						</div>

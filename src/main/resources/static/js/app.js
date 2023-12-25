@@ -54,6 +54,14 @@ $(document).ready(function() {
 		}
 	});
 
+	$(".onlyNums").on("input", function(e) {
+		var currentValue = $(this).val();
+
+		var newValue = currentValue.replace(/[^0-9.,]/g, '');
+
+		$(this).val(newValue);
+	});
+
 	if ($("#fault_type").val() != null && $("#fault_type").val() != "") {
 		var faultTypes = $("#fault_type").val();
 
@@ -67,10 +75,10 @@ $(document).ready(function() {
 				$(this).css("background-color", "red");
 			}
 		});
-		
+
 		$("#pdf1").css("display", "inline");
 		$("#pdf2").css("display", "inline");
-		
+
 		$("#imgph1").hide();
 		$("#imgph2").hide();
 	}
@@ -128,4 +136,87 @@ function getCircleType(circleId) {
 		default:
 			return "";
 	}
+}
+
+$("#pdf1").click(function() {
+	var fault_detected = $("#fault_detected").val();
+	var fault_info = $("#fault_info").val();
+	var fault_type = $("#fault_type").val();
+	var fault_details = $("#fault_details").val();
+	var analysis_result = $("#analysis_result").val();
+
+	$.ajax({
+		type: "GET",
+		url: "/generate-pdf",
+		data: {
+			fault_detected: fault_detected,
+			fault_info: fault_info,
+			fault_type: fault_type,
+			fault_details: fault_details,
+			analysis_result: analysis_result
+		},
+		success: function(data) {
+			var blob = b64toBlob(data, 'application/pdf');
+			var link = document.createElement('a');
+			link.href = window.URL.createObjectURL(blob);
+			link.target = '_blank';
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		},
+		error: function(error) {
+			console.error("Error al generar el PDF: " + error);
+		}
+	});
+});
+
+$("#pdf2").click(function() {
+	var fault_detected = $("#fault_detected").val();
+	var fault_info = $("#fault_info").val();
+	var fault_type = $("#fault_type").val();
+	var fault_details = $("#fault_details").val();
+	var analysis_result = $("#analysis_result").val();
+
+	$.ajax({
+		type: "GET",
+		url: "/generate-pdf",
+		data: {
+			fault_detected: fault_detected,
+			fault_info: fault_info,
+			fault_type: fault_type,
+			fault_details: fault_details,
+			analysis_result: analysis_result
+		},
+		success: function(data) {
+			var blob = b64toBlob(data, 'application/pdf');
+			var link = document.createElement('a');
+			link.href = window.URL.createObjectURL(blob);
+			link.target = '_blank';
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		},
+		error: function(error) {
+			console.error("Error al generar el PDF: " + error);
+		}
+	});
+});
+
+function b64toBlob(base64, contentType) {
+	contentType = contentType || '';
+	const sliceSize = 512;
+	const byteCharacters = atob(base64);
+	const byteArrays = [];
+
+	for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+		const slice = byteCharacters.slice(offset, offset + sliceSize);
+		const byteNumbers = new Array(slice.length);
+		for (let i = 0; i < slice.length; i++) {
+			byteNumbers[i] = slice.charCodeAt(i);
+		}
+		const byteArray = new Uint8Array(byteNumbers);
+		byteArrays.push(byteArray);
+	}
+
+	return new Blob(byteArrays, { type: contentType });
 }

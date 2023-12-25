@@ -28,6 +28,7 @@ import com.app.dto.RunResponseDTO;
 import com.app.service.ElectricService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class BaseController {
@@ -44,7 +45,12 @@ public class BaseController {
 	@GetMapping("/home")
 	public String home(Model model, HttpServletRequest request) {
 		Locale currentLocale = RequestContextUtils.getLocale(request);
-		this.sessionActual = request.getRequestedSessionId();
+		
+		if(this.sessionActual == "" || this.sessionActual == null) {
+			HttpSession newSession = request.getSession(true);
+			this.sessionActual = newSession.getId();
+		}
+		
 		this.language = currentLocale.getLanguage();
 
 		try {
