@@ -244,11 +244,8 @@ public class BaseController {
 
 	@GetMapping("/saveDataset")
 	public String saveDataset(DatasetInformationDTO infoForm, Model model) {
-		DatasetInformationDTO tmp = new DatasetInformationDTO();
-
 		try {
-			tmp = electricService.getDatasetInfo(infoForm.getNombre());
-			if ("Dataset not found".equals(tmp.getNombre())) {
+			if (infoForm.getId() == null) {
 				electricService.createDatasetInDB(infoForm);
 			} else {
 				electricService.updateDatasetInDB(infoForm);
