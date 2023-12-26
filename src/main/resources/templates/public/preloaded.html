@@ -132,14 +132,14 @@
 								<img src="/images/test_graf.png" style="width: 66%;" id="imgph1">
 								<div th:if="${img2Front1Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1"
-										style="width: 66%;" id="img1">
+										style="width: 66%;" id="img1" data-toggle="modal" data-target="#imagenModal1">
 								</div>
 							</div>
 							<div class="col-6">
 								<img src="/images/test_graf.png" style="width: 66%;" id="imgph2">
 								<div th:if="${img2Front1Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2"
-										style="width: 66%;" id="img2">
+										style="width: 66%;" id="img2" data-toggle="modal" data-target="#imagenModal2">
 								</div>
 							</div>
 						</div>
@@ -250,13 +250,40 @@
 				<input type="hidden" id="fault_info" name="fault_info" th:field="*{fault_info}" />
 				<input type="hidden" id="fault_type" name="fault_type" th:field="*{fault_type}" />
 				<input type="hidden" id="analysis_result" name="analysis_result" th:field="*{analysis_result}" />
-				<input type="hidden" id="fault_details_0" name="fault_details_0" th:value="${dataList0}" />
-				<input type="hidden" id="fault_details_1" name="fault_details_1" th:value="${dataList1}" />
-				<input type="hidden" id="fault_details_2" name="fault_details_2" th:value="${dataList2}" />
-				<input type="hidden" id="fault_details_3" name="fault_details_3" th:value="${dataList3}" />
+				<input type="hidden" id="fault_details_Outer_race" name="fault_details_Outer_race" th:value="${data_Outer_race}" />
+				<input type="hidden" id="fault_details_Inner_race" name="fault_details_Inner_race" th:value="${data_Inner_race}" />
+				<input type="hidden" id="fault_details_Bearing_Balls" name="fault_details_Bearing_Balls" th:value="${data_Bearing_Balls}" />
+				<input type="hidden" id="fault_details_Cage" name="fault_details_Cage" th:value="${data_Cage}" />
+				
 			</div>
 		</form>
 	</main>
+	<div class="modal fade" id="imagenModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" 
+		aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body d-flex align-items-center justify-content-center">
+                    <img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1">
+                </div>
+                <div class="modal-footer">
+					<button type="button" data-dismiss="modal" th:text="#{view.modal.footer.close}">Close</button>
+				</div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade" id="imagenModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-body d-flex align-items-center justify-content-center">
+					<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2">
+				</div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" th:text="#{view.modal.footer.close}"></button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<th:block th:insert="~{/fragments/footer}"></th:block>
 </body>
 

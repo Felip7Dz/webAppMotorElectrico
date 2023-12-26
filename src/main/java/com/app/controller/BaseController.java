@@ -192,7 +192,7 @@ public class BaseController {
 			model.addAttribute("runResForm", response);
 			model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
 			for(int i=0; i < response.getFault_details().size(); i++) {
-				model.addAttribute("dataList" + i, response.getFault_details().get(i));
+				model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
 			}
 		}
 

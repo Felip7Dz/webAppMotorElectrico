@@ -80,12 +80,17 @@ $(document).ready(function() {
 			$("#pdf1").css("display", "inline");
 			$("#pdf2").css("display", "inline");
 		}
-		
+
 		$("#imgph1").hide();
 		$("#imgph2").hide();
-		
+
 		$("#n_healthy_data").val($("#n_healthy_used").val());
 	}
+
+	if ($("#warningsDiv").is(":visible")) {
+		$("#runNew").hide();
+	}
+
 });
 
 function eliminarItem(item) {
@@ -129,11 +134,11 @@ $("#runPre").click(function() {
 function getCircleType(circleId) {
 	switch (circleId) {
 		case "colorCircle1":
-			return "Outer-race";
+			return "Outer_race";
 		case "colorCircle2":
-			return "Inner-race";
+			return "Inner_race";
 		case "colorCircle3":
-			return "Bearing balls";
+			return "Bearing_balls";
 		case "colorCircle4":
 			return "Cage";
 		default:
