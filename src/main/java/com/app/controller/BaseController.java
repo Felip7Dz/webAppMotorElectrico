@@ -265,7 +265,7 @@ public class BaseController {
 	@PostMapping("/uploadNewData")
 	public String guardarNewArchivos(@RequestParam("healthyData2Save") MultipartFile healthy,
 			@RequestParam("newSample2Save") MultipartFile newSample,
-			@RequestParam("name2send") String name, Model model) {
+			@RequestParam("name2send") String name, @RequestParam("id2send") int id, Model model) {
 		
 		this.errorsH = "";
 		try {
@@ -276,8 +276,8 @@ public class BaseController {
 					String healthyFileName = "healthy" + name + "." + extension1;
 					String newSampleFileName = name + "." + extension2;
 					
-					electricService.uploadDataSample(healthy, healthyFileName);
-					electricService.uploadDataSample(newSample, newSampleFileName);
+					electricService.uploadDataSample(healthy, healthyFileName, id);
+					electricService.uploadDataSample(newSample, newSampleFileName, id);
 				} else {
 					if ("en".equals(this.language)) {
 						this.errorsH = "Extension ." + extension1 + " not allowed.";

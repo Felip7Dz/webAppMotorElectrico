@@ -86,20 +86,19 @@ $(document).ready(function() {
 
 		$("#n_healthy_data").val($("#n_healthy_used").val());
 	}
-
-	if ($("#warningsDiv").is(":visible") || $("#file1").is(":visible")) {
-		$("#runNew").hide();
-	}
 	
 	if($("#files_added").val() == 1){
 		$("#formNewUpload").hide();
 		$("#formDataCheckNew").show();
+		$("#runNew").show();
 	}
 	if($("#files_added").val() == 0){
 		$("#formNewUpload").show();
 		$("#formDataCheckNew").hide();
+		$("#runNew").hide();
 	}
 	
+	$("#id2send").val($("#id").val());
 	$("#name2send").val($("#nombre").val());
 
 });

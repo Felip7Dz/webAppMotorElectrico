@@ -253,8 +253,8 @@ public class ElectricService {
 		}
 	}
 	
-	public ResponseEntity<String> uploadDataSample(MultipartFile file, String fileName) {
-		String apiUrl = "http://127.0.0.1:5000/saveData";
+	public ResponseEntity<String> uploadDataSample(MultipartFile file, String fileName, int id) {
+		String apiUrl = "http://127.0.0.1:5000/saveData/" + id;
 
 		try {
 			ByteArrayResource fileResource = new ByteArrayResource(file.getBytes()) {

@@ -176,8 +176,9 @@
 			</div>
 		</form>
 		<br>
-		<div class="row align-items-center justify-content-between">
+		<div class="row align-items-center justify-content-between mb-4">
 			<form id="formNewUpload" method="post" action="/uploadNewData" enctype="multipart/form-data">
+				<input type="hidden" id="id2send" name="id2send" value="">
 				<input type="hidden" id="name2send" name="name2send" value="">
 				<div class="col-8">
 					<div th:if="${errorsH}">
@@ -206,29 +207,31 @@
 				</div>
 			</form>
 			<form id="formDataCheckNew" name="formDataCheckNew">
-				<div class="row align-items-center">
-					<div class="col-4">
-						<span th:text="#{view.load.select.healthy}"></span>
+				<div id="mi-div">
+					<div class="row align-items-center">
+						<div class="col-4">
+							<span th:text="#{view.load.select.healthy}"></span>
+						</div>
+						<div class="col-3 d-flex justify-content-start align-items-center ml-4">
+							<input type="text" placeholder="0" id="n_healthy_data" style="text-align: center;"
+								pattern="[0-9]*\.?[0-9]*" class="onlyNums" maxlength="6">
+						</div>
 					</div>
-					<div class="col-3 d-flex justify-content-start align-items-center ml-4">
-						<input type="text" placeholder="0" id="n_healthy_data" style="text-align: center;"
-							pattern="[0-9]*\.?[0-9]*" class="onlyNums" maxlength="6">
-					</div>
-				</div>
-				<div class="row justify-content-between align-items-center mt-2">
-					<div class="col-4">
-						<span th:text="#{view.load.select.check}"></span>
-					</div>
-					<div class="col-3">
-						<input type="text" style="text-align: center;"
-							pattern="[0-9]*\.?[0-9]*" class="onlyNums" maxlength="6">
-					</div>
-					<div class="col-1 d-flex justify-content-center align-items-center">
-						<span th:text="#{view.load.select.to}"></span>
-					</div>
-					<div class="col-3">
-						<input type="text" style="text-align: center;"
-							pattern="[0-9]*\.?[0-9]*" class="onlyNums" maxlength="6">
+					<div class="row justify-content-between align-items-center mt-2">
+						<div class="col-4">
+							<span th:text="#{view.load.select.check}"></span>
+						</div>
+						<div class="col-3">
+							<input type="text" style="text-align: center;" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
+								maxlength="6">
+						</div>
+						<div class="col-1 d-flex justify-content-center align-items-center">
+							<span th:text="#{view.load.select.to}"></span>
+						</div>
+						<div class="col-3">
+							<input type="text" style="text-align: center;" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
+								maxlength="6">
+						</div>
 					</div>
 				</div>
 			</form>
