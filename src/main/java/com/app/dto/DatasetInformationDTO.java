@@ -14,6 +14,7 @@ public class DatasetInformationDTO {
 	private Double ftf;
 	private int min_to_check;
 	private int max_to_check;
+	private int files_added;
 
 	public Integer getId() {
 		return id;
@@ -109,6 +110,14 @@ public class DatasetInformationDTO {
 
 	public void setMax_to_check(int max_to_check) {
 		this.max_to_check = max_to_check;
+	}
+
+	public int getFiles_added() {
+		return files_added;
+	}
+
+	public void setFiles_added(int files_added) {
+		this.files_added = files_added;
 	}
 
 }

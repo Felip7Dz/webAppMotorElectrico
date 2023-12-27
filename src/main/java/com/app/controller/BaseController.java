@@ -45,12 +45,12 @@ public class BaseController {
 	@GetMapping("/home")
 	public String home(Model model, HttpServletRequest request) {
 		Locale currentLocale = RequestContextUtils.getLocale(request);
-		
-		if(this.sessionActual == "" || this.sessionActual == null) {
+
+		if (this.sessionActual == "" || this.sessionActual == null) {
 			HttpSession newSession = request.getSession(true);
 			this.sessionActual = newSession.getId();
 		}
-		
+
 		this.language = currentLocale.getLanguage();
 
 		try {
@@ -191,7 +191,7 @@ public class BaseController {
 		if (response != null) {
 			model.addAttribute("runResForm", response);
 			model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
-			for(int i=0; i < response.getFault_details().size(); i++) {
+			for (int i = 0; i < response.getFault_details().size(); i++) {
 				model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
 			}
 		}
@@ -223,6 +223,10 @@ public class BaseController {
 		}
 
 		model.addAttribute("selectedSavedModel", tmp[0]);
+		
+		if (!this.errorsH.isEmpty()) {
+			model.addAttribute("errorsH", errorsH);
+		}
 
 		if (!"Dataset not found".equals(info.getNombre())) {
 			model.addAttribute("formData", info);
@@ -236,9 +240,10 @@ public class BaseController {
 			info.setNombre(tmp[0]);
 			info.setSampling_frequency(0.0);
 			info.setShaft_frequency(0.0);
+			info.setFiles_added(0);
 			model.addAttribute("formData", info);
 		}
-
+		this.errorsH = "";
 		return "public/newLoad";
 	}
 
@@ -255,5 +260,42 @@ public class BaseController {
 		}
 
 		return "redirect:/newload?selectedSavedModel=" + infoForm.getNombre();
+	}
+
+	@PostMapping("/uploadNewData")
+	public String guardarNewArchivos(@RequestParam("healthyData2Save") MultipartFile healthy,
+			@RequestParam("newSample2Save") MultipartFile newSample,
+			@RequestParam("name2send") String name, Model model) {
+		
+		this.errorsH = "";
+		try {
+			if (!healthy.isEmpty() && !newSample.isEmpty()) {
+				String extension1 = StringUtils.getFilenameExtension(healthy.getOriginalFilename());
+				String extension2 = StringUtils.getFilenameExtension(newSample.getOriginalFilename());
+				if ("csv".equalsIgnoreCase(extension1) && "csv".equalsIgnoreCase(extension2)) {
+					String healthyFileName = "healthy" + name + "." + extension1;
+					String newSampleFileName = name + "." + extension2;
+					
+					electricService.uploadDataSample(healthy, healthyFileName);
+					electricService.uploadDataSample(newSample, newSampleFileName);
+				} else {
+					if ("en".equals(this.language)) {
+						this.errorsH = "Extension ." + extension1 + " not allowed.";
+					} else {
+						this.errorsH = "Extensión ." + extension1 + " no permitida.";
+					}
+				}
+			} else {
+				if ("en".equals(this.language)) {
+					this.errorsH = "File not attached.";
+				} else {
+					this.errorsH = "Archivo no adjuntado.";
+				}
+			}
+		} catch (Exception e) {
+			System.err.println("Error al conectar con la API: " + e.getMessage());
+		}
+
+		return "redirect:/newload?selectedSavedModel=" + name;
 	}
 }

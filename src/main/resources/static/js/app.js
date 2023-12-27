@@ -87,9 +87,20 @@ $(document).ready(function() {
 		$("#n_healthy_data").val($("#n_healthy_used").val());
 	}
 
-	if ($("#warningsDiv").is(":visible")) {
+	if ($("#warningsDiv").is(":visible") || $("#file1").is(":visible")) {
 		$("#runNew").hide();
 	}
+	
+	if($("#files_added").val() == 1){
+		$("#formNewUpload").hide();
+		$("#formDataCheckNew").show();
+	}
+	if($("#files_added").val() == 0){
+		$("#formNewUpload").show();
+		$("#formDataCheckNew").hide();
+	}
+	
+	$("#name2send").val($("#nombre").val());
 
 });
 
