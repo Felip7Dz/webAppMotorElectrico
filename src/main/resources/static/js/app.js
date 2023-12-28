@@ -98,6 +98,11 @@ $(document).ready(function() {
 		$("#runNew").hide();
 	}
 	
+	if($("#warningsDivNew").is(":visible")){
+		$("#formNewUpload").hide();
+		$("#formDataCheckNew").hide();
+	}
+	
 	$("#id2send").val($("#id").val());
 	$("#name2send").val($("#nombre").val());
 
@@ -120,6 +125,28 @@ function eliminarItem(item) {
 }
 
 $("#runPre").click(function() {
+	var nombre = $("#nombre").val();
+	var samplingFrequency = $("#sampling_frequency").val();
+	var bpfo = $("#bpfo").val();
+	var bpfi = $("#bpfi").val();
+	var bsf = $("#bsf").val();
+	var ftf = $("#ftf").val();
+	var firstSample = $("#min_to_check").val();
+	var analyzedNumber = $("#max_to_check").val();
+	var n_healthy = $("#n_healthy_data").val();
+
+	$("#nombre_req").val(nombre);
+	$("#sampling_frequency_req").val(samplingFrequency);
+	$("#bpfo_req").val(bpfo);
+	$("#bpfi_req").val(bpfi);
+	$("#bsf_req").val(bsf);
+	$("#ftf_req").val(ftf);
+	$("#first_sample_req").val(firstSample);
+	$("#analyzed_number_req").val(analyzedNumber - firstSample);
+	$("#healthy_number_req").val(n_healthy);
+});
+
+$("#runNew").click(function() {
 	var nombre = $("#nombre").val();
 	var samplingFrequency = $("#sampling_frequency").val();
 	var bpfo = $("#bpfo").val();

@@ -200,8 +200,8 @@ public class ElectricService {
 		}
 	}
 
-	public RunResponseDTO run(RunRequestDTO data2Run, String sess) {
-		String url = "http://127.0.0.1:5000/analyze_data/" + sess;
+	public RunResponseDTO run(RunRequestDTO data2Run, String sess, int flag) {
+		String url = "http://127.0.0.1:5000/analyze_data/" + sess + "/" + flag;
 
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);

@@ -7,7 +7,7 @@
 	<main>
 		<form id="formData" name="formData" th:object="${formData}" action="/saveDataset" method="get">
 			<div th:if="${formData.id == null}">
-				<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDiv">
+				<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDivNew">
 					<span class="material-symbols-outlined">warning </span>
 					<h4 th:text="#{view.load.check.exists}" style="margin-bottom: 0; margin-left: 1%;"></h4>
 				</div>
@@ -131,10 +131,18 @@
 						<div class="col-12" id="mi-div">
 							<div class="row" style="text-align: center;">
 								<div class="col-6">
-									<img src="/images/test_graf.png" style="width: 66%;">
+									<img src="/images/test_graf.png" style="width: 66%;" id="imgph1">
+									<div th:if="${img2Front1Encoded}">
+										<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1" style="width: 66%;" id="img1"
+											data-toggle="modal" data-target="#imagenModal1">
+									</div>
 								</div>
 								<div class="col-6">
-									<img src="/images/test_graf.png" style="width: 66%;">
+									<img src="/images/test_graf.png" style="width: 66%;" id="imgph2">
+									<div th:if="${img2Front1Encoded}">
+										<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2" style="width: 66%;" id="img2"
+											data-toggle="modal" data-target="#imagenModal2">
+									</div>
 								</div>
 							</div>
 						</div>
@@ -206,39 +214,52 @@
 					</div>
 				</div>
 			</form>
-			<form id="formDataCheckNew" name="formDataCheckNew">
-				<div id="mi-div">
-					<div class="row align-items-center">
-						<div class="col-4">
-							<span th:text="#{view.load.select.healthy}"></span>
+			<form id="formDataCheckNew" name="formDataCheckNew" th:object="${formDataCheckNew}">
+				<div th:if="${formDataCheckNew}">
+					<div id="mi-div">
+						<div class="row align-items-center">
+							<div class="col-4">
+								<span th:text="#{view.load.select.healthy}"></span>
+							</div>
+							<div class="col-3 d-flex justify-content-start align-items-center ml-4">
+								<input type="text" placeholder="0" id="n_healthy_data" style="text-align: center;"
+									pattern="[0-9]*\.?[0-9]*" class="onlyNums" maxlength="6">
+							</div>
 						</div>
-						<div class="col-3 d-flex justify-content-start align-items-center ml-4">
-							<input type="text" placeholder="0" id="n_healthy_data" style="text-align: center;"
-								pattern="[0-9]*\.?[0-9]*" class="onlyNums" maxlength="6">
-						</div>
-					</div>
-					<div class="row justify-content-between align-items-center mt-2">
-						<div class="col-4">
-							<span th:text="#{view.load.select.check}"></span>
-						</div>
-						<div class="col-3">
-							<input type="text" style="text-align: center;" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
-								maxlength="6">
-						</div>
-						<div class="col-1 d-flex justify-content-center align-items-center">
-							<span th:text="#{view.load.select.to}"></span>
-						</div>
-						<div class="col-3">
-							<input type="text" style="text-align: center;" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
-								maxlength="6">
+						<div class="row justify-content-between align-items-center mt-2">
+							<div class="col-4">
+								<span th:text="#{view.load.select.check}"></span>
+							</div>
+							<div class="col-3">
+								<input type="text" style="text-align: center;" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
+									maxlength="6" th:field="*{min_to_check}">
+							</div>
+							<div class="col-1 d-flex justify-content-center align-items-center">
+								<span th:text="#{view.load.select.to}"></span>
+							</div>
+							<div class="col-3">
+								<input type="text" style="text-align: center;" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
+									maxlength="6" th:field="*{max_to_check}">
+							</div>
 						</div>
 					</div>
 				</div>
 			</form>
 			<div class="col-5">
 				<div class="row justify-content-end mb-2">
-					<button id="runNew" type="button" th:text="#{view.load.run.btt}"></button>
-					<a class="back-btt" href="/home" th:text="#{view.load.bck.btt}"></a>
+					<form id="runNewform" action="/runNewload" method="post">
+						<input type="hidden" id="nombre_req" name="nombre_req" th:value="${nombre_req}" />
+						<input type="hidden" id="sampling_frequency_req" name="sampling_frequency_req" th:value="${sampling_frequency_req}" />
+						<input type="hidden" id="bpfo_req" name="bpfo_req" th:value="${bpfo_req}" />
+						<input type="hidden" id="bpfi_req" name="bpfi_req" th:value="${bpfi_req}" />
+						<input type="hidden" id="bsf_req" name="bsf_req" th:value="${bsf_req}" />
+						<input type="hidden" id="ftf_req" name="ftf_req" th:value="${ftf_req}" />
+						<input type="hidden" id="first_sample_req" name="first_sample_req" th:value="${first_sample_req}" />
+						<input type="hidden" id="analyzed_number_req" name="analyzed_number_req" th:value="${analyzed_number_req}" />
+						<input type="hidden" id="healthy_number_req" name="healthy_number_req" th:value="${healthy_number_req}" />
+						<button id="runNew" type="submit" th:text="#{view.load.run.btt}"></button>
+						<a class="back-btt" href="/home" th:text="#{view.load.bck.btt}"></a>
+					</form>
 				</div>
 				<div class="row justify-content-end mb-2">
 					<button type="button" style="display: none;">
@@ -252,7 +273,46 @@
 				</div>
 			</div>
 		</div>
+		<form id="runResForm" name="runResForm" th:object="${runResForm}">
+			<div th:if="${runResForm}">
+				<input type="hidden" id="n_healthy_used" name="n_healthy_used" th:value="${n_healthy_used}" />
+				<input type="hidden" id="fault_detected" name="fault_detected" th:field="*{fault_detected}" />
+				<input type="hidden" id="fault_info" name="fault_info" th:field="*{fault_info}" />
+				<input type="hidden" id="fault_type" name="fault_type" th:field="*{fault_type}" />
+				<input type="hidden" id="analysis_result" name="analysis_result" th:field="*{analysis_result}" />
+				<input type="hidden" id="fault_details_Outer_race" name="fault_details_Outer_race" th:value="${data_Outer_race}" />
+				<input type="hidden" id="fault_details_Inner_race" name="fault_details_Inner_race" th:value="${data_Inner_race}" />
+				<input type="hidden" id="fault_details_Bearing_Balls" name="fault_details_Bearing_Balls" th:value="${data_Bearing_Balls}" />
+				<input type="hidden" id="fault_details_Cage" name="fault_details_Cage" th:value="${data_Cage}" />
+			</div>
+		</form>
 	</main>
+	<div class="modal fade" id="imagenModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-body d-flex align-items-center justify-content-center">
+					<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1">
+				</div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" th:text="#{view.modal.footer.close}">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="imagenModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-body d-flex align-items-center justify-content-center">
+					<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2">
+				</div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" th:text="#{view.modal.footer.close}"></button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<th:block th:insert="~{/fragments/footer}"></th:block>
 </body>
 

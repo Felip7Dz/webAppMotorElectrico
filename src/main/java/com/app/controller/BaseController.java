@@ -101,7 +101,7 @@ public class BaseController {
 		try {
 			if (!archivo.isEmpty()) {
 				String extension = StringUtils.getFilenameExtension(archivo.getOriginalFilename());
-				if ("csv".equalsIgnoreCase(extension)) {
+				if ("h5".equalsIgnoreCase(extension)) {
 					electricService.uploadDataset(archivo);
 				} else {
 					if ("en".equals(this.language)) {
@@ -155,7 +155,7 @@ public class BaseController {
 			if (info.getMax_to_check() >= data2Run.getAnalyzed_number_req()) {
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
-				response = electricService.run(data2Run, this.sessionActual);
+				response = electricService.run(data2Run, this.sessionActual, 0);
 				img1 = electricService.getImage1(this.sessionActual);
 				img2 = electricService.getImage2(this.sessionActual);
 
@@ -230,6 +230,7 @@ public class BaseController {
 
 		if (!"Dataset not found".equals(info.getNombre())) {
 			model.addAttribute("formData", info);
+			model.addAttribute("formDataCheckNew", info);
 		} else {
 			info.setBearing_type("");
 			info.setBpfi(0.0);
@@ -297,5 +298,66 @@ public class BaseController {
 		}
 
 		return "redirect:/newload?selectedSavedModel=" + name;
+	}
+	
+	@PostMapping("/runNewload")
+	public String runNewload(RunRequestDTO data2Run, Model model) throws IOException {
+		DatasetInformationDTO info = new DatasetInformationDTO();
+		RunResponseDTO response = new RunResponseDTO();
+		String errors = "";
+		BufferedImage img1 = null;
+		BufferedImage img2 = null;
+
+		try {
+			info = electricService.getDatasetInfo(data2Run.getNombre_req());
+			if (info.getMax_to_check() >= data2Run.getAnalyzed_number_req()) {
+				info.setMin_to_check(data2Run.getFirst_sample_req());
+				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
+				response = electricService.run(data2Run, this.sessionActual, 1);
+				img1 = electricService.getImage1(this.sessionActual);
+				img2 = electricService.getImage2(this.sessionActual);
+
+				if (img1 != null && img2 != null) {
+					String img2Front1Encoded = encodeImageToBase64(img1);
+					String img2Front2Encoded = encodeImageToBase64(img2);
+
+					model.addAttribute("img2Front1Encoded", img2Front1Encoded);
+					model.addAttribute("img2Front2Encoded", img2Front2Encoded);
+				}
+
+			} else {
+				if ("en".equals(this.language)) {
+					errors = "Value " + data2Run.getAnalyzed_number_req()
+							+ " out of range. Should be equal or lower than " + info.getMax_to_check();
+				} else {
+					errors = "Valor " + data2Run.getAnalyzed_number_req()
+							+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
+				}
+				info.setMin_to_check(data2Run.getFirst_sample_req());
+				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
+			}
+		} catch (ConnectException e) {
+			System.err.println("Error al conectar con la API: " + e.getMessage());
+		}
+
+		model.addAttribute("selectedModel", data2Run.getNombre_req());
+		if (info != null) {
+			model.addAttribute("formData", info);
+			model.addAttribute("formDataCheckNew", info);
+		}
+
+		if (response != null) {
+			model.addAttribute("runResForm", response);
+			model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
+			for (int i = 0; i < response.getFault_details().size(); i++) {
+				model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
+			}
+		}
+
+		if (!errors.isEmpty()) {
+			model.addAttribute("errors", errors);
+		}
+
+		return "public/newLoad";
 	}
 }

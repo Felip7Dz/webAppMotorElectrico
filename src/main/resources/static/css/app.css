@@ -182,7 +182,7 @@ a.back-btt {
 	transition: background .2s ease-in-out;
 }
 
-#warningsDiv {
+#warningsDiv, #warningsDivNew {
 	background-color: lightyellow;
 	padding: 1%;
 	border: 2px solid yellow;
