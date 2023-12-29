@@ -149,6 +149,8 @@ public class BaseController {
 		String errors = "";
 		BufferedImage img1 = null;
 		BufferedImage img2 = null;
+		BufferedImage img3 = null;
+		BufferedImage img4 = null;
 
 		try {
 			info = electricService.getDatasetInfo(data2Run.getNombre_req());
@@ -156,15 +158,23 @@ public class BaseController {
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
 				response = electricService.run(data2Run, this.sessionActual, 0);
-				img1 = electricService.getImage1(this.sessionActual);
-				img2 = electricService.getImage2(this.sessionActual);
+				img1 = electricService.getImage(this.sessionActual, 1);
+				img2 = electricService.getImage(this.sessionActual, 2);
+				img3 = electricService.getImage(this.sessionActual, 3);
+				img4 = electricService.getImage(this.sessionActual, 4);
 
-				if (img1 != null && img2 != null) {
+				if (img1 != null) {
 					String img2Front1Encoded = encodeImageToBase64(img1);
-					String img2Front2Encoded = encodeImageToBase64(img2);
-
 					model.addAttribute("img2Front1Encoded", img2Front1Encoded);
+				}if(img2 != null) {				
+					String img2Front2Encoded = encodeImageToBase64(img2);
 					model.addAttribute("img2Front2Encoded", img2Front2Encoded);
+				}if(img3 != null) {
+					String img2Front3Encoded = encodeImageToBase64(img3);
+					model.addAttribute("img2Front3Encoded", img2Front3Encoded);
+				}if(img4 != null) {
+					String img2Front4Encoded = encodeImageToBase64(img4);
+					model.addAttribute("img2Front4Encoded", img2Front4Encoded);
 				}
 
 			} else {
@@ -307,6 +317,8 @@ public class BaseController {
 		String errors = "";
 		BufferedImage img1 = null;
 		BufferedImage img2 = null;
+		BufferedImage img3 = null;
+		BufferedImage img4 = null;
 
 		try {
 			info = electricService.getDatasetInfo(data2Run.getNombre_req());
@@ -314,15 +326,23 @@ public class BaseController {
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
 				response = electricService.run(data2Run, this.sessionActual, 1);
-				img1 = electricService.getImage1(this.sessionActual);
-				img2 = electricService.getImage2(this.sessionActual);
+				img1 = electricService.getImage(this.sessionActual, 1);
+				img2 = electricService.getImage(this.sessionActual, 2);
+				img3 = electricService.getImage(this.sessionActual, 3);
+				img4 = electricService.getImage(this.sessionActual, 4);
 
-				if (img1 != null && img2 != null) {
+				if (img1 != null) {
 					String img2Front1Encoded = encodeImageToBase64(img1);
-					String img2Front2Encoded = encodeImageToBase64(img2);
-
 					model.addAttribute("img2Front1Encoded", img2Front1Encoded);
+				}if(img2 != null) {				
+					String img2Front2Encoded = encodeImageToBase64(img2);
 					model.addAttribute("img2Front2Encoded", img2Front2Encoded);
+				}if(img3 != null) {
+					String img2Front3Encoded = encodeImageToBase64(img3);
+					model.addAttribute("img2Front3Encoded", img2Front3Encoded);
+				}if(img4 != null) {
+					String img2Front4Encoded = encodeImageToBase64(img4);
+					model.addAttribute("img2Front4Encoded", img2Front4Encoded);
 				}
 
 			} else {
@@ -349,8 +369,10 @@ public class BaseController {
 		if (response != null) {
 			model.addAttribute("runResForm", response);
 			model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
-			for (int i = 0; i < response.getFault_details().size(); i++) {
-				model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
+			if (response.isFault_detected()) {
+				for (int i = 0; i < response.getFault_details().size(); i++) {
+					model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
+				}
 			}
 		}
 

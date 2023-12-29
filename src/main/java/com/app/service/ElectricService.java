@@ -221,24 +221,8 @@ public class ElectricService {
 	    return responseDTO;
 	}
 	
-	public BufferedImage getImage1(String sessionID) {
-		String url = "http://127.0.0.1:5000/get_image1/" + sessionID;
-
-		try {
-			RestTemplate restTemplate = new RestTemplate();
-			ResponseEntity<byte[]> responseEntity = restTemplate.getForEntity(url, byte[].class);
-			byte[] imageBytes = responseEntity.getBody();
-
-			InputStream inputStream = new ByteArrayInputStream(imageBytes);
-			return ImageIO.read(inputStream);
-		} catch (IOException e) {
-			System.err.println("Error al recuperar las imagenes: " + e.getMessage());
-			return null;
-		}
-	}
-
-	public BufferedImage getImage2(String sessionID) {
-		String url = "http://127.0.0.1:5000/get_image2/" + sessionID;
+	public BufferedImage getImage(String sessionID, int flag) {
+		String url = "http://127.0.0.1:5000/get_image/" + sessionID + "/" + flag;
 
 		try {
 			RestTemplate restTemplate = new RestTemplate();

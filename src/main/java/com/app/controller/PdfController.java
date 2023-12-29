@@ -40,8 +40,8 @@ public class PdfController {
 		this.sessionActual = request.getRequestedSessionId();
 		this.language = currentLocale.getLanguage();
 
-		BufferedImage img1 = electricService.getImage1("null");
-		BufferedImage img2 = electricService.getImage2("null");
+		BufferedImage img1 = electricService.getImage("null", 1);
+		BufferedImage img2 = electricService.getImage("null", 2);
 
 		PDDocument document = new PDDocument();
 		PDPage page = new PDPage();

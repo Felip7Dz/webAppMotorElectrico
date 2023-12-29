@@ -136,11 +136,19 @@
 										<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1" style="width: 66%;" id="img1"
 											data-toggle="modal" data-target="#imagenModal1">
 									</div>
+									<div th:if="${img2Front3Encoded}">
+										<img th:src="@{'data:image/png;base64,' + ${img2Front3Encoded}}" alt="Imagen 1" style="width: 66%;" id="img1"
+											data-toggle="modal" data-target="#imagenModal1">
+									</div>
 								</div>
 								<div class="col-6">
 									<img src="/images/test_graf.png" style="width: 66%;" id="imgph2">
-									<div th:if="${img2Front1Encoded}">
+									<div th:if="${img2Front2Encoded}">
 										<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2" style="width: 66%;" id="img2"
+											data-toggle="modal" data-target="#imagenModal2">
+									</div>
+									<div th:if="${img2Front4Encoded}">
+										<img th:src="@{'data:image/png;base64,' + ${img2Front4Encoded}}" alt="Imagen 2" style="width: 66%;" id="img2"
 											data-toggle="modal" data-target="#imagenModal2">
 									</div>
 								</div>
@@ -292,7 +300,12 @@
 		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-body d-flex align-items-center justify-content-center">
-					<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1">
+					<div th:if="${img2Front1Encoded}">
+                    	<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1">
+					</div>
+					<div th:if="${img2Front3Encoded}">
+                    	<img th:src="@{'data:image/png;base64,' + ${img2Front3Encoded}}" alt="Imagen 1">
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" data-dismiss="modal" th:text="#{view.modal.footer.close}">Close</button>
@@ -305,7 +318,12 @@
 		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-body d-flex align-items-center justify-content-center">
-					<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2">
+					<div th:if="${img2Front2Encoded}">
+						<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2">
+					</div>
+					<div th:if="${img2Front4Encoded}">
+						<img th:src="@{'data:image/png;base64,' + ${img2Front4Encoded}}" alt="Imagen 2">
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" data-dismiss="modal" th:text="#{view.modal.footer.close}"></button>
