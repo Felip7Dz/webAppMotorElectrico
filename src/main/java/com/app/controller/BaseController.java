@@ -310,6 +310,18 @@ public class BaseController {
 		return "redirect:/newload?selectedSavedModel=" + name;
 	}
 	
+	@PostMapping("/deleteSample")
+	public String deleteSample(@RequestParam("nombre") String nombre, @RequestParam("id") int id) {
+		String healthyName = "healthy" + nombre + ".csv";
+		String regularName = nombre + ".csv";
+		try {
+			electricService.deleteSample(healthyName, regularName, id);
+		} catch (ConnectException e) {
+			System.err.println("Error al conectar con la API: " + e.getMessage());
+		}
+		return "redirect:/newload?selectedSavedModel=" + nombre;
+	}
+
 	@PostMapping("/runNewload")
 	public String runNewload(RunRequestDTO data2Run, Model model) throws IOException {
 		DatasetInformationDTO info = new DatasetInformationDTO();

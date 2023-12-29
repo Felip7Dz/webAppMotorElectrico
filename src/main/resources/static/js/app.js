@@ -116,12 +116,22 @@ function eliminarItem(item) {
 			data: { item: item },
 			success: function() {
 				location.reload();
-			},
-			error: function(error) {
-				console.error(error);
 			}
 		});
 	}
+}
+
+function eliminarSample(nombre, id) {
+    if (nombre != null && id != null) {
+        jQuery.ajax({
+            url: '/deleteSample',
+            type: 'POST',
+            data: { nombre: nombre, id: id },
+            success: function() {
+                location.reload();
+            }
+        });
+    }
 }
 
 $("#runPre").click(function() {
@@ -245,6 +255,10 @@ $("#pdf2").click(function() {
 			console.error("Error al generar el PDF: " + error);
 		}
 	});
+});
+
+$("#min_to_check").click(function(){
+	$(this).val('');
 });
 
 function b64toBlob(base64, contentType) {

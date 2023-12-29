@@ -192,7 +192,7 @@
 			</div>
 		</form>
 		<br>
-		<div class="row align-items-center justify-content-between mb-4">
+		<div class="row align-items-center justify-content-between mb-2">
 			<form id="formNewUpload" method="post" action="/uploadNewData" enctype="multipart/form-data">
 				<input type="hidden" id="id2send" name="id2send" value="">
 				<input type="hidden" id="name2send" name="name2send" value="">
@@ -225,13 +225,19 @@
 			<form id="formDataCheckNew" name="formDataCheckNew" th:object="${formDataCheckNew}">
 				<div th:if="${formDataCheckNew}">
 					<div id="mi-div">
-						<div class="row align-items-center">
+						<div class="row justify-content-between align-items-center">
 							<div class="col-4">
 								<span th:text="#{view.load.select.healthy}"></span>
 							</div>
-							<div class="col-3 d-flex justify-content-start align-items-center ml-4">
+							<div class="col-3 d-flex justify-content-start align-items-center">
 								<input type="text" placeholder="0" id="n_healthy_data" style="text-align: center;"
 									pattern="[0-9]*\.?[0-9]*" class="onlyNums" maxlength="6">
+							</div>
+							<div class="col-1">
+								<span>to</span>
+							</div>
+							<div class="col-3">
+								<button type="button" th:onclick="eliminarSample(/*[[*{nombre}]]*/, /*[[*{id}]]*/)" style="width: 100%;">Erase Data</button>
 							</div>
 						</div>
 						<div class="row justify-content-between align-items-center mt-2">
@@ -255,7 +261,7 @@
 			</form>
 			<div class="col-5">
 				<div class="row justify-content-end mb-2">
-					<form id="runNewform" action="/runNewload" method="post">
+					<form id="runNewform" name="runNewform" action="/runNewload" method="post">
 						<input type="hidden" id="nombre_req" name="nombre_req" th:value="${nombre_req}" />
 						<input type="hidden" id="sampling_frequency_req" name="sampling_frequency_req" th:value="${sampling_frequency_req}" />
 						<input type="hidden" id="bpfo_req" name="bpfo_req" th:value="${bpfo_req}" />

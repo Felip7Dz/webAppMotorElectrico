@@ -4,7 +4,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
@@ -264,5 +266,27 @@ public class ElectricService {
 			System.err.println("Error de E/S al leer el archivo: " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el archivo");
 		}
+	}
+	
+	public void deleteSample(String healthy, String regular, int id) throws ConnectException {
+	    String url = "http://127.0.0.1:5000/deleteSample/" + id;
+
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+
+	    Map<String, String> parametros = new HashMap<>();
+	    parametros.put("healthy", healthy);
+	    parametros.put("regular", regular);
+
+	    HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(parametros, headers);
+
+	    RestTemplate restTemplate = new RestTemplate();
+
+	    try {
+	        ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
+	        System.out.println("Respuesta del servidor: " + response.getBody());
+	    } catch (Exception e) {
+	        System.err.println("Error al llamar al método deleteDataset: " + e.getMessage());
+	    }
 	}
 }
