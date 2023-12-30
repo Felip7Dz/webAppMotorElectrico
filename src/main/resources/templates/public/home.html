@@ -7,6 +7,12 @@
 	<main>
 		<div class="row">
 			<div class="col-8">
+				<div th:if="${errorsAPI}"> 
+					<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDivAPI">
+						<span class="material-symbols-outlined">warning </span>
+						<h4 th:text="${errorsAPI}" style="margin-bottom: 0; margin-left: 1%;"></h4>
+					</div>
+				</div>
 				<div class="row justify-content-center" style="text-align: center;">
 					<div class="col-10" id="mi-div">
 						<label th:text="#{view.home.table.tittle}"></label>
@@ -26,7 +32,7 @@
 									</label>
 								</div>
 							</div>
-							<div th:if="${#lists.size(resultDatatest) > 0}">
+							<div th:if="${#lists.size(resultDatatest.modelsList) > 0}">
 								<button id="submitButton" type="submit">OK</button>
 							</div>
 						</form>
@@ -80,7 +86,7 @@
 						</div>
 					</div>
 					<div class="row justify-content-center">
-						<button type="submit" th:text="#{view.home.save.btt}"></button>
+						<button type="submit" id="saveDatasetBtt" th:text="#{view.home.save.btt}"></button>
 					</div>
 				</form>
 			</div>

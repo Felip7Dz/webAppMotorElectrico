@@ -142,7 +142,7 @@ button[type=button]:hover {
 .circle {
 	width: 100px;
 	height: 100px;
-	background-color: green;
+	background-color: #43A047;
 	border-radius: 50%;
 	margin: 20px auto;
 }
@@ -182,7 +182,7 @@ a.back-btt {
 	transition: background .2s ease-in-out;
 }
 
-#warningsDiv, #warningsDivNew {
+#warningsDiv, #warningsDivNew, #warningsDivAPI {
 	background-color: lightyellow;
 	padding: 1%;
 	border: 2px solid yellow;

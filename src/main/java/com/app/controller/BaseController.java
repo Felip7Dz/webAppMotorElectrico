@@ -56,6 +56,10 @@ public class BaseController {
 		try {
 			List<String> pdatasets = electricService.getAllDatasets();
 			List<String> savedatasets = electricService.getAllSavedDatasets();
+			
+			if(pdatasets.size() == 0) {
+				model.addAttribute("errorsAPI", "API Connection Error");
+			}
 
 			List<String> pdatasetsNames = pdatasets.stream().map(dataset -> dataset.split("\\.")[0])
 					.collect(Collectors.toList());
@@ -98,19 +102,34 @@ public class BaseController {
 	@PostMapping("/uploadDataset")
 	public String guardarArchivo(@RequestParam("model2Save") MultipartFile archivo, Model model) {
 		this.errorsH = "";
+		if (archivo.isEmpty()) {
+			return "redirect:/home";
+		}
 		try {
-			if (!archivo.isEmpty()) {
-				String extension = StringUtils.getFilenameExtension(archivo.getOriginalFilename());
-				if ("h5".equalsIgnoreCase(extension)) {
-					electricService.uploadDataset(archivo);
+			String extension = StringUtils.getFilenameExtension(archivo.getOriginalFilename());
+			if (!"h5".equalsIgnoreCase(extension)) {
+				if ("en".equals(this.language)) {
+					this.errorsH = "Extension ." + extension + " not allowed.";
 				} else {
+					this.errorsH = "Extensión ." + extension + " no permitida.";
+				}
+				return "redirect:/home";
+			}
+			
+			List<String> savedatasets = electricService.getAllSavedDatasets();
+			for (int i = 0; i < savedatasets.size(); i++) {
+				if (archivo.getOriginalFilename().equals(savedatasets.get(i))) {
 					if ("en".equals(this.language)) {
-						this.errorsH = "Extension ." + extension + " not allowed.";
+						this.errorsH = "A file with name " + archivo.getOriginalFilename()
+								+ " already exists in the file system.";
 					} else {
-						this.errorsH = "Extensión ." + extension + " no permitida.";
+						this.errorsH = "Un archivo con nombe " + archivo.getOriginalFilename()
+								+ " ya existe en el sistema.";
 					}
+					return "redirect:/home";
 				}
 			}
+			electricService.uploadDataset(archivo);
 		} catch (Exception e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
@@ -119,7 +138,7 @@ public class BaseController {
 	}
 
 	@GetMapping("/preloaded")
-	public String preload(@RequestParam(name = "selectedModel", required = false) String selectedModel, Model model) {
+	public String preload(@RequestParam(name = "selectedModel", required = true) String selectedModel, Model model) {
 
 		List<String> data = new ArrayList<>();
 		DatasetInformationDTO info = new DatasetInformationDTO();
@@ -176,6 +195,12 @@ public class BaseController {
 					String img2Front4Encoded = encodeImageToBase64(img4);
 					model.addAttribute("img2Front4Encoded", img2Front4Encoded);
 				}
+				
+				if (img1 == null && img2 == null && img3 == null && img4 == null) {
+					BufferedImage imgNotFault = electricService.getImage("faultless", 1);
+					String img2FrontNotFaultEncoded = encodeImageToBase64(imgNotFault);
+					model.addAttribute("img2FrontNotFaultEncoded", img2FrontNotFaultEncoded);
+				}
 
 			} else {
 				if ("en".equals(this.language)) {
@@ -201,8 +226,10 @@ public class BaseController {
 		if (response != null) {
 			model.addAttribute("runResForm", response);
 			model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
-			for (int i = 0; i < response.getFault_details().size(); i++) {
-				model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
+			if (response.isFault_detected()) {
+				for (int i = 0; i < response.getFault_details().size(); i++) {
+					model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
+				}
 			}
 		}
 
@@ -221,7 +248,7 @@ public class BaseController {
 	}
 
 	@GetMapping("/newload")
-	public String newload(@RequestParam(name = "selectedSavedModel", required = false) String selectedSavedModel,
+	public String newload(@RequestParam(name = "selectedSavedModel", required = true) String selectedSavedModel,
 			Model model) {
 		DatasetInformationDTO info = new DatasetInformationDTO();
 		String[] tmp = selectedSavedModel.split("\\.");
@@ -270,7 +297,7 @@ public class BaseController {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
 
-		return "redirect:/newload?selectedSavedModel=" + infoForm.getNombre();
+		return "redirect:/newload?selectedSavedModel=" + infoForm.getNombre() + ".h5";
 	}
 
 	@PostMapping("/uploadNewData")
@@ -307,7 +334,7 @@ public class BaseController {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
 
-		return "redirect:/newload?selectedSavedModel=" + name;
+		return "redirect:/newload?selectedSavedModel=" + name + ".h5";
 	}
 	
 	@PostMapping("/deleteSample")
@@ -319,7 +346,7 @@ public class BaseController {
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
-		return "redirect:/newload?selectedSavedModel=" + nombre;
+		return "redirect:/newload?selectedSavedModel=" + nombre + ".h5";
 	}
 
 	@PostMapping("/runNewload")
@@ -355,6 +382,12 @@ public class BaseController {
 				}if(img4 != null) {
 					String img2Front4Encoded = encodeImageToBase64(img4);
 					model.addAttribute("img2Front4Encoded", img2Front4Encoded);
+				}
+				
+				if (img1 == null && img2 == null && img3 == null && img4 == null) {
+					BufferedImage imgNotFault = electricService.getImage("faultless", 1);
+					String img2FrontNotFaultEncoded = encodeImageToBase64(imgNotFault);
+					model.addAttribute("img2FrontNotFaultEncoded", img2FrontNotFaultEncoded);
 				}
 
 			} else {

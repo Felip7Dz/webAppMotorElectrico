@@ -62,7 +62,7 @@ $(document).ready(function() {
 		$(this).val(newValue);
 	});
 
-	if ($("#analysis_result").val() != null && $("#analysis_result").val() != "") {
+	if ($("#fault_detected").val() == 'true') {
 		var faultTypes = $("#fault_type").val();
 
 		var faultTypesArray = faultTypes.split(',');
@@ -75,15 +75,16 @@ $(document).ready(function() {
 				$(this).css("background-color", "red");
 			}
 		});
-
-		if ($("#fault_detected").val() == "true") {
-			$("#pdf1").css("display", "inline");
-			$("#pdf2").css("display", "inline");
-		}
-
+		$("#pdf1").css("display", "inline");
+		$("#pdf2").css("display", "inline");
 		$("#imgph1").hide();
 		$("#imgph2").hide();
-
+		$("#n_healthy_data").val($("#n_healthy_used").val());
+	}
+	
+	if ($("#fault_detected").val() == 'false') {
+		$("#imgph1").hide();
+		$("#imgph2").hide();
 		$("#n_healthy_data").val($("#n_healthy_used").val());
 	}
 	
@@ -101,6 +102,10 @@ $(document).ready(function() {
 	if($("#warningsDivNew").is(":visible")){
 		$("#formNewUpload").hide();
 		$("#formDataCheckNew").hide();
+	}
+	
+	if($("#warningsDivAPI").is(":visible")){
+		$("#saveDatasetBtt").hide();
 	}
 	
 	$("#id2send").val($("#id").val());
