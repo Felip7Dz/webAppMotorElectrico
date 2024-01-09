@@ -81,33 +81,33 @@ $(document).ready(function() {
 		$("#imgph2").hide();
 		$("#n_healthy_data").val($("#n_healthy_used").val());
 	}
-	
+
 	if ($("#fault_detected").val() == 'false') {
 		$("#imgph1").hide();
 		$("#imgph2").hide();
 		$("#n_healthy_data").val($("#n_healthy_used").val());
 	}
-	
-	if($("#files_added").val() == 1){
+
+	if ($("#files_added").val() == 1) {
 		$("#formNewUpload").hide();
 		$("#formDataCheckNew").show();
 		$("#runNew").show();
 	}
-	if($("#files_added").val() == 0){
+	if ($("#files_added").val() == 0) {
 		$("#formNewUpload").show();
 		$("#formDataCheckNew").hide();
 		$("#runNew").hide();
 	}
-	
-	if($("#warningsDivNew").is(":visible")){
+
+	if ($("#warningsDivNew").is(":visible")) {
 		$("#formNewUpload").hide();
 		$("#formDataCheckNew").hide();
 	}
-	
-	if($("#warningsDivAPI").is(":visible")){
+
+	if ($("#warningsDivAPI").is(":visible")) {
 		$("#saveDatasetBtt").hide();
 	}
-	
+
 	$("#id2send").val($("#id").val());
 	$("#name2send").val($("#nombre").val());
 
@@ -127,16 +127,16 @@ function eliminarItem(item) {
 }
 
 function eliminarSample(nombre, id) {
-    if (nombre != null && id != null) {
-        jQuery.ajax({
-            url: '/deleteSample',
-            type: 'POST',
-            data: { nombre: nombre, id: id },
-            success: function() {
-                location.reload();
-            }
-        });
-    }
+	if (nombre != null && id != null) {
+		jQuery.ajax({
+			url: '/deleteSample',
+			type: 'POST',
+			data: { nombre: nombre, id: id },
+			success: function() {
+				location.reload();
+			}
+		});
+	}
 }
 
 $("#runPre").click(function() {
@@ -159,6 +159,8 @@ $("#runPre").click(function() {
 	$("#first_sample_req").val(firstSample);
 	$("#analyzed_number_req").val(analyzedNumber - firstSample);
 	$("#healthy_number_req").val(n_healthy);
+	
+	$('#loadingModal').modal('show');
 });
 
 $("#runNew").click(function() {
@@ -181,6 +183,8 @@ $("#runNew").click(function() {
 	$("#first_sample_req").val(firstSample);
 	$("#analyzed_number_req").val(analyzedNumber - firstSample);
 	$("#healthy_number_req").val(n_healthy);
+	
+	$('#loadingModal').modal('show');
 });
 
 function getCircleType(circleId) {
@@ -262,7 +266,7 @@ $("#pdf2").click(function() {
 	});
 });
 
-$("#min_to_check").click(function(){
+$("#min_to_check").click(function() {
 	$(this).val('');
 });
 

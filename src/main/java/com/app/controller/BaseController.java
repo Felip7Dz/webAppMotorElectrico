@@ -109,9 +109,9 @@ public class BaseController {
 			String extension = StringUtils.getFilenameExtension(archivo.getOriginalFilename());
 			if (!"h5".equalsIgnoreCase(extension)) {
 				if ("en".equals(this.language)) {
-					this.errorsH = "Extension ." + extension + " not allowed.";
+					this.errorsH = "Extension ." + extension + " not allowed. Only .h5 allowed.";
 				} else {
-					this.errorsH = "Extensión ." + extension + " no permitida.";
+					this.errorsH = "Extensión ." + extension + " no permitida. Solo .h5 permitida.";
 				}
 				return "redirect:/home";
 			}
