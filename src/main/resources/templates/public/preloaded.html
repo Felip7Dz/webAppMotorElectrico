@@ -206,7 +206,7 @@
 						</div>
 						<div class="col-3 d-flex justify-content-start align-items-center">
 							<input type="text" placeholder="0" id="n_healthy_data" style="text-align: center;"
-								pattern="[0-9]*\.?[0-9]*" class="onlyNums" minlength="1" maxlength="6">
+								pattern="[0-9]*\.?[0-9]*" class="onlyNums" minlength="1" maxlength="6" required>
 						</div>
 						<div class="col-3"></div>
 						<div class="col-1"></div>
@@ -245,8 +245,8 @@
 						<input type="hidden" id="analyzed_number_req" name="analyzed_number_req"
 							th:value="${analyzed_number_req}" />
 						<input type="hidden" id="healthy_number_req" name="healthy_number_req"
-							th:value="${healthy_number_req}" />
-						<button id="runPre" type="submit" th:text="#{view.load.run.btt}"></button>
+							th:value="${healthy_number_req}" required/>
+						<button id="runPre" type="button" th:text="#{view.load.run.btt}"></button>
 						<a class="back-btt" href="/home" th:text="#{view.load.bck.btt}"></a>
 					</form>
 				</div>

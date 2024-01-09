@@ -150,17 +150,23 @@ $("#runPre").click(function() {
 	var analyzedNumber = $("#max_to_check").val();
 	var n_healthy = $("#n_healthy_data").val();
 
-	$("#nombre_req").val(nombre);
-	$("#sampling_frequency_req").val(samplingFrequency);
-	$("#bpfo_req").val(bpfo);
-	$("#bpfi_req").val(bpfi);
-	$("#bsf_req").val(bsf);
-	$("#ftf_req").val(ftf);
-	$("#first_sample_req").val(firstSample);
-	$("#analyzed_number_req").val(analyzedNumber - firstSample);
-	$("#healthy_number_req").val(n_healthy);
-	
-	$('#loadingModal').modal('show');
+	if (n_healthy != '') {
+		$("#nombre_req").val(nombre);
+		$("#sampling_frequency_req").val(samplingFrequency);
+		$("#bpfo_req").val(bpfo);
+		$("#bpfi_req").val(bpfi);
+		$("#bsf_req").val(bsf);
+		$("#ftf_req").val(ftf);
+		$("#first_sample_req").val(firstSample);
+		$("#analyzed_number_req").val(analyzedNumber - firstSample);
+		$("#healthy_number_req").val(n_healthy);
+
+		$('#loadingModal').modal('show');
+		
+		$("#runPreform").submit();
+	}else{
+		location.reload();
+	}
 });
 
 $("#runNew").click(function() {
@@ -174,17 +180,23 @@ $("#runNew").click(function() {
 	var analyzedNumber = $("#max_to_check").val();
 	var n_healthy = $("#n_healthy_data").val();
 
-	$("#nombre_req").val(nombre);
-	$("#sampling_frequency_req").val(samplingFrequency);
-	$("#bpfo_req").val(bpfo);
-	$("#bpfi_req").val(bpfi);
-	$("#bsf_req").val(bsf);
-	$("#ftf_req").val(ftf);
-	$("#first_sample_req").val(firstSample);
-	$("#analyzed_number_req").val(analyzedNumber - firstSample);
-	$("#healthy_number_req").val(n_healthy);
-	
-	$('#loadingModal').modal('show');
+	if (n_healthy != '') {
+		$("#nombre_req").val(nombre);
+		$("#sampling_frequency_req").val(samplingFrequency);
+		$("#bpfo_req").val(bpfo);
+		$("#bpfi_req").val(bpfi);
+		$("#bsf_req").val(bsf);
+		$("#ftf_req").val(ftf);
+		$("#first_sample_req").val(firstSample);
+		$("#analyzed_number_req").val(analyzedNumber - firstSample);
+		$("#healthy_number_req").val(n_healthy);
+
+		$('#loadingModal').modal('show');
+		
+		$("#runNewform").submit();
+	}else{
+		location.reload();
+	}
 });
 
 function getCircleType(circleId) {

@@ -27,8 +27,8 @@ import jakarta.servlet.http.HttpServletRequest;
 public class PdfController {
 
 	private final ElectricService electricService;
-	private String language = "";
-	private String sessionActual = "";
+	private String language;
+	private String sessionActual;
 
 	public PdfController(ElectricService electricService) {
 		this.electricService = electricService;

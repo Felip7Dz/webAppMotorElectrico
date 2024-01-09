@@ -59,6 +59,7 @@ h1.responsive-h1 {
 
 input[type=file],
 input[type=text],
+input[type=password],
 button[type=submit],
 button[type=button] {
 	width: auto;
