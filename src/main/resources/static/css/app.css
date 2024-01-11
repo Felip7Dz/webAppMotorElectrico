@@ -60,6 +60,7 @@ h1.responsive-h1 {
 input[type=file],
 input[type=text],
 input[type=password],
+input[type=email],
 button[type=submit],
 button[type=button] {
 	width: auto;
@@ -189,6 +190,13 @@ a.back-btt {
 	background-color: lightyellow;
 	padding: 1%;
 	border: 2px solid yellow;
+	border-radius: 10px;
+}
+
+#okDiv {
+	background-color: lightgreen;
+	padding: 1%;
+	border: 2px solid greenyellow;
 	border-radius: 10px;
 }
 

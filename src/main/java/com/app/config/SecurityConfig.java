@@ -26,6 +26,7 @@ public class SecurityConfig {
 		http
 			.authorizeHttpRequests((authorize) -> authorize
 				.requestMatchers( "/login").permitAll()
+				.requestMatchers( "/register").permitAll()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.anyRequest().authenticated()
 			).csrf(AbstractHttpConfigurer::disable)
@@ -63,7 +64,7 @@ public class SecurityConfig {
 
 		return new InMemoryUserDetailsManager(userDetails);
 	}
-
+ 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
