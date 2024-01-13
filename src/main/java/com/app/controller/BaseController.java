@@ -226,6 +226,7 @@ public class BaseController {
 			if (response.isFault_detected()) {
 				for (int i = 0; i < response.getFault_details().size(); i++) {
 					model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
+					model.addAttribute("faults_" + response.getFault_type().get(i), response.getFault_details().get(i));
 				}
 			}
 		}
@@ -414,6 +415,7 @@ public class BaseController {
 			if (response.isFault_detected()) {
 				for (int i = 0; i < response.getFault_details().size(); i++) {
 					model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
+					model.addAttribute("faults_" + response.getFault_type().get(i), response.getFault_details().get(i));
 				}
 			}
 		}

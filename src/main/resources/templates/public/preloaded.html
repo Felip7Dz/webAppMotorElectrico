@@ -133,10 +133,16 @@
 								<div th:if="${img2Front1Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1"
 										style="width: 66%;" id="img1" data-toggle="modal" data-target="#imagenModal1">
+									<br>
+									<span th:text="#{view.load.info.faults}"></span>
+									<span th:text="${faults_Outer_race}"></span>							
 								</div>
 								<div th:if="${img2Front3Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front3Encoded}}" alt="Imagen 1"
-										style="width: 66%;" id="img1" data-toggle="modal" data-target="#imagenModal1">
+										style="width: 66%;" id="img3" data-toggle="modal" data-target="#imagenModal3">
+									<br>
+									<span th:text="#{view.load.info.faults}"></span>
+									<span th:text="${faults_Bearing_Balls}"></span>
 								</div>
 							</div>
 							<div class="col-6">
@@ -144,10 +150,16 @@
 								<div th:if="${img2Front2Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2"
 										style="width: 66%;" id="img2" data-toggle="modal" data-target="#imagenModal2">
+									<br>
+									<span th:text="#{view.load.info.faults}"></span>
+									<span th:text="${faults_Inner_race}"></span>
 								</div>
 								<div th:if="${img2Front4Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front4Encoded}}" alt="Imagen 2"
-										style="width: 66%;" id="img2" data-toggle="modal" data-target="#imagenModal2">
+										style="width: 66%;" id="img4" data-toggle="modal" data-target="#imagenModal4">
+									<br>
+									<span th:text="#{view.load.info.faults}"></span>
+									<span th:text="${faults_Cage}"></span>
 								</div>
 							</div>
 						</div>
@@ -284,6 +296,18 @@
 					<div th:if="${img2Front1Encoded}">
                     	<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1">
 					</div>
+                </div>
+                <div class="modal-footer">
+					<button type="button" data-dismiss="modal" th:text="#{view.modal.footer.close}">Close</button>
+				</div>
+            </div>
+        </div>
+    </div>
+	<div class="modal fade" id="imagenModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" 
+		aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front3Encoded}">
                     	<img th:src="@{'data:image/png;base64,' + ${img2Front3Encoded}}" alt="Imagen 1">
 					</div>
@@ -302,6 +326,18 @@
 					<div th:if="${img2Front2Encoded}">
 						<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2">
 					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" th:text="#{view.modal.footer.close}"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="imagenModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front4Encoded}">
 						<img th:src="@{'data:image/png;base64,' + ${img2Front4Encoded}}" alt="Imagen 1">
 					</div>

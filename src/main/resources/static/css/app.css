@@ -173,6 +173,13 @@ h1:hover {
 	text-decoration: none !important;
 }
 
+#img1:hover,
+#img2:hover,
+#img3:hover,
+#img4:hover {
+	cursor: pointer;
+}
+
 a.back-btt {
 	margin-right: 20px;
 	border: none;

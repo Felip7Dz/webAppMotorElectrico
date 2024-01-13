@@ -139,6 +139,16 @@ function eliminarSample(nombre, id) {
 	}
 }
 
+$("#saveDatasetBtt").click(function() {
+	$('#uploadingModal').modal('show');
+	$("#formUpload").submit();
+});
+
+$("#uploadDataSamples").click(function() {
+	$('#uploadingModal').modal('show');
+	$("#formNewUpload").submit();
+});
+
 $("#runPre").click(function() {
 	var nombre = $("#nombre").val();
 	var samplingFrequency = $("#sampling_frequency").val();
