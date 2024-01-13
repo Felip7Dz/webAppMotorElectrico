@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.ConnectException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -28,7 +29,6 @@ import com.app.dto.RunResponseDTO;
 import com.app.service.ElectricService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class BaseController {
@@ -45,17 +45,14 @@ public class BaseController {
 	@GetMapping("/home")
 	public String home(Model model, HttpServletRequest request) {
 		Locale currentLocale = RequestContextUtils.getLocale(request);
-
-		if (this.sessionActual == "" || this.sessionActual == null) {
-			HttpSession newSession = request.getSession(true);
-			this.sessionActual = newSession.getId();
-		}
-
+		Principal test = request.getUserPrincipal();
+	
+		this.sessionActual = test.getName();
 		this.language = currentLocale.getLanguage();
 
 		try {
 			List<String> pdatasets = electricService.getAllDatasets();
-			List<String> savedatasets = electricService.getAllSavedDatasets();
+			List<String> savedatasets = electricService.getAllSavedDatasets(this.sessionActual);
 			
 			if(pdatasets.size() == 0) {
 				model.addAttribute("errorsAPI", "API Connection Error");
@@ -92,7 +89,7 @@ public class BaseController {
 	@PostMapping("/deleteDataset")
 	public String delete(@RequestParam("item") String item) {
 		try {
-			electricService.delete(item);
+			electricService.delete(item, this.sessionActual);
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
@@ -116,7 +113,7 @@ public class BaseController {
 				return "redirect:/home";
 			}
 			
-			List<String> savedatasets = electricService.getAllSavedDatasets();
+			List<String> savedatasets = electricService.getAllSavedDatasets(this.sessionActual);
 			for (int i = 0; i < savedatasets.size(); i++) {
 				if (archivo.getOriginalFilename().equals(savedatasets.get(i))) {
 					if ("en".equals(this.language)) {
@@ -129,7 +126,7 @@ public class BaseController {
 					return "redirect:/home";
 				}
 			}
-			electricService.uploadDataset(archivo);
+			electricService.uploadDataset(archivo, this.sessionActual);
 		} catch (Exception e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
@@ -314,8 +311,8 @@ public class BaseController {
 					String healthyFileName = "healthy" + name + "." + extension1;
 					String newSampleFileName = name + "." + extension2;
 					
-					electricService.uploadDataSample(healthy, healthyFileName, id);
-					electricService.uploadDataSample(newSample, newSampleFileName, id);
+					electricService.uploadDataSample(healthy, healthyFileName, id, this.sessionActual);
+					electricService.uploadDataSample(newSample, newSampleFileName, id, this.sessionActual);
 				} else {
 					if ("en".equals(this.language)) {
 						this.errorsH = "Extension ." + extension1 + " not allowed.";
@@ -342,7 +339,7 @@ public class BaseController {
 		String healthyName = "healthy" + nombre + ".csv";
 		String regularName = nombre + ".csv";
 		try {
-			electricService.deleteSample(healthyName, regularName, id);
+			electricService.deleteSample(healthyName, regularName, id, this.sessionActual);
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}

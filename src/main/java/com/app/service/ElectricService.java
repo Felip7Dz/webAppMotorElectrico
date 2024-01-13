@@ -58,8 +58,8 @@ public class ElectricService {
 		}
 	}
 
-	public List<String> getAllSavedDatasets() throws ConnectException {
-		String url = "http://127.0.0.1:5000/getSavedModelsList";
+	public List<String> getAllSavedDatasets(String user) throws ConnectException {
+		String url = "http://127.0.0.1:5000/getSavedModelsList/" + user;
 		DatasetsResponseDTO response = null;
 
 		try {
@@ -76,8 +76,8 @@ public class ElectricService {
 		}
 	}
 
-	public void delete(String item) throws ConnectException {
-		String url = "http://127.0.0.1:5000/deleteDataset";
+	public void delete(String item, String user) throws ConnectException {
+		String url = "http://127.0.0.1:5000/deleteDataset/" + user;
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -115,8 +115,8 @@ public class ElectricService {
 		}
 	}
 
-	public ResponseEntity<String> uploadDataset(MultipartFile file) {
-		String apiUrl = "http://127.0.0.1:5000/guardar_archivo";
+	public ResponseEntity<String> uploadDataset(MultipartFile file, String user) {
+		String apiUrl = "http://127.0.0.1:5000/guardar_archivo/" + user;
 
 		try {
 			ByteArrayResource fileResource = new ByteArrayResource(file.getBytes()) {
@@ -239,8 +239,8 @@ public class ElectricService {
 		}
 	}
 	
-	public ResponseEntity<String> uploadDataSample(MultipartFile file, String fileName, int id) {
-		String apiUrl = "http://127.0.0.1:5000/saveData/" + id;
+	public ResponseEntity<String> uploadDataSample(MultipartFile file, String fileName, int id, String user) {
+		String apiUrl = "http://127.0.0.1:5000/saveData/" + id + "/" + user;
 
 		try {
 			ByteArrayResource fileResource = new ByteArrayResource(file.getBytes()) {
@@ -268,8 +268,8 @@ public class ElectricService {
 		}
 	}
 	
-	public void deleteSample(String healthy, String regular, int id) throws ConnectException {
-	    String url = "http://127.0.0.1:5000/deleteSample/" + id;
+	public void deleteSample(String healthy, String regular, int id, String user) throws ConnectException {
+	    String url = "http://127.0.0.1:5000/deleteSample/" + id + "/" + user;
 
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
