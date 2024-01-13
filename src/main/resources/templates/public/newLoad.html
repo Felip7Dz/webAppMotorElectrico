@@ -296,11 +296,11 @@
 					</form>
 				</div>
 				<div class="row justify-content-end mb-2">
-					<button type="button" style="display: none;">
+					<button type="button" id="pdf1" style="display: none;">
 						<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
 						<span th:text="#{view.load.exp.btt}" style="vertical-align: middle;"></span>
 					</button>
-					<button type="button" style="display: none;">
+					<button type="button" id="pdf2" style="display: none;">
 						<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
 						<span th:text="#{view.load.int.btt}" style="vertical-align: middle;"></span>
 					</button>
@@ -328,6 +328,9 @@
 				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front1Encoded}">
                     	<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1">
+                    	<br>
+						<span th:text="#{view.load.info.faults}"></span>
+						<span th:text="${faults_Outer_race}"></span>	
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -343,6 +346,9 @@
 				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front3Encoded}">
                     	<img th:src="@{'data:image/png;base64,' + ${img2Front3Encoded}}" alt="Imagen 1">
+                    	<br>
+						<span th:text="#{view.load.info.faults}"></span>
+						<span th:text="${faults_Bearing_Balls}"></span>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -358,6 +364,9 @@
 				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front2Encoded}">
 						<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2">
+						<br>
+						<span th:text="#{view.load.info.faults}"></span>
+						<span th:text="${faults_Inner_race}"></span>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -373,6 +382,9 @@
 				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front4Encoded}">
 						<img th:src="@{'data:image/png;base64,' + ${img2Front4Encoded}}" alt="Imagen 2">
+						<br>
+						<span th:text="#{view.load.info.faults}"></span>
+						<span th:text="${faults_Cage}"></span>
 					</div>
 				</div>
 				<div class="modal-footer">
