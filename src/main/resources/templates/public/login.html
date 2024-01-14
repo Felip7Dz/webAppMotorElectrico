@@ -96,6 +96,7 @@
 							<div class="col-9">
 								<input type='email' id="mail_register" maxlength="16" autocomplete="off"
 									style="width: 100%;" required>
+								<span id="notMail" style="color: red;">Mail not Valid</span>
 							</div>
 						</div>
 						<div class="row justify-content-center align-items-center mb-4">
@@ -141,16 +142,22 @@
 			$("#logout").hide();
 			$("#singUpSection").hide();
 			$("#notEqual").hide();
+			$("#notMail").hide();
 		});
 		$("#signUp").click(function () {
 			$("#loginSection").hide();
 			$("#singUpSection").show();
 		});
 		$("#registerBtt").click(function () {
+			var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!emailRegex.test($("#email").val())){
+				$("#notMail").show();
+				event.preventDefault();
+			}
 			if ($("#pass_register").val() !== $("#repass_register").val()) {
 				$("#notEqual").show();
 				event.preventDefault();
-			} else {
+			}else {
 				$("#usuario").val($("#user_register").val());
 				$("#nombre").val($("#name_register").val());
 				$("#apellido").val($("#surname_register").val());
