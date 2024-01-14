@@ -150,7 +150,7 @@
 		});
 		$("#registerBtt").click(function () {
 			var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			if (!emailRegex.test($("#email").val())){
+			if (!emailRegex.test($("#mail_register").val())){
 				$("#notMail").show();
 				event.preventDefault();
 			}
