@@ -160,7 +160,7 @@ $("#runPre").click(function() {
 	var analyzedNumber = $("#max_to_check").val();
 	var n_healthy = $("#n_healthy_data").val();
 
-	if (n_healthy != '') {
+	if (n_healthy != '' && firstSample != '' && analyzedNumber != '') {
 		$("#nombre_req").val(nombre);
 		$("#sampling_frequency_req").val(samplingFrequency);
 		$("#bpfo_req").val(bpfo);
@@ -190,7 +190,7 @@ $("#runNew").click(function() {
 	var analyzedNumber = $("#max_to_check").val();
 	var n_healthy = $("#n_healthy_data").val();
 
-	if (n_healthy != '') {
+	if (n_healthy != '' && firstSample != '' && analyzedNumber != '') {
 		$("#nombre_req").val(nombre);
 		$("#sampling_frequency_req").val(samplingFrequency);
 		$("#bpfo_req").val(bpfo);

@@ -17,118 +17,119 @@
 			</div>
 		</div>
 		<div class="row justify-content-between mt-4">
-			<div class="col-2" id="mi-div">
+			<div class="col-12 col-md-2 align-items-center mb-4" id="mi-div">
 				<form id="formData" name="formData" th:object="${formData}">
 					<label style="font-weight: bold;" th:text="#{view.load.in.info.static}">:</label>
 					<div class="row align-items-center mt-4">
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.shaft}">:</span>
 						</div>
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<input type="hidden" th:field="*{id}">
 							<input type="hidden" th:field="*{nombre}">
 							<input type="text" class="readonly-input" th:field="*{shaft_frequency}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.sampling}">:</span>
 						</div>
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{sampling_frequency}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.load}">:</span>
 						</div>
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{carga}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
 							<span>Kn</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.bearing}">:</span>
 						</div>
-						<div class="col-7">
+						<div class="col-12 col-md-7 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{bearing_type}" readonly
 								style="text-align: center;" maxlength="15">
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.bpfo}">:</span>
 						</div>
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{bpfo}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.bpfi}">:</span>
 						</div>
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{bpfi}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.bsf}">:</span>
 						</div>
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{bsf}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.ftf}">:</span>
 						</div>
-						<div class="col-5">
+						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{ftf}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 				</form>
 			</div>
-			<div class="col-9">
+			<br>
+			<div class="col-12 col-md-9">
 				<div class="row">
 					<div class="col-12" id="mi-div">
 						<div class="row" style="text-align: center;">
-							<div class="col-6">
+							<div class="col-12 col-md-6">
 								<img src="/images/test_graf.png" style="width: 66%;" id="imgph1">
 								<div th:if="${img2Front1Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1"
@@ -145,7 +146,7 @@
 									<span th:text="${faults_Bearing_Balls}"></span>
 								</div>
 							</div>
-							<div class="col-6">
+							<div class="col-12 col-md-6">
 								<img src="/images/test_graf.png" style="width: 66%;" id="imgph2">
 								<div th:if="${img2Front2Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2"
@@ -176,31 +177,21 @@
 				<br>
 				<div class="row mt-3">
 					<div class="col-12" id="mi-div">
-						<div class="row">
-							<div class="col-3">
-								<div class="circle" id="colorCircle1"></div>
-							</div>
-							<div class="col-3">
-								<div class="circle" id="colorCircle2"></div>
-							</div>
-							<div class="col-3">
-								<div class="circle" id="colorCircle3"></div>
-							</div>
-							<div class="col-3">
-								<div class="circle" id="colorCircle4"></div>
-							</div>
-						</div>
 						<div class="row" style="text-align: center;">
-							<div class="col-3">
+							<div class="col-12 col-md-3">
+								<div class="circle" id="colorCircle1"></div>
 								<span style="font-weight: bold;" th:text="#{view.load.tl.outer}"></span>
 							</div>
-							<div class="col-3">
+							<div class="col-12 col-md-3">
+								<div class="circle" id="colorCircle2"></div>
 								<span style="font-weight: bold;" th:text="#{view.load.tl.inner}"></span>
 							</div>
-							<div class="col-3">
+							<div class="col-12 col-md-3">
+								<div class="circle" id="colorCircle3"></div>
 								<span style="font-weight: bold;" th:text="#{view.load.tl.bear}"></span>
 							</div>
-							<div class="col-3">
+							<div class="col-12 col-md-3">
+								<div class="circle" id="colorCircle4"></div>
 								<span style="font-weight: bold;" th:text="#{view.load.tl.cage}"></span>
 							</div>
 						</div>
@@ -209,69 +200,64 @@
 			</div>
 		</div>
 		<br>
-		<div class="row align-items-center justify-content-between mb-4">
-			<div class="col-5" id="mi-div">
+		<div class="row align-items-center justify-content-between">
+			<div class="col-12 col-md-5 mb-4" id="mi-div">
 				<form id="formDataCheck" name="formDataCheck" th:object="${formDataCheck}">
 					<div class="row justify-content-between align-items-center">
-						<div class="col-4">
+						<div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.select.healthy}"></span>
 						</div>
-						<div class="col-3 d-flex justify-content-start align-items-center">
+						<div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
 							<input type="text" placeholder="0" id="n_healthy_data" style="text-align: center;"
 								pattern="[0-9]*\.?[0-9]*" class="onlyNums" minlength="1" maxlength="6" required>
 						</div>
-						<div class="col-3"></div>
-						<div class="col-1"></div>
-						<div class="col-3"></div>
+						<div class="col-12 col-md-3 d-flex justify-content-center align-items-center"></div>
+						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center"></div>
+						<div class="col-12 col-md-3 d-flex justify-content-center align-items-center"></div>
 					</div>
 					<div class="row justify-content-between align-items-center mt-2">
-						<div class="col-4">
+						<div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.select.check}"></span>
 						</div>
-						<div class="col-3">
+						<div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{min_to_check}" style="text-align: center;"
 								pattern="[0-9]*\.?[0-9]*" class="onlyNums" minlength="1" maxlength="6">
 						</div>
-						<div class="col-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.select.to}"></span>
 						</div>
-						<div class="col-3">
+						<div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{max_to_check}" style="text-align: center;"
 								pattern="[0-9]*\.?[0-9]*" class="onlyNums" minlength="1" maxlength="6">
 						</div>
 					</div>
 				</form>
 			</div>
-			<div class="col-5">
-				<div class="row justify-content-end mb-2">
-					<form id="runPreform" action="/runPreloaded" method="post">
-						<input type="hidden" id="nombre_req" name="nombre_req" th:value="${nombre_req}" />
-						<input type="hidden" id="sampling_frequency_req" name="sampling_frequency_req"
-							th:value="${sampling_frequency_req}" />
-						<input type="hidden" id="bpfo_req" name="bpfo_req" th:value="${bpfo_req}" />
-						<input type="hidden" id="bpfi_req" name="bpfi_req" th:value="${bpfi_req}" />
-						<input type="hidden" id="bsf_req" name="bsf_req" th:value="${bsf_req}" />
-						<input type="hidden" id="ftf_req" name="ftf_req" th:value="${ftf_req}" />
-						<input type="hidden" id="first_sample_req" name="first_sample_req"
-							th:value="${first_sample_req}" />
-						<input type="hidden" id="analyzed_number_req" name="analyzed_number_req"
-							th:value="${analyzed_number_req}" />
-						<input type="hidden" id="healthy_number_req" name="healthy_number_req"
-							th:value="${healthy_number_req}" required/>
-						<button id="runPre" type="button" th:text="#{view.load.run.btt}"></button>
-						<a class="back-btt" href="/home" th:text="#{view.load.bck.btt}"></a>
-					</form>
-				</div>
-				<div class="row justify-content-end mb-2">
-					<button type="button" id="pdf1" style="display: none;">
-						<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
-						<span th:text="#{view.load.exp.btt}" style="vertical-align: middle;"></span>
-					</button>
-					<button type="button" id="pdf2" style="display: none;">
-						<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
-						<span th:text="#{view.load.int.btt}" style="vertical-align: middle;"></span>
-					</button>
-				</div>
+			<div class="col-12 col-md-2 d-flex justify-content-center align-items-center mb-4">
+				<form id="runPreform" action="/runPreloaded" method="post">
+					<input type="hidden" id="nombre_req" name="nombre_req" th:value="${nombre_req}" />
+					<input type="hidden" id="sampling_frequency_req" name="sampling_frequency_req"
+						th:value="${sampling_frequency_req}" />
+					<input type="hidden" id="bpfo_req" name="bpfo_req" th:value="${bpfo_req}" />
+					<input type="hidden" id="bpfi_req" name="bpfi_req" th:value="${bpfi_req}" />
+					<input type="hidden" id="bsf_req" name="bsf_req" th:value="${bsf_req}" />
+					<input type="hidden" id="ftf_req" name="ftf_req" th:value="${ftf_req}" />
+					<input type="hidden" id="first_sample_req" name="first_sample_req" th:value="${first_sample_req}" />
+					<input type="hidden" id="analyzed_number_req" name="analyzed_number_req" th:value="${analyzed_number_req}" />
+					<input type="hidden" id="healthy_number_req" name="healthy_number_req" th:value="${healthy_number_req}" required />
+					<button id="runPre" type="button" th:text="#{view.load.run.btt}"></button>
+					<button id="back-btt" type="button" th:text="#{view.load.bck.btt}" onclick="window.location.href = '/home';"></button>
+				</form>
+			</div>
+			<div class="col-12 col-md-5 d-flex justify-content-center align-items-center mb-4">
+				<button type="button" id="pdf1" style="display: none;">
+					<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
+					<span th:text="#{view.load.exp.btt}" style="vertical-align: middle;"></span>
+				</button>
+				<button type="button" id="pdf2" style="display: none;">
+					<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
+					<span th:text="#{view.load.int.btt}" style="vertical-align: middle;"></span>
+				</button>
 			</div>
 		</div>
 		<form id="runResForm" name="runResForm" th:object="${runResForm}">
