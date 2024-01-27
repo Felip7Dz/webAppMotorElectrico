@@ -21,7 +21,7 @@
 				<div class="row d-flex justify-content-center mt-2" style="text-align: center;">
 					<div class="col-12 col-md-6 mb-4" id="mi-div-home-right">
 						<label th:text="#{view.home.table.pre}"></label>
-						<form id="formDataset" name="formDataset" method="get" action="/preloaded">
+						<form id="formDataset" name="formDataset" method="get" action="/webAppMotorElectrico/preloaded">
 							<div id="mi-div" class="mb-2">
 								<div th:each="model, iterStat : ${resultDatatest.modelsList}"
 									style="text-align: start;">
@@ -39,7 +39,7 @@
 					</div>
 					<div class="col-12 col-md-6 mb-4" id="mi-div-home-left">
 						<label th:text="#{view.home.table.saved}"></label>
-						<form id="formSavedDataset" name="formSavedDataset" method="get" action="/newload">
+						<form id="formSavedDataset" name="formSavedDataset" method="get" action="/webAppMotorElectrico/newload">
 							<div id="mi-div" class="mb-2">
 								<div th:each="modelS, iterStat : ${resultSavedDatatest.modelsList}"
 									style="text-align: start;">
@@ -76,7 +76,7 @@
 						<h4 th:text="${errorsH}" style="margin-bottom: 0; margin-left: 1%;"></h4>
 					</div>
 				</div>
-				<form id="formUpload" method="post" action="/uploadDataset" enctype="multipart/form-data">
+				<form id="formUpload" method="post" action="/webAppMotorElectrico/uploadDataset" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-12">
 							<label for="images" class="drop-container" id="dropcontainer">

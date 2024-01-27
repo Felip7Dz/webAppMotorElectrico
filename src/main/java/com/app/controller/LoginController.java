@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import java.net.ConnectException;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -8,9 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.app.constants.MappingConstants;
+import com.app.constants.ViewConstants;
 import com.app.dto.UserDTO;
 import com.app.service.LoginService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class LoginController {
@@ -25,18 +31,19 @@ public class LoginController {
 		this.passwEncoder = passwEncoder;
 	}
 
-	@GetMapping("/login")
+	@GetMapping(MappingConstants.LOGIN_ROOT)
 	public String login(Model model) {
-		return "public/login";
+		return ViewConstants.VIEW_LOGIN_PAGE;
 	}
 
-	@GetMapping("/logout")
+	@GetMapping(MappingConstants.LOGOUT_ROOT)
 	public String logout() {
-		return "redirect:/login";
+		return ViewConstants.REDIRECT_LOGIN_PAGE;
 	}
 
-	@PostMapping("/register")
-	public String register(UserDTO user, Model model) {
+	@PostMapping(MappingConstants.REGISTER_ROOT)
+	public String register(UserDTO user, Model model, HttpServletRequest request) {
+		Locale currentLocale = RequestContextUtils.getLocale(request);
 		try {
 			String tmpCheck = loginService.checkUserInDB(user.getUsuario());
 			if ("1".equals(tmpCheck)) {
@@ -44,14 +51,22 @@ public class LoginController {
 				user.setPassw(tmpPass);
 				user.setRole("USER");
 				loginService.createUserInDB(user);
-				model.addAttribute("userCreated", "User Created Successfully");
+				if("en".equals(currentLocale.getLanguage())) {
+					model.addAttribute("userCreated", "User Created Successfully");
+				}else {
+					model.addAttribute("userCreated", "Usuario Creado con Exito");
+				}
 			} else {
-				model.addAttribute("userAlreadyExists", "User Already Exists");
+				if("en".equals(currentLocale.getLanguage())) {
+					model.addAttribute("userAlreadyExists", "User Already Exists");
+				}else {
+					model.addAttribute("userAlreadyExists", "El Nombre de Usuario ya Existe");
+				}
 			}
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
 
-		return "public/login";
+		return ViewConstants.VIEW_LOGIN_PAGE;
 	}
 }

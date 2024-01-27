@@ -18,10 +18,13 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.app.constants.ViewConstants;
+import com.app.constants.MappingConstants;
 import com.app.dto.DatasetInformationDTO;
 import com.app.dto.DatasetsResponseDTO;
 import com.app.dto.RunRequestDTO;
@@ -31,6 +34,7 @@ import com.app.service.ElectricService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
+@RequestMapping(MappingConstants.ROOT)
 public class BaseController {
 
 	private final ElectricService electricService;
@@ -42,7 +46,7 @@ public class BaseController {
 		this.electricService = electricService;
 	}
 
-	@GetMapping("/home")
+	@GetMapping(MappingConstants.HOME_ROOT)
 	public String home(Model model, HttpServletRequest request) {
 		Locale currentLocale = RequestContextUtils.getLocale(request);
 		Principal test = request.getUserPrincipal();
@@ -83,24 +87,24 @@ public class BaseController {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
 		this.errorsH = "";
-		return "public/home";
+		return ViewConstants.VIEW_HOME_PAGE;
 	}
 
-	@PostMapping("/deleteDataset")
+	@PostMapping(MappingConstants.DELETE_DATASET)
 	public String delete(@RequestParam("item") String item) {
 		try {
 			electricService.delete(item, this.sessionActual);
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
-		return "redirect:/home";
+		return ViewConstants.REDIRECT_HOME_PAGE;
 	}
 
-	@PostMapping("/uploadDataset")
+	@PostMapping(MappingConstants.UPLOAD_DATASET)
 	public String guardarArchivo(@RequestParam("model2Save") MultipartFile archivo, Model model) {
 		this.errorsH = "";
 		if (archivo.isEmpty()) {
-			return "redirect:/home";
+			return ViewConstants.REDIRECT_HOME_PAGE;
 		}
 		try {
 			String extension = StringUtils.getFilenameExtension(archivo.getOriginalFilename());
@@ -110,7 +114,7 @@ public class BaseController {
 				} else {
 					this.errorsH = "Extensión ." + extension + " no permitida. Solo .h5 permitida.";
 				}
-				return "redirect:/home";
+				return ViewConstants.REDIRECT_HOME_PAGE;
 			}
 			
 			List<String> savedatasets = electricService.getAllSavedDatasets(this.sessionActual);
@@ -123,7 +127,7 @@ public class BaseController {
 						this.errorsH = "Un archivo con nombe " + archivo.getOriginalFilename()
 								+ " ya existe en el sistema.";
 					}
-					return "redirect:/home";
+					return ViewConstants.REDIRECT_HOME_PAGE;
 				}
 			}
 			electricService.uploadDataset(archivo, this.sessionActual);
@@ -131,10 +135,10 @@ public class BaseController {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
 
-		return "redirect:/home";
+		return ViewConstants.REDIRECT_HOME_PAGE;
 	}
 
-	@GetMapping("/preloaded")
+	@GetMapping(MappingConstants.PRE_LOADED)
 	public String preload(@RequestParam(name = "selectedModel", required = true) String selectedModel, Model model) {
 
 		List<String> data = new ArrayList<>();
@@ -155,10 +159,10 @@ public class BaseController {
 		}
 		model.addAttribute("resultData", data);
 
-		return "public/preloaded";
+		return ViewConstants.VIEW_PRELOADED_PAGE;
 	}
 
-	@PostMapping("/runPreloaded")
+	@PostMapping(MappingConstants.RUN_PRELOADED)
 	public String runPreloaded(RunRequestDTO data2Run, Model model) throws IOException {
 		DatasetInformationDTO info = new DatasetInformationDTO();
 		RunResponseDTO response = new RunResponseDTO();
@@ -235,7 +239,7 @@ public class BaseController {
 			model.addAttribute("errors", errors);
 		}
 
-		return "public/preloaded";
+		return ViewConstants.VIEW_PRELOADED_PAGE;
 	}
 
 	private String encodeImageToBase64(BufferedImage image) throws IOException {
@@ -245,7 +249,7 @@ public class BaseController {
 		return Base64.getEncoder().encodeToString(bytes);
 	}
 
-	@GetMapping("/newload")
+	@GetMapping(MappingConstants.NEW_LOAD)
 	public String newload(@RequestParam(name = "selectedSavedModel", required = true) String selectedSavedModel,
 			Model model) {
 		DatasetInformationDTO info = new DatasetInformationDTO();
@@ -280,10 +284,10 @@ public class BaseController {
 			model.addAttribute("formData", info);
 		}
 		this.errorsH = "";
-		return "public/newLoad";
+		return ViewConstants.VIEW_NEWLOADED_PAGE;
 	}
 
-	@GetMapping("/saveDataset")
+	@GetMapping(MappingConstants.SAVE_DATASET)
 	public String saveDataset(DatasetInformationDTO infoForm, Model model) {
 		try {
 			if (infoForm.getId() == null) {
@@ -295,10 +299,10 @@ public class BaseController {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
 
-		return "redirect:/newload?selectedSavedModel=" + infoForm.getNombre() + ".h5";
+		return ViewConstants.REDIRECT_NEWLOADED_PAGE + infoForm.getNombre() + ".h5";
 	}
 
-	@PostMapping("/uploadNewData")
+	@PostMapping(MappingConstants.UPLOAD_NEW_DATASET)
 	public String guardarNewArchivos(@RequestParam("healthyData2Save") MultipartFile healthy,
 			@RequestParam("newSample2Save") MultipartFile newSample,
 			@RequestParam("name2send") String name, @RequestParam("id2send") int id, Model model) {
@@ -332,10 +336,10 @@ public class BaseController {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
 
-		return "redirect:/newload?selectedSavedModel=" + name + ".h5";
+		return ViewConstants.REDIRECT_NEWLOADED_PAGE + name + ".h5";
 	}
 	
-	@PostMapping("/deleteSample")
+	@PostMapping(MappingConstants.DELETE_SAMPLE)
 	public String deleteSample(@RequestParam("nombre") String nombre, @RequestParam("id") int id) {
 		String healthyName = "healthy" + nombre + ".csv";
 		String regularName = nombre + ".csv";
@@ -344,10 +348,10 @@ public class BaseController {
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
-		return "redirect:/newload?selectedSavedModel=" + nombre + ".h5";
+		return ViewConstants.REDIRECT_NEWLOADED_PAGE + nombre + ".h5";
 	}
 
-	@PostMapping("/runNewload")
+	@PostMapping(MappingConstants.RUN_NEWLOAD)
 	public String runNewload(RunRequestDTO data2Run, Model model) throws IOException {
 		DatasetInformationDTO info = new DatasetInformationDTO();
 		RunResponseDTO response = new RunResponseDTO();
@@ -424,6 +428,6 @@ public class BaseController {
 			model.addAttribute("errors", errors);
 		}
 
-		return "public/newLoad";
+		return ViewConstants.VIEW_NEWLOADED_PAGE;
 	}
 }

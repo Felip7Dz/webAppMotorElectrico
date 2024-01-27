@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.app.constants.MappingConstants;
 import com.app.dto.RunResponseDTO;
 import com.app.service.ElectricService;
 
@@ -34,7 +35,7 @@ public class PdfController {
 		this.electricService = electricService;
 	}
 
-	@GetMapping("/generate-pdf")
+	@GetMapping(MappingConstants.GENERATE_PDF)
 	public ResponseEntity<String> generatePdf(HttpServletRequest request, RunResponseDTO data) throws IOException {
 		Locale currentLocale = RequestContextUtils.getLocale(request);
 		Principal test = request.getUserPrincipal();

@@ -7,13 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import com.app.constants.MappingConstants;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class LanguageController {
 
-	@GetMapping("/change-locale")
+	@GetMapping(MappingConstants.CHANGE_LOCALE)
 	public String changeLocale(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(defaultValue = "es") String lang) {
 

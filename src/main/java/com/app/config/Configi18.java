@@ -26,7 +26,7 @@ public class Configi18 implements WebMvcConfigurer{
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-        sessionLocaleResolver.setDefaultLocale(Locale.ENGLISH);
+        sessionLocaleResolver.setDefaultLocale(new Locale("es"));
         return sessionLocaleResolver;
     }
 

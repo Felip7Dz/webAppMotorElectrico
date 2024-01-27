@@ -1,8 +1,5 @@
 package com.app.config;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,9 +18,6 @@ import com.app.login.CustomUserDetailsService;
 @EnableWebSecurity
 public class SecurityConfig {
 	
-	@Autowired
-	private DataSource dataSource;
-
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return new CustomUserDetailsService();
@@ -50,6 +44,7 @@ public class SecurityConfig {
 			.authorizeHttpRequests((authorize) -> authorize
 				.requestMatchers( "/login").permitAll()
 				.requestMatchers( "/register").permitAll()
+				.requestMatchers( "/change-locale").permitAll()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.anyRequest().authenticated()
 			).csrf(AbstractHttpConfigurer::disable)
@@ -58,7 +53,7 @@ public class SecurityConfig {
 		    	.usernameParameter("username")
 		        .loginPage("/login")
 		        .permitAll()
-		        .defaultSuccessUrl("/home", true)
+		        .defaultSuccessUrl("/webAppMotorElectrico/home", true)
 		);
 
 		return http.build();

@@ -1,9 +1,9 @@
 <header>
 	<div class="row justify-content-between align-items-center mt-2 ml-2 mb-2">
 		<div class="col-6">
-			<a th:href="@{/change-locale(lang='es')}"><img id="langIMG" src="/images/esp.png"></a>
+			<a th:href="@{/change-locale(lang='es')}"><img id="langIMG" th:src="@{/images/esp.png}"></a>
 			<span> | </span>
-			<a th:href="@{/change-locale(lang='en')}"><img id="langIMG" src="/images/eng.png"></a>
+			<a th:href="@{/change-locale(lang='en')}"><img id="langIMG" th:src="@{/images/eng.png}"></a>
 		</div>
 		<div class="col-6 d-flex justify-content-end align-items-center">
 			<form th:action="@{/logout}" method="post">
@@ -13,16 +13,16 @@
 	</div>
 	<div class="row align-items-center" id="headID">
 		<div class="col-12 col-md-8 mb-4">
-			<a href="/home" style="color: black;">
+			<a th:href="@{/webAppMotorElectrico/home}" style="color: black;">
 				<h1 class="responsive-h1" th:text="#{view.home.main}"></h1>
 			</a>
 		</div>
 		<div class="col-12 col-md-4 d-flex justify-content-around align-items-center">
 			<a href="https://www.cranfield.ac.uk/" target="_blank">
-				<img src="/images/Cranfield.png" id="logoCran">
+				<img th:src="@{/images/Cranfield.png}" id="logoCran">
 			</a>
 			<a href="https://www.uniovi.es/" target="_blank">
-				<img src="/images/Uniovi.png" id="logoUniovi">
+				<img th:src="@{/images/Uniovi.png}" id="logoUniovi">
 			</a>
 		</div>
 	</div>

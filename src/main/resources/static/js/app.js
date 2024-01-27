@@ -116,7 +116,7 @@ $(document).ready(function() {
 function eliminarItem(item) {
 	if (item != null) {
 		jQuery.ajax({
-			url: '/deleteDataset',
+			url: '/webAppMotorElectrico/deleteDataset',
 			type: 'POST',
 			data: { item: item },
 			success: function() {
@@ -129,7 +129,7 @@ function eliminarItem(item) {
 function eliminarSample(nombre, id) {
 	if (nombre != null && id != null) {
 		jQuery.ajax({
-			url: '/deleteSample',
+			url: '/webAppMotorElectrico/deleteSample',
 			type: 'POST',
 			data: { nombre: nombre, id: id },
 			success: function() {

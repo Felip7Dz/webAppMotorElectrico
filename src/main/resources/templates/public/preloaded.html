@@ -130,7 +130,7 @@
 					<div class="col-12" id="mi-div">
 						<div class="row" style="text-align: center;">
 							<div class="col-12 col-md-6">
-								<img src="/images/test_graf.png" style="width: 66%;" id="imgph1">
+								<img th:src="@{/images/test_graf.png}" style="width: 66%;" id="imgph1">
 								<div th:if="${img2Front1Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1"
 										style="width: 66%;" id="img1" data-toggle="modal" data-target="#imagenModal1">
@@ -147,7 +147,7 @@
 								</div>
 							</div>
 							<div class="col-12 col-md-6">
-								<img src="/images/test_graf.png" style="width: 66%;" id="imgph2">
+								<img th:src="@{/images/test_graf.png}" style="width: 66%;" id="imgph2">
 								<div th:if="${img2Front2Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2"
 										style="width: 66%;" id="img2" data-toggle="modal" data-target="#imagenModal2">
@@ -234,7 +234,7 @@
 				</form>
 			</div>
 			<div class="col-12 col-md-2 d-flex justify-content-center align-items-center mb-4">
-				<form id="runPreform" action="/runPreloaded" method="post">
+				<form id="runPreform" action="/webAppMotorElectrico/runPreloaded" method="post">
 					<input type="hidden" id="nombre_req" name="nombre_req" th:value="${nombre_req}" />
 					<input type="hidden" id="sampling_frequency_req" name="sampling_frequency_req"
 						th:value="${sampling_frequency_req}" />
@@ -246,7 +246,7 @@
 					<input type="hidden" id="analyzed_number_req" name="analyzed_number_req" th:value="${analyzed_number_req}" />
 					<input type="hidden" id="healthy_number_req" name="healthy_number_req" th:value="${healthy_number_req}" required />
 					<button id="runPre" type="button" th:text="#{view.load.run.btt}"></button>
-					<button id="back-btt" type="button" th:text="#{view.load.bck.btt}" onclick="window.location.href = '/home';"></button>
+					<button id="back-btt" type="button" th:text="#{view.load.bck.btt}" onclick="window.location.href = '/webAppMotorElectrico/home';"></button>
 				</form>
 			</div>
 			<div class="col-12 col-md-5 d-flex justify-content-center align-items-center mb-4">
@@ -280,14 +280,14 @@
             <div class="modal-content">
                 <div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front1Encoded}">
-                    	<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1">
+                    	<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1" style="width: 100%;">
                     	<br>
 						<span th:text="#{view.load.info.faults}"></span>
 						<span th:text="${faults_Outer_race}"></span>	
 					</div>
                 </div>
                 <div class="modal-footer">
-					<button type="button" data-dismiss="modal" th:text="#{view.modal.footer.close}">Close</button>
+					<button type="button" data-dismiss="modal" th:text="#{view.modal.footer.close}"></button>
 				</div>
             </div>
         </div>
@@ -298,14 +298,14 @@
             <div class="modal-content">
                 <div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front3Encoded}">
-                    	<img th:src="@{'data:image/png;base64,' + ${img2Front3Encoded}}" alt="Imagen 1">
+                    	<img th:src="@{'data:image/png;base64,' + ${img2Front3Encoded}}" alt="Imagen 3" style="width: 100%;">
                     	<br>
 						<span th:text="#{view.load.info.faults}"></span>
 						<span th:text="${faults_Bearing_Balls}"></span>
 					</div>
                 </div>
                 <div class="modal-footer">
-					<button type="button" data-dismiss="modal" th:text="#{view.modal.footer.close}">Close</button>
+					<button type="button" data-dismiss="modal" th:text="#{view.modal.footer.close}"></button>
 				</div>
             </div>
         </div>
@@ -316,7 +316,7 @@
 			<div class="modal-content">
 				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front2Encoded}">
-						<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2">
+						<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2" style="width: 100%;">
 						<br>
 						<span th:text="#{view.load.info.faults}"></span>
 						<span th:text="${faults_Inner_race}"></span>
@@ -334,7 +334,7 @@
 			<div class="modal-content">
 				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front4Encoded}">
-						<img th:src="@{'data:image/png;base64,' + ${img2Front4Encoded}}" alt="Imagen 1">
+						<img th:src="@{'data:image/png;base64,' + ${img2Front4Encoded}}" alt="Imagen 4" style="width: 100%;">
 						<br>
 						<span th:text="#{view.load.info.faults}"></span>
 						<span th:text="${faults_Cage}"></span>
