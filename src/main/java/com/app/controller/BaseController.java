@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
@@ -141,12 +140,10 @@ public class BaseController {
 	@GetMapping(MappingConstants.PRE_LOADED)
 	public String preload(@RequestParam(name = "selectedModel", required = true) String selectedModel, Model model) {
 
-		List<String> data = new ArrayList<>();
 		DatasetInformationDTO info = new DatasetInformationDTO();
 		String[] tmp = selectedModel.split("\\.");
 
 		try {
-			data = electricService.getData();
 			info = electricService.getDatasetInfo(tmp[0]);
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
@@ -157,8 +154,6 @@ public class BaseController {
 			model.addAttribute("formData", info);
 			model.addAttribute("formDataCheck", info);
 		}
-		model.addAttribute("resultData", data);
-
 		return ViewConstants.VIEW_PRELOADED_PAGE;
 	}
 

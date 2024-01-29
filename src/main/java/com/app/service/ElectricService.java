@@ -97,24 +97,6 @@ public class ElectricService {
 		}
 	}
 
-	public List<String> getData() throws ConnectException {
-		String url = "http://127.0.0.1:5000/getData";
-		DatasetsResponseDTO response = null;
-
-		try {
-			response = restTemplate.getForObject(url, DatasetsResponseDTO.class);
-		} catch (ResourceAccessException e) {
-			System.err.println("Error de conexión con la API: " + e.getMessage());
-			return Collections.emptyList();
-		}
-
-		if (response != null) {
-			return response.getModelsList();
-		} else {
-			return Collections.emptyList();
-		}
-	}
-
 	public ResponseEntity<String> uploadDataset(MultipartFile file, String user) {
 		String apiUrl = "http://127.0.0.1:5000/guardar_archivo/" + user;
 
