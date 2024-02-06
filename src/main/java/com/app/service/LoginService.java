@@ -4,6 +4,7 @@ import java.net.ConnectException;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class LoginService {
 		}
 	}
 
-	public String checkUserInDB(String usuario) {
+	public String checkUserInDB(String usuario) throws ConnectException{
 		String apiUrl = "http://127.0.0.1:5000/checkUser/" + usuario;
 
 		try {
@@ -64,5 +65,41 @@ public class LoginService {
 			System.err.println("Error al procesar la respuesta de la API: " + e.getMessage());
 			return "1";
 		}
+	}
+
+	public UserDTO getCurrentUser(String usuario) throws ConnectException{
+		String url = "http://127.0.0.1:5000/getUser/" + usuario;
+		UserDTO response = null;
+		
+		try {
+			response = restTemplate.getForObject(url, UserDTO.class);
+		} catch (ResourceAccessException e) {
+			System.err.println("Error de conexión con la API: " + e.getMessage());
+			return response;
+		}
+
+		if (response != null) {
+			return response;
+		} else {
+			return response;
+		}
+	}
+
+	public void updateCurrentUser(UserDTO user2Update) throws ConnectException{
+		String url = "http://127.0.0.1:5000/updateUser/" + user2Update.getUsuario();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		HttpEntity<UserDTO> requestEntity = new HttpEntity<>(user2Update, headers);
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		try {
+			restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Void.class);
+			System.out.println("Dataset actualizado correctamente");
+		} catch (Exception e) {
+			System.err.println("Error al actualizar el dataset: " + e.getMessage());
+		}		
 	}
 }

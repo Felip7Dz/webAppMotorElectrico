@@ -6,6 +6,9 @@
 			<a th:href="@{/change-locale(lang='en')}"><img id="langIMG" th:src="@{/images/eng.png}"></a>
 		</div>
 		<div class="col-6 d-flex justify-content-end align-items-center">
+			<a th:href="@{/adminAccount}" id="manageLink">
+				<span class="material-symbols-outlined" style="font-size: 44px;">account_circle</span>
+			</a>
 			<form th:action="@{/logout}" method="post">
 				<button id="logout" type="submit" value="Logout">Logout</button>
 			</form>

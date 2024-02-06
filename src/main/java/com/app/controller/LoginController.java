@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import java.net.ConnectException;
+import java.security.Principal;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +69,55 @@ public class LoginController {
 		}
 
 		return ViewConstants.VIEW_LOGIN_PAGE;
+	}
+	
+	@GetMapping("/adminAccount")
+	public String adminAccount(HttpServletRequest request, Model model) {
+		Principal loggedUser = request.getUserPrincipal();
+		UserDTO usr = new UserDTO();
+		
+		try {
+			usr = loginService.getCurrentUser(loggedUser.getName());
+		} catch (ConnectException e) {
+			System.err.println("Error al conectar con la API: " + e.getMessage());
+		}
+		
+		model.addAttribute("user_register", usr.getUsuario());
+		model.addAttribute("name_register", usr.getNombre());
+		model.addAttribute("surname_register", usr.getApellido());
+		model.addAttribute("mail_register", usr.getEmail());
+		
+		return "public/adminAccount";
+	}
+	
+	@PostMapping("/updateAccount")
+	public String updateAccount(UserDTO user2Update, HttpServletRequest request, Model model) {
+		Principal loggedUser = request.getUserPrincipal();
+		Locale currentLocale = RequestContextUtils.getLocale(request);
+		UserDTO usr = new UserDTO();
+		
+		try {
+			if(user2Update.getUsuario().equals(loggedUser.getName())) {
+				String tmpPass = passwEncoder.encode(user2Update.getPassw());
+				user2Update.setPassw(tmpPass);
+				loginService.updateCurrentUser(user2Update);
+			}
+			usr = loginService.getCurrentUser(loggedUser.getName());
+		} catch (ConnectException e) {
+			System.err.println("Error al conectar con la API: " + e.getMessage());
+		}
+		
+		model.addAttribute("user_register", usr.getUsuario());
+		model.addAttribute("name_register", usr.getNombre());
+		model.addAttribute("surname_register", usr.getApellido());
+		model.addAttribute("mail_register", usr.getEmail());
+		
+		if("en".equals(currentLocale.getLanguage())) {
+			model.addAttribute("userCreated", "User Updated Successfully");
+		}else {
+			model.addAttribute("userCreated", "Usuario Actualizado con Exito");
+		}
+		
+		return "public/adminAccount";
 	}
 }

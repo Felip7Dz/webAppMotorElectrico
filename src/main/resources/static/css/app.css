@@ -73,6 +73,13 @@ h1.responsive-h1 {
 	}
 }
 
+#manageLink{
+	color: #084cdf;
+	width: 44px;
+	height: 44px;
+	margin-right: 5%;
+}
+
 input[type=file],
 input[type=text],
 input[type=password],
@@ -228,7 +235,7 @@ button[type=button]:hover,
 	margin: 20px auto;
 }
 
-.readonly-input {
+.readonly-input, #user_register {
 	cursor: not-allowed;
 }
 

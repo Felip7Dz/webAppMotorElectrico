@@ -5,70 +5,26 @@
 	<th:block th:insert="~{/fragments/header :: header}"></th:block>
 	<br>
 	<main>
-		<div th:if="${userAlreadyExists}">
-			<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDivAPI">
-				<span class="material-symbols-outlined">warning </span>
-				<h4 th:text="${userAlreadyExists}" style="margin-bottom: 0; margin-left: 1%;"></h4>
-			</div>
-		</div>
 		<div th:if="${userCreated}">
 			<div class="row d-flex justify-content-center align-items-center mb-4" id="okDiv">
 				<span class="material-symbols-outlined">done </span>
 				<h4 th:text="${userCreated}" style="margin-bottom: 0; margin-left: 1%;"></h4>
 			</div>
 		</div>
-		<div id="loginSection">
-			<div class="row justify-content-center align-items-center mb-4">
-				<h1 th:text="#{view.landing.login.title}"></h1>
-			</div>
-			<div class="row justify-content-center align-items-center">
-				<form name='f' action="login" method='POST'>
-					<div class="mb-4" id="mi-div">
-						<div class="row justify-content-center align-items-center mt-2 mb-4">
-							<div class="col-3">
-								<span th:text="#{view.landing.login.user}"></span>
-							</div>
-							<div class="col-9">
-								<input type='text' id="username" name="username" maxlength="16" style="width: 100%;"
-									autocomplete="off">
-							</div>
-						</div>
-						<div class="row justify-content-center align-items-center mb-2">
-							<div class="col-3">
-								<span th:text="#{view.landing.login.pass}"></span>
-							</div>
-							<div class="col-9">
-								<input type='password' id="password" name="password" maxlength="16"
-									style="width: 100%;" />
-							</div>
-						</div>
-					</div>
-					<div class="row justify-content-center align-items-center">
-						<div class="col-6">
-							<button type="submit" style="width: 100%;" th:text="#{view.landing.login.btt}"></button>
-						</div>
-						<div class="col-6">
-							<button id="signUp" style="width: 100%;" type="button"
-								th:text="#{view.landing.login.signup}"></button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
 		<div id="singUpSection">
 			<div class="row justify-content-center align-items-center mb-4">
-				<h1 th:text="#{view.landing.login.signup}"></h1>
+				<h1 th:text="#{view.landing.login.manage}"></h1>
 			</div>
 			<div class="row justify-content-center align-items-center">
-				<form id="registerForm" action="/register" method="POST">
+				<form id="updateAccountForm" action="/updateAccount" method="POST">
 					<div class="mb-4" id="mi-div">
 						<div class="row justify-content-center align-items-center mt-2 mb-4">
 							<div class="col-3">
 								<span th:text="#{view.landing.login.user}"></span>
 							</div>
 							<div class="col-9">
-								<input type='text' id="user_register" maxlength="16" autocomplete="off"
-									style="width: 100%;" required>
+								<input type='text' th:value="${user_register}" id="user_register" maxlength="16" autocomplete="off"
+									style="width: 100%;" readonly>
 							</div>
 						</div>
 						<div class="row justify-content-center align-items-center mb-4">
@@ -76,7 +32,7 @@
 								<span th:text="#{view.landing.login.name}"></span>
 							</div>
 							<div class="col-9">
-								<input type='text' id="name_register" maxlength="16" autocomplete="off"
+								<input type='text' th:value="${name_register}" id="name_register" maxlength="16" autocomplete="off"
 									style="width: 100%;" pattern="[A-Za-z]+" required>
 							</div>
 						</div>
@@ -85,7 +41,7 @@
 								<span th:text="#{view.landing.login.surname}"></span>
 							</div>
 							<div class="col-9">
-								<input type='text' id="surname_register" maxlength="16" autocomplete="off"
+								<input type='text' th:value="${surname_register}" id="surname_register" maxlength="16" autocomplete="off"
 									pattern="[A-Za-z]+" style="width: 100%;" required>
 							</div>
 						</div>
@@ -94,7 +50,7 @@
 								<span th:text="#{view.landing.login.mail}"></span>
 							</div>
 							<div class="col-9">
-								<input type='email' id="mail_register" maxlength="30" autocomplete="off"
+								<input type='email' th:value="${mail_register}" id="mail_register" maxlength="30" autocomplete="off"
 									style="width: 100%;" required>
 								<span id="notMail" style="color: red;" th:text="#{view.landing.login.mail.fail}"></span>
 							</div>
@@ -128,37 +84,35 @@
 							<input type="hidden" id="apellido" name="apellido" th:value="${apellido}" />
 							<input type="hidden" id="email" name="email" th:value="${email}" />
 							<input type="hidden" id="passw" name="passw" th:value="${passw}" />
-							<button id="registerBtt" style="width: 100%;" type="button"
-								th:text="#{view.landing.login.register}"></button>
+							<button id="updateAccount" style="width: 100%;" type="button"
+								th:text="#{view.landing.login.update}"></button>
+							<button id="deleteAccount" style="width: 100%; margin-top: 2%;" type="button"
+								th:text="#{view.landing.login.delete}"></button>
 						</div>
 					</div>
 				</form>
+				<form id="deleteAccountForm" action="/deleteAccount" method="POST"></form>
 			</div>
 		</div>
 	</main>
 	<th:block th:insert="~{/fragments/footer}"></th:block>
 	<script>
 		$(document).ready(function () {
-			$("#logout").hide();
-			$("#singUpSection").hide();
 			$("#notEqual").hide();
 			$("#notMail").hide();
-			$("#manageLink").hide();
 		});
-		$("#signUp").click(function () {
-			$("#loginSection").hide();
-			$("#singUpSection").show();
-		});
-		$("#registerBtt").click(function () {
+		$("#updateAccount").click(function () {
 			var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 			if (!emailRegex.test($("#mail_register").val())){
 				$("#notMail").show();
 				event.preventDefault();
 			}
+			
 			if (($("#pass_register").val() !== $("#repass_register").val()) || ($("#pass_register").val() == "")) {
 				$("#notEqual").show();
 				event.preventDefault();
 			}
+			
 			if(emailRegex.test($("#mail_register").val()) && ($("#pass_register").val() == $("#repass_register").val()) && $("#pass_register").val() != "") {
 				$("#usuario").val($("#user_register").val());
 				$("#nombre").val($("#name_register").val());
@@ -166,7 +120,7 @@
 				$("#email").val($("#mail_register").val());
 				$("#passw").val($("#pass_register").val());
 
-				$("#registerForm").submit();
+				$("#updateAccountForm").submit();
 			}
 		});
 	</script>
