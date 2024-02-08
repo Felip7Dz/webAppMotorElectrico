@@ -42,16 +42,16 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests((authorize) -> authorize
-				.requestMatchers( "/login").permitAll()
-				.requestMatchers( "/register").permitAll()
-				.requestMatchers( "/change-locale").permitAll()
+				.requestMatchers( "/webAppMotorElectrico/login").permitAll()
+				.requestMatchers( "/webAppMotorElectrico/register").permitAll()
+				.requestMatchers( "/webAppMotorElectrico/change-locale").permitAll()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.anyRequest().authenticated()
 			).csrf(AbstractHttpConfigurer::disable)
 			.formLogin(formLogin ->
 		    formLogin
 		    	.usernameParameter("username")
-		        .loginPage("/login")
+		        .loginPage("/webAppMotorElectrico/login")
 		        .permitAll()
 		        .defaultSuccessUrl("/webAppMotorElectrico/home", true)
 		);

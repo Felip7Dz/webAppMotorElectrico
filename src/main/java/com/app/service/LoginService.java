@@ -1,10 +1,13 @@
 package com.app.service;
 
 import java.net.ConnectException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -46,7 +49,7 @@ public class LoginService {
 		}
 	}
 
-	public String checkUserInDB(String usuario) throws ConnectException{
+	public String checkUserInDB(String usuario) throws ConnectException {
 		String apiUrl = "http://127.0.0.1:5000/checkUser/" + usuario;
 
 		try {
@@ -67,10 +70,10 @@ public class LoginService {
 		}
 	}
 
-	public UserDTO getCurrentUser(String usuario) throws ConnectException{
+	public UserDTO getCurrentUser(String usuario) throws ConnectException {
 		String url = "http://127.0.0.1:5000/getUser/" + usuario;
 		UserDTO response = null;
-		
+
 		try {
 			response = restTemplate.getForObject(url, UserDTO.class);
 		} catch (ResourceAccessException e) {
@@ -85,7 +88,7 @@ public class LoginService {
 		}
 	}
 
-	public void updateCurrentUser(UserDTO user2Update) throws ConnectException{
+	public void updateCurrentUser(UserDTO user2Update) throws ConnectException {
 		String url = "http://127.0.0.1:5000/updateUser/" + user2Update.getUsuario();
 
 		HttpHeaders headers = new HttpHeaders();
@@ -100,6 +103,36 @@ public class LoginService {
 			System.out.println("Dataset actualizado correctamente");
 		} catch (Exception e) {
 			System.err.println("Error al actualizar el dataset: " + e.getMessage());
-		}		
+		}
+	}
+
+	public ArrayList<UserDTO> getAllUsers() throws ConnectException {
+		String url = "http://127.0.0.1:5000/getAllUsers";
+		ArrayList<UserDTO> listUsers = new ArrayList<>();
+
+		ResponseEntity<UserDTO[]> response = restTemplate.getForEntity(url, UserDTO[].class);
+		if (response.getStatusCode() == HttpStatus.OK) {
+			Collections.addAll(listUsers, response.getBody());
+		}
+
+		return listUsers;
+	}
+
+	public void deleteUser(String user) throws ConnectException {
+	    String url = "http://127.0.0.1:5000/deleteUser/" + user;
+
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+
+	    HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+
+	    RestTemplate restTemplate = new RestTemplate();
+
+	    try {
+	        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, String.class);
+	        System.out.println("Respuesta del servidor: " + response.getBody());
+	    } catch (Exception e) {
+	        System.err.println("Error al llamar al método deleteUser: " + e.getMessage());
+	    }
 	}
 }

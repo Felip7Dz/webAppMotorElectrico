@@ -106,12 +106,27 @@ $(document).ready(function() {
 
 	if ($("#warningsDivAPI").is(":visible")) {
 		$("#saveDatasetBtt").hide();
+		$("#manageLink").hide();
+		$("#adminUsersBtt").hide();
 	}
 
 	$("#id2send").val($("#id").val());
 	$("#name2send").val($("#nombre").val());
 
 });
+
+function eliminarUser(item) {
+	if (item != null && item != "admin") {
+		jQuery.ajax({
+			url: '/webAppMotorElectrico/deleteUser',
+			type: 'POST',
+			data: { item: item },
+			success: function() {
+				location.reload();
+			}
+		});
+	}
+}
 
 function eliminarItem(item) {
 	if (item != null) {

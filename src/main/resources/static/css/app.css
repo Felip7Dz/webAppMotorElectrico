@@ -77,7 +77,7 @@ h1.responsive-h1 {
 	color: #084cdf;
 	width: 44px;
 	height: 44px;
-	margin-right: 5%;
+	margin-right: 2.75%;
 }
 
 input[type=file],
@@ -262,7 +262,7 @@ h1:hover {
 #img1:hover,
 #img2:hover,
 #img3:hover,
-#img4:hover {
+#img4:hover, #editUser, #deleteUser {
 	cursor: pointer;
 }
 
@@ -289,4 +289,46 @@ h1:hover {
 
 .modal-body {
 	text-align: center;
+}
+
+.dataTables_wrapper {
+    width: 75%;
+}
+
+table thead {
+	background-color: #084cdf; 
+	color: #ffff;
+}
+
+table thead tr:first-child th:first-child {
+	border-top-left-radius: 10px;
+}
+
+table thead tr:first-child th:last-child {
+	border-top-right-radius: 10px;
+}
+
+table tbody tr:last-child td:first-child {
+	border-bottom-left-radius: 10px;
+}
+
+table tbody tr:last-child td:last-child {
+	border-bottom-right-radius: 10px;
+}
+
+table.dataTable.no-footer {
+	border: 2px solid black !important;
+    border-top: 2px black !important;
+    border-left: 2px black !important;
+    border-right: 2px black !important;
+    border-bottom: 2px black !important;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border: 1px solid black !important;
+    border-radius: 10px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+	border-radius: 10px;	
 }

@@ -9,6 +9,9 @@ public class ViewConstants {
 	/** VIEW_LOGIN_PAGE */
 	public static final String VIEW_LOGIN_PAGE = "public/login";
 	
+	/** VIEW_MANAGE_ACCOUNT_PAGE */
+	public static final String VIEW_MANAGE_ACCOUNT_PAGE = "public/adminAccount";
+	
 	/** REDIRECT_LOGIN_PAGE */
 	public static final String REDIRECT_LOGIN_PAGE = "redirect:/webAppMotorElectrico/login";
 	

@@ -18,6 +18,12 @@ public class MappingConstants {
 	/** REGISTER_ROOT */
 	public static final String REGISTER_ROOT = "/register";
 	
+	/** ADMIN_ACCOUNT */
+	public static final String ADMIN_ACCOUNT = "/adminAccount";
+	
+	/** UPDATE_ACCOUNT */
+	public static final String UPDATE_ACCOUNT = "/updateAccount";
+	
 	/** LOGOUT_ROOT */
 	public static final String LOGOUT_ROOT = "/logout";
 	

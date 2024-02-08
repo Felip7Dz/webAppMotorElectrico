@@ -1,0 +1,62 @@
+<th:block th:insert="~{/fragments/head}"></th:block>
+<title th:text="#{view.landing.title}"></title>
+
+<body>
+	<th:block th:insert="~{/fragments/header :: header}"></th:block>
+	<br>
+	<main>
+		<div class="row justify-content-center align-items-center mb-4">
+			<h1 th:text="#{view.landing.admin.users.btt}"></h1>
+		</div>
+		<div class="row justify-content-center align-items-center mb-4">
+			<table id="usersTable" border="1">
+				<thead>
+					<tr>
+						<th th:text="#{view.landing.manage.user}"></th>
+						<th th:text="#{view.landing.manage.name}"></th>
+						<th th:text="#{view.landing.manage.surname}"></th>
+						<th th:text="#{view.landing.manage.mail}"></th>
+						<th th:text="#{view.landing.manage.rol}"></th>
+						<th th:text="#{view.landing.manage.options}"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="usuario : ${userCreated}">
+						<td th:text="${usuario.usuario}"></td>
+						<td th:text="${usuario.nombre}"></td>
+						<td th:text="${usuario.apellido}"></td>
+						<td th:text="${usuario.email}"></td>
+						<td th:text="${usuario.role}"></td>
+						<td>
+							<a title="Edit" id="editUser" th:href="@{/webAppMotorElectrico/adminAccount(usuario=${usuario.usuario})}"><span class="material-symbols-outlined">edit</span></a>
+							<a title="Delete" id="deleteUser" th:onclick="eliminarUser(/*[[${usuario.usuario}]]*/)"><span class="material-symbols-outlined">close</span></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</main>
+	<th:block th:insert="~{/fragments/footer}"></th:block>
+</body>
+<script>
+	$(document).ready(function () {
+		var userLang;
+		if($("#logout").text() == "Logout"){
+			userLang="en";
+		}else{
+			userLang="es-ES";
+		}
+		new DataTable('#usersTable', {
+			"bPaginate": true,
+			"bLengthChange": false,
+			"bFilter": true,
+			"bInfo": false,
+			"bAutoWidth": false,
+			info: false,
+			language: {
+				url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/'+userLang+'.json',
+			}
+		});
+	});
+</script>
+</html>

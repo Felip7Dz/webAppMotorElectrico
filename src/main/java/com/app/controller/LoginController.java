@@ -2,6 +2,7 @@ package com.app.controller;
 
 import java.net.ConnectException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.app.constants.MappingConstants;
@@ -20,6 +23,7 @@ import com.app.service.LoginService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
+@RequestMapping(MappingConstants.ROOT)
 public class LoginController {
 
 	@Autowired
@@ -71,13 +75,18 @@ public class LoginController {
 		return ViewConstants.VIEW_LOGIN_PAGE;
 	}
 	
-	@GetMapping("/adminAccount")
-	public String adminAccount(HttpServletRequest request, Model model) {
-		Principal loggedUser = request.getUserPrincipal();
+	@GetMapping(MappingConstants.ADMIN_ACCOUNT)
+	public String adminAccount(@RequestParam(name = "usuario", required = false) String usuario, HttpServletRequest request, Model model) {
+		Principal tmp = request.getUserPrincipal();
+		String loggedUser = tmp.getName();
 		UserDTO usr = new UserDTO();
 		
+		if(usuario != "" && usuario != null) {
+			loggedUser = usuario;
+		}
+		
 		try {
-			usr = loginService.getCurrentUser(loggedUser.getName());
+			usr = loginService.getCurrentUser(loggedUser);
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
@@ -87,10 +96,10 @@ public class LoginController {
 		model.addAttribute("surname_register", usr.getApellido());
 		model.addAttribute("mail_register", usr.getEmail());
 		
-		return "public/adminAccount";
+		return ViewConstants.VIEW_MANAGE_ACCOUNT_PAGE;
 	}
 	
-	@PostMapping("/updateAccount")
+	@PostMapping(MappingConstants.UPDATE_ACCOUNT)
 	public String updateAccount(UserDTO user2Update, HttpServletRequest request, Model model) {
 		Principal loggedUser = request.getUserPrincipal();
 		Locale currentLocale = RequestContextUtils.getLocale(request);
@@ -118,6 +127,36 @@ public class LoginController {
 			model.addAttribute("userCreated", "Usuario Actualizado con Exito");
 		}
 		
-		return "public/adminAccount";
+		return ViewConstants.VIEW_MANAGE_ACCOUNT_PAGE;
+	}
+	
+
+	@GetMapping("/adminUsers")
+	public String adminUsers(HttpServletRequest request, Model model) {
+		Principal loggedUser = request.getUserPrincipal();
+		if(!loggedUser.getName().equals("admin")) {
+			return ViewConstants.REDIRECT_HOME_PAGE;
+		}
+		
+		ArrayList<UserDTO> listUsers = new ArrayList<>();
+		try {
+			listUsers = loginService.getAllUsers();
+		} catch (ConnectException e) {
+			System.err.println("Error al conectar con la API: " + e.getMessage());
+		}
+		
+		model.addAttribute("userCreated", listUsers);
+		
+		return "public/adminUsers";
+	}
+	
+	@PostMapping("/deleteUser")
+	public String deleteUser(@RequestParam("item") String item) {
+		try {
+			loginService.deleteUser(item);
+		} catch (ConnectException e) {
+			System.err.println("Error al conectar con la API: " + e.getMessage());
+		}
+		return "redirect:/webAppMotorElectrico/adminUsers";
 	}
 }

@@ -16,7 +16,7 @@
 				<h1 th:text="#{view.landing.login.manage}"></h1>
 			</div>
 			<div class="row justify-content-center align-items-center">
-				<form id="updateAccountForm" action="/updateAccount" method="POST">
+				<form id="updateAccountForm" action="/webAppMotorElectrico/updateAccount" method="POST">
 					<div class="mb-4" id="mi-div">
 						<div class="row justify-content-center align-items-center mt-2 mb-4">
 							<div class="col-3">
@@ -86,12 +86,9 @@
 							<input type="hidden" id="passw" name="passw" th:value="${passw}" />
 							<button id="updateAccount" style="width: 100%;" type="button"
 								th:text="#{view.landing.login.update}"></button>
-							<button id="deleteAccount" style="width: 100%; margin-top: 2%;" type="button"
-								th:text="#{view.landing.login.delete}"></button>
 						</div>
 					</div>
 				</form>
-				<form id="deleteAccountForm" action="/deleteAccount" method="POST"></form>
 			</div>
 		</div>
 	</main>
