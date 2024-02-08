@@ -12,6 +12,7 @@
 			<form th:action="@{/webAppMotorElectrico/adminUsers}" method="get">
 				<button id="adminUsersBtt" type="submit" value="adminUsersBtt" th:text="#{view.landing.admin.users.btt}"></button>
 			</form>
+			<input type="hidden" id="loggedUserFlag" th:value="${loggedUser}">
 			<form th:action="@{/logout}" method="post">
 				<button id="logout" type="submit" value="Logout" th:text="#{view.landing.logout}"></button>
 			</form>

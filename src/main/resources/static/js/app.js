@@ -1,4 +1,9 @@
 $(document).ready(function() {
+	
+	if($("#loggedUserFlag").val() != "admin"){
+		$("#adminUsersBtt").hide();
+	}
+	
 	const dropContainer = $("#dropcontainer");
 	const fileInput = $("#file");
 

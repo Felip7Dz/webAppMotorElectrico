@@ -77,6 +77,7 @@ public class BaseController {
 
 			model.addAttribute("resultDatatest", show);
 			model.addAttribute("resultSavedDatatest", showSavec);
+			model.addAttribute("loggedUser", this.sessionActual);
 
 			if (!this.errorsH.isEmpty()) {
 				model.addAttribute("errorsH", errorsH);
@@ -154,6 +155,7 @@ public class BaseController {
 			model.addAttribute("formData", info);
 			model.addAttribute("formDataCheck", info);
 		}
+		model.addAttribute("loggedUser", this.sessionActual);
 		return ViewConstants.VIEW_PRELOADED_PAGE;
 	}
 
@@ -233,7 +235,7 @@ public class BaseController {
 		if (!errors.isEmpty()) {
 			model.addAttribute("errors", errors);
 		}
-
+		model.addAttribute("loggedUser", this.sessionActual);
 		return ViewConstants.VIEW_PRELOADED_PAGE;
 	}
 
@@ -279,6 +281,7 @@ public class BaseController {
 			model.addAttribute("formData", info);
 		}
 		this.errorsH = "";
+		model.addAttribute("loggedUser", this.sessionActual);
 		return ViewConstants.VIEW_NEWLOADED_PAGE;
 	}
 
@@ -422,7 +425,7 @@ public class BaseController {
 		if (!errors.isEmpty()) {
 			model.addAttribute("errors", errors);
 		}
-
+		model.addAttribute("loggedUser", this.sessionActual);
 		return ViewConstants.VIEW_NEWLOADED_PAGE;
 	}
 }

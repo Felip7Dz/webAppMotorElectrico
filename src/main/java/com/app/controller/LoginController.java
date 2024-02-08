@@ -95,7 +95,7 @@ public class LoginController {
 		model.addAttribute("name_register", usr.getNombre());
 		model.addAttribute("surname_register", usr.getApellido());
 		model.addAttribute("mail_register", usr.getEmail());
-		
+		model.addAttribute("loggedUser", request.getUserPrincipal().getName());
 		return ViewConstants.VIEW_MANAGE_ACCOUNT_PAGE;
 	}
 	
@@ -126,7 +126,7 @@ public class LoginController {
 		}else {
 			model.addAttribute("userCreated", "Usuario Actualizado con Exito");
 		}
-		
+		model.addAttribute("loggedUser", request.getUserPrincipal().getName());
 		return ViewConstants.VIEW_MANAGE_ACCOUNT_PAGE;
 	}
 	
