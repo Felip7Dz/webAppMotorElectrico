@@ -25,39 +25,22 @@ $(document).ready(function() {
 		fileInput.prop("files", e.originalEvent.dataTransfer.files);
 	});
 
-	$('#submitButton').prop('disabled', true);
-	$('.single-checkbox').change(function() {
-		$('.single-checkbox').not(this).prop('checked', false);
-
-		var alMenosUnaSeleccionada = $('.single-checkbox:checked').length > 0;
-		$('#submitButton').prop('disabled', !alMenosUnaSeleccionada);
+	$('.single-checkbox').click(function() {
+		$('.single-checkbox').prop('checked', false);
+		$(this).prop('checked', true);
 	});
 
-	$('#formDataset').submit(function() {
-		if ($('.single-checkbox:checked').length > 0) {
-			return true;
+	$('#submitButton').click(function() {
+		var selectedCheckbox = $('.single-checkbox:checked');
+		var formToSubmit = selectedCheckbox.closest('form');
+
+		if (selectedCheckbox.length === 1) {
+			formToSubmit.submit();
 		} else {
 			$('#myModal').modal('show');
-			return false;
 		}
 	});
 
-	$('#savedSubmitButton').prop('disabled', true);
-	$('.saved-single-checkbox').change(function() {
-		$('.saved-single-checkbox').not(this).prop('checked', false);
-
-		var alMenosUnaSeleccionada = $('.saved-single-checkbox:checked').length > 0;
-		$('#savedSubmitButton').prop('disabled', !alMenosUnaSeleccionada);
-	});
-
-	$('#formSavedDataset').submit(function() {
-		if ($('.saved-single-checkbox:checked').length > 0) {
-			return true;
-		} else {
-			$('#myModal').modal('show');
-			return false;
-		}
-	});
 
 	$(".onlyNums").on("input", function(e) {
 		var currentValue = $(this).val();
@@ -118,6 +101,13 @@ $(document).ready(function() {
 	$("#id2send").val($("#id").val());
 	$("#name2send").val($("#nombre").val());
 
+});
+
+$(document).on('keydown', function(event) {
+    if ($('#loadingModal').is(':visible') && event.keyCode === 27) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
 });
 
 function eliminarUser(item) {
@@ -191,7 +181,10 @@ $("#runPre").click(function() {
 		$("#analyzed_number_req").val(analyzedNumber - firstSample);
 		$("#healthy_number_req").val(n_healthy);
 
-		$('#loadingModal').modal('show');
+		$('#loadingModal').modal({
+            backdrop: 'static',
+            keyboard: false 
+        }).modal('show');
 		
 		$("#runPreform").submit();
 	}else{
@@ -221,7 +214,10 @@ $("#runNew").click(function() {
 		$("#analyzed_number_req").val(analyzedNumber - firstSample);
 		$("#healthy_number_req").val(n_healthy);
 
-		$('#loadingModal').modal('show');
+		$('#loadingModal').modal({
+            backdrop: 'static',
+            keyboard: false 
+        }).modal('show');
 		
 		$("#runNewform").submit();
 	}else{

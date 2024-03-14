@@ -42,9 +42,9 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests((authorize) -> authorize
-				.requestMatchers( "/webAppMotorElectrico/login").permitAll()
+				.requestMatchers( "/webAppMotorElectrico/login/**").permitAll()
 				.requestMatchers( "/webAppMotorElectrico/register").permitAll()
-				.requestMatchers( "/webAppMotorElectrico/change-locale").permitAll()
+				.requestMatchers( "/webAppMotorElectrico/changeLocale").permitAll()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.anyRequest().authenticated()
 			).csrf(AbstractHttpConfigurer::disable)

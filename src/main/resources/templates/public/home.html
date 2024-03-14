@@ -22,7 +22,7 @@
 					<div class="col-12 col-md-6 mb-4" id="mi-div-home-right">
 						<label th:text="#{view.home.table.pre}"></label>
 						<form id="formDataset" name="formDataset" method="get" action="/webAppMotorElectrico/preloaded">
-							<div id="mi-div" class="mb-2">
+							<div id="mi-div-home" class="mb-2">
 								<div th:each="model, iterStat : ${resultDatatest.modelsList}"
 									style="text-align: start;">
 									<label th:for="${'checkbox_' + iterStat.index}">
@@ -32,23 +32,22 @@
 									</label>
 								</div>
 							</div>
-							<div th:if="${#lists.size(resultDatatest.modelsList) > 0}">
-								<button id="submitButton" type="submit">OK</button>
-							</div>
 						</form>
 					</div>
 					<div class="col-12 col-md-6 mb-4" id="mi-div-home-left">
 						<label th:text="#{view.home.table.saved}"></label>
-						<form id="formSavedDataset" name="formSavedDataset" method="get" action="/webAppMotorElectrico/newload">
-							<div id="mi-div" class="mb-2">
+						<form id="formSavedDataset" name="formSavedDataset" method="get"
+							action="/webAppMotorElectrico/newload">
+							<div id="mi-div-home" class="mb-2">
 								<div th:each="modelS, iterStat : ${resultSavedDatatest.modelsList}"
 									style="text-align: start;">
 									<div class="row justify-content-between align-items-center">
 										<div class="col-6 d-flex align-items-center">
-											<label th:for="${'checkbox_' + iterStat.index}" style="margin-bottom: auto; margin-top: auto;">
+											<label th:for="${'checkbox_' + iterStat.index}"
+												style="margin-bottom: auto; margin-top: auto;">
 												<input type="checkbox" th:id="${'savedDataset_' + iterStat.index}"
 													th:value="${modelS}" name="selectedSavedModel"
-													class="saved-single-checkbox" />
+													class="single-checkbox" />
 												<span
 													th:text="${resultSavedDatatest.modelsNames[iterStat.index]}"></span>
 											</label>
@@ -62,10 +61,10 @@
 									</div>
 								</div>
 							</div>
-							<div th:if="${#lists.size(resultSavedDatatest.modelsList) > 0}">
-								<button id="savedSubmitButton" type="submit">OK</button>
-							</div>
 						</form>
+					</div>
+					<div id="submitButtonContainer">
+    					<button id="submitButton" type="button">OK</button>
 					</div>
 				</div>
 			</div>
@@ -76,7 +75,8 @@
 						<h4 th:text="${errorsH}" style="margin-bottom: 0; margin-left: 1%;"></h4>
 					</div>
 				</div>
-				<form id="formUpload" method="post" action="/webAppMotorElectrico/uploadDataset" enctype="multipart/form-data">
+				<form id="formUpload" method="post" action="/webAppMotorElectrico/uploadDataset"
+					enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-12">
 							<label for="images" class="drop-container" id="dropcontainer">

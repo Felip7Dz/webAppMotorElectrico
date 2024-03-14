@@ -19,14 +19,14 @@
 		</div>
 		<div id="loginSection">
 			<div class="row justify-content-center align-items-center mb-4">
-				<h1 th:text="#{view.landing.login.title}"></h1>
+				<h1 id="loginTitle" th:text="#{view.landing.login.title}"></h1>
 			</div>
 			<div class="row justify-content-center align-items-center">
 				<form name='f' action="login" method='POST'>
 					<div class="mb-4" id="mi-div">
 						<div class="row justify-content-center align-items-center mt-2 mb-4">
 							<div class="col-3">
-								<span th:text="#{view.landing.login.user}"></span>
+								<span id="loginUser" th:text="#{view.landing.login.user}"></span>
 							</div>
 							<div class="col-9">
 								<input type='text' id="username" name="username" maxlength="16" style="width: 100%;"
@@ -35,7 +35,7 @@
 						</div>
 						<div class="row justify-content-center align-items-center mb-2">
 							<div class="col-3">
-								<span th:text="#{view.landing.login.pass}"></span>
+								<span id="loginPass" th:text="#{view.landing.login.pass}"></span>
 							</div>
 							<div class="col-9">
 								<input type='password' id="password" name="password" maxlength="16"
@@ -45,7 +45,7 @@
 					</div>
 					<div class="row justify-content-center align-items-center">
 						<div class="col-6">
-							<button type="submit" style="width: 100%;" th:text="#{view.landing.login.btt}"></button>
+							<button id="loginBtt" type="submit" style="width: 100%;" th:text="#{view.landing.login.btt}"></button>
 						</div>
 						<div class="col-6">
 							<button id="signUp" style="width: 100%;" type="button"
@@ -57,14 +57,14 @@
 		</div>
 		<div id="singUpSection">
 			<div class="row justify-content-center align-items-center mb-4">
-				<h1 th:text="#{view.landing.login.signup}"></h1>
+				<h1 id="regisTitle" th:text="#{view.landing.login.signup}"></h1>
 			</div>
 			<div class="row justify-content-center align-items-center">
 				<form id="registerForm" action="/register" method="POST">
 					<div class="mb-4" id="mi-div">
 						<div class="row justify-content-center align-items-center mt-2 mb-4">
 							<div class="col-3">
-								<span th:text="#{view.landing.login.user}"></span>
+								<span id="regisUser" th:text="#{view.landing.login.user}"></span>
 							</div>
 							<div class="col-9">
 								<input type='text' id="user_register" maxlength="16" autocomplete="off"
@@ -73,7 +73,7 @@
 						</div>
 						<div class="row justify-content-center align-items-center mb-4">
 							<div class="col-3">
-								<span th:text="#{view.landing.login.name}"></span>
+								<span id="regisName" th:text="#{view.landing.login.name}"></span>
 							</div>
 							<div class="col-9">
 								<input type='text' id="name_register" maxlength="16" autocomplete="off"
@@ -82,7 +82,7 @@
 						</div>
 						<div class="row justify-content-center align-items-center mb-4">
 							<div class="col-3">
-								<span th:text="#{view.landing.login.surname}"></span>
+								<span id="regisSurname" th:text="#{view.landing.login.surname}"></span>
 							</div>
 							<div class="col-9">
 								<input type='text' id="surname_register" maxlength="16" autocomplete="off"
@@ -101,7 +101,7 @@
 						</div>
 						<div class="row justify-content-center align-items-center mb-4">
 							<div class="col-3">
-								<span th:text="#{view.landing.login.pass}"></span>
+								<span id="regisPass" th:text="#{view.landing.login.pass}"></span>
 							</div>
 							<div class="col-9">
 								<input type='password' id="pass_register" minlength="8" maxlength="16"
@@ -110,7 +110,7 @@
 						</div>
 						<div class="row justify-content-center align-items-center">
 							<div class="col-3">
-								<span th:text="#{view.landing.login.repass}"></span>
+								<span id="regisRepass" th:text="#{view.landing.login.repass}"></span>
 							</div>
 							<div class="col-9">
 								<input type='password' id="repass_register" minlength="8" maxlength="16"
@@ -145,6 +145,38 @@
 			$("#notMail").hide();
 			$("#manageLink").hide();
 			$("#adminUsersBtt").hide();
+		});
+		$('#langURLES').click(function() {
+			event.preventDefault();
+			$(".responsive-h1").text("Detección y Diagnosis de Fallos en Rodamientos de Motores Eléctricos");
+			$("#loginTitle").text("Acceso");
+			$("#loginUser").text("Usuario:");
+			$("#loginPass").text("Contraseña:");
+			$("#loginBtt").text("Entrar");
+			$("#signUp").text("Registro");			
+			$("#regisTitle").text("Registro");
+			$("#regisUser").text("Usuario:");
+			$("#regisName").text("Nombre:");
+			$("#regisSurname").text("Apellido:");
+			$("#regisPass").text("Contraseña:");
+			$("#regisRepass").text("Repetir Contrseña:");
+			$("#registerBtt").text("Registrarse");
+		});
+		$('#langURLEN').click(function() {
+			event.preventDefault();
+			$(".responsive-h1").text("Detection and Diagnosis of Bearing Failures on Electric Motors");
+			$("#loginTitle").text("Login");
+			$("#loginUser").text("User:");
+			$("#loginPass").text("Password:");
+			$("#loginBtt").text("Enter");
+			$("#signUp").text("Sign Up");
+			$("#regisTitle").text("Sign Up");		
+			$("#regisUser").text("User:");
+			$("#regisName").text("Name:");
+			$("#regisSurname").text("Surname:");
+			$("#regisPass").text("Password:");
+			$("#regisRepass").text("Repeat Password:");
+			$("#registerBtt").text("Sing Up");
 		});
 		$("#signUp").click(function () {
 			$("#loginSection").hide();

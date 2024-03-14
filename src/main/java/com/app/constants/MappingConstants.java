@@ -10,7 +10,7 @@ public class MappingConstants {
 	public static final String ROOT = "/webAppMotorElectrico";
 
 	/** CHANGE_LOCALE */
-	public static final String CHANGE_LOCALE = "/change-locale";
+	public static final String CHANGE_LOCALE = "/changeLocale";
 	
 	/** LOGIN_ROOT */
 	public static final String LOGIN_ROOT = "/login";

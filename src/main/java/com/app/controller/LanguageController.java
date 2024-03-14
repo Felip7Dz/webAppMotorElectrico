@@ -17,7 +17,7 @@ public class LanguageController {
 
 	@GetMapping(MappingConstants.CHANGE_LOCALE)
 	public String changeLocale(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(defaultValue = "es") String lang) {
+			@RequestParam(required = true) String lang) {
 
 		request.getSession().setAttribute(SessionLocaleResolver.LOCALE_SESSION_ATTRIBUTE_NAME, new Locale(lang));
 

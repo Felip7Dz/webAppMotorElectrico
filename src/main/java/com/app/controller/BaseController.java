@@ -171,7 +171,7 @@ public class BaseController {
 
 		try {
 			info = electricService.getDatasetInfo(data2Run.getNombre_req());
-			if (info.getMax_to_check() >= data2Run.getAnalyzed_number_req()) {
+			if (info.getMax_to_check() >= data2Run.getAnalyzed_number_req() && info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
 				response = electricService.run(data2Run, this.sessionActual, 0);
@@ -201,12 +201,22 @@ public class BaseController {
 				}
 
 			} else {
-				if ("en".equals(this.language)) {
-					errors = "Value " + data2Run.getAnalyzed_number_req()
-							+ " out of range. Should be equal or lower than " + info.getMax_to_check();
-				} else {
-					errors = "Valor " + data2Run.getAnalyzed_number_req()
-							+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
+				if(info.getMax_to_check() <= data2Run.getHealthy_number_req()) {
+					if ("en".equals(this.language)) {
+						errors = "Value of healthy samples " + data2Run.getHealthy_number_req()
+								+ " out of range. Should be equal or lower than " + info.getMax_to_check();
+					} else {
+						errors = "Valor de muestras sanas " + data2Run.getHealthy_number_req()
+								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
+					}
+				}else {
+					if ("en".equals(this.language)) {
+						errors = "Value " + data2Run.getAnalyzed_number_req()
+								+ " out of range. Should be equal or lower than " + info.getMax_to_check();
+					} else {
+						errors = "Valor " + data2Run.getAnalyzed_number_req()
+								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
+					}
 				}
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
@@ -221,7 +231,7 @@ public class BaseController {
 			model.addAttribute("formDataCheck", info);
 		}
 
-		if (response != null) {
+		if (response.getAnalysis_result() != null) {
 			model.addAttribute("runResForm", response);
 			model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
 			if (response.isFault_detected()) {
@@ -361,7 +371,7 @@ public class BaseController {
 
 		try {
 			info = electricService.getDatasetInfo(data2Run.getNombre_req());
-			if (info.getMax_to_check() >= data2Run.getAnalyzed_number_req()) {
+			if (info.getMax_to_check() >= data2Run.getAnalyzed_number_req() && info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
 				response = electricService.run(data2Run, this.sessionActual, 1);
@@ -391,12 +401,22 @@ public class BaseController {
 				}
 
 			} else {
-				if ("en".equals(this.language)) {
-					errors = "Value " + data2Run.getAnalyzed_number_req()
-							+ " out of range. Should be equal or lower than " + info.getMax_to_check();
-				} else {
-					errors = "Valor " + data2Run.getAnalyzed_number_req()
-							+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
+				if(info.getMax_to_check() <= data2Run.getHealthy_number_req()) {
+					if ("en".equals(this.language)) {
+						errors = "Value of healthy samples " + data2Run.getHealthy_number_req()
+								+ " out of range. Should be equal or lower than " + info.getMax_to_check();
+					} else {
+						errors = "Valor de muestras sanas " + data2Run.getHealthy_number_req()
+								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
+					}
+				}else {
+					if ("en".equals(this.language)) {
+						errors = "Value " + data2Run.getAnalyzed_number_req()
+								+ " out of range. Should be equal or lower than " + info.getMax_to_check();
+					} else {
+						errors = "Valor " + data2Run.getAnalyzed_number_req()
+								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
+					}
 				}
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
@@ -411,7 +431,7 @@ public class BaseController {
 			model.addAttribute("formDataCheckNew", info);
 		}
 
-		if (response != null) {
+		if (response.getAnalysis_result() != null) {
 			model.addAttribute("runResForm", response);
 			model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
 			if (response.isFault_detected()) {

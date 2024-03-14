@@ -73,7 +73,7 @@ h1.responsive-h1 {
 	}
 }
 
-#manageLink{
+#manageLink {
 	color: #084cdf;
 	width: 44px;
 	height: 44px;
@@ -167,6 +167,17 @@ button[type=button]:hover,
 	padding: 5px;
 }
 
+#mi-div-home {
+	border: 2px solid #555;
+	border-radius: 10px;
+	width: auto;
+	height: auto;
+	padding: 5px;
+	max-height: 238px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 #mi-div-home-right {
 	border: 2px solid #555;
 	border-radius: 10px;
@@ -189,11 +200,11 @@ button[type=button]:hover,
 	border-top-left-radius: 0px;
 }
 
-#logoCran{
-		width: 170px;
+#logoCran {
+	width: 170px;
 }
 
-#logoUniovi{
+#logoUniovi {
 	width: 200px;
 }
 
@@ -217,14 +228,22 @@ button[type=button]:hover,
 		height: auto;
 		padding: 5px;
 	}
-	
-	#logoCran{
-		width: 120px;
+
+	#logoCran {
+		width: 100px;
 	}
-	
-	#logoUniovi{
-		width: 150px;
+
+	#logoUniovi {
+		width: 130px;
 	}
+
+	@media screen and (max-width: 600px) {
+		#usersTable th:not(:first-child):not(:nth-child(2)):not(:last-child),
+    	#usersTable td:not(:first-child):not(:nth-child(2)):not(:last-child) {
+        	display: none;
+		}
+	}
+
 }
 
 .circle {
@@ -235,7 +254,8 @@ button[type=button]:hover,
 	margin: 20px auto;
 }
 
-.readonly-input, #user_register {
+.readonly-input,
+#user_register {
 	cursor: not-allowed;
 }
 
@@ -262,7 +282,9 @@ h1:hover {
 #img1:hover,
 #img2:hover,
 #img3:hover,
-#img4:hover, #editUser, #deleteUser {
+#img4:hover,
+#editUser,
+#deleteUser {
 	cursor: pointer;
 }
 
@@ -292,11 +314,11 @@ h1:hover {
 }
 
 .dataTables_wrapper {
-    width: 75%;
+	width: 75%;
 }
 
 table thead {
-	background-color: #084cdf; 
+	background-color: #084cdf;
 	color: #ffff;
 }
 
@@ -318,17 +340,18 @@ table tbody tr:last-child td:last-child {
 
 table.dataTable.no-footer {
 	border: 2px solid black !important;
-    border-top: 2px black !important;
-    border-left: 2px black !important;
-    border-right: 2px black !important;
-    border-bottom: 2px black !important;
+	border-top: 2px black !important;
+	border-left: 2px black !important;
+	border-right: 2px black !important;
+	border-bottom: 2px black !important;
 }
 
 .dataTables_wrapper .dataTables_filter input {
-    border: 1px solid black !important;
-    border-radius: 10px !important;
+	border: 1px solid black !important;
+	border-radius: 10px !important;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-	border-radius: 10px;	
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+	border-radius: 10px;
 }
