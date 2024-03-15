@@ -96,11 +96,16 @@ $(document).ready(function() {
 		$("#saveDatasetBtt").hide();
 		$("#manageLink").hide();
 		$("#adminUsersBtt").hide();
+		$("#submitButton").hide();
 	}
 
 	$("#id2send").val($("#id").val());
 	$("#name2send").val($("#nombre").val());
 
+	if ($("#imgOk").is(":visible")) {
+		$("#imgph1").hide();
+		$("#imgph2").hide();
+	}
 });
 
 $(document).on('keydown', function(event) {

@@ -108,11 +108,11 @@ public class BaseController {
 		}
 		try {
 			String extension = StringUtils.getFilenameExtension(archivo.getOriginalFilename());
-			if (!"h5".equalsIgnoreCase(extension)) {
+			if (!"csv".equalsIgnoreCase(extension)) {
 				if ("en".equals(this.language)) {
-					this.errorsH = "Extension ." + extension + " not allowed. Only .h5 allowed.";
+					this.errorsH = "Extension ." + extension + " not allowed. Only .csv allowed.";
 				} else {
-					this.errorsH = "Extensión ." + extension + " no permitida. Solo .h5 permitida.";
+					this.errorsH = "Extensión ." + extension + " no permitida. Solo .csv permitida.";
 				}
 				return ViewConstants.REDIRECT_HOME_PAGE;
 			}
@@ -233,7 +233,6 @@ public class BaseController {
 
 		if (response.getAnalysis_result() != null) {
 			model.addAttribute("runResForm", response);
-			model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
 			if (response.isFault_detected()) {
 				for (int i = 0; i < response.getFault_details().size(); i++) {
 					model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
@@ -245,6 +244,7 @@ public class BaseController {
 		if (!errors.isEmpty()) {
 			model.addAttribute("errors", errors);
 		}
+		model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
 		model.addAttribute("loggedUser", this.sessionActual);
 		return ViewConstants.VIEW_PRELOADED_PAGE;
 	}
@@ -307,7 +307,7 @@ public class BaseController {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
 
-		return ViewConstants.REDIRECT_NEWLOADED_PAGE + infoForm.getNombre() + ".h5";
+		return ViewConstants.REDIRECT_NEWLOADED_PAGE + infoForm.getNombre();
 	}
 
 	@PostMapping(MappingConstants.UPLOAD_NEW_DATASET)
@@ -344,7 +344,7 @@ public class BaseController {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
 
-		return ViewConstants.REDIRECT_NEWLOADED_PAGE + name + ".h5";
+		return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
 	}
 	
 	@PostMapping(MappingConstants.DELETE_SAMPLE)
@@ -356,7 +356,7 @@ public class BaseController {
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
-		return ViewConstants.REDIRECT_NEWLOADED_PAGE + nombre + ".h5";
+		return ViewConstants.REDIRECT_NEWLOADED_PAGE + nombre;
 	}
 
 	@PostMapping(MappingConstants.RUN_NEWLOAD)
@@ -433,7 +433,6 @@ public class BaseController {
 
 		if (response.getAnalysis_result() != null) {
 			model.addAttribute("runResForm", response);
-			model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
 			if (response.isFault_detected()) {
 				for (int i = 0; i < response.getFault_details().size(); i++) {
 					model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
@@ -445,6 +444,7 @@ public class BaseController {
 		if (!errors.isEmpty()) {
 			model.addAttribute("errors", errors);
 		}
+		model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
 		model.addAttribute("loggedUser", this.sessionActual);
 		return ViewConstants.VIEW_NEWLOADED_PAGE;
 	}

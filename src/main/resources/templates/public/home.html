@@ -19,7 +19,7 @@
 					</div>
 				</div>
 				<div class="row d-flex justify-content-center mt-2" style="text-align: center;">
-					<div class="col-12 col-md-6 mb-4" id="mi-div-home-right">
+					<div class="col-12 col-md-6 mb-2" id="mi-div-home-right">
 						<label th:text="#{view.home.table.pre}"></label>
 						<form id="formDataset" name="formDataset" method="get" action="/webAppMotorElectrico/preloaded">
 							<div id="mi-div-home" class="mb-2">
@@ -34,7 +34,7 @@
 							</div>
 						</form>
 					</div>
-					<div class="col-12 col-md-6 mb-4" id="mi-div-home-left">
+					<div class="col-12 col-md-6 mb-2" id="mi-div-home-left">
 						<label th:text="#{view.home.table.saved}"></label>
 						<form id="formSavedDataset" name="formSavedDataset" method="get"
 							action="/webAppMotorElectrico/newload">
@@ -53,7 +53,7 @@
 											</label>
 										</div>
 										<div class="col-6 d-flex justify-content-end align-items-center">
-											<button type="button" th:onclick="eliminarItem(/*[[${modelS}]]*/)">
+											<button type="button" th:onclick="eliminarItem(/*[[${modelS}]]*/)" data-toggle="tooltip" data-placement="bottom" th:title="#{view.load.erase.data}">
 												<span class="material-symbols-outlined"
 													style="vertical-align: middle;">close</span>
 											</button>
@@ -63,8 +63,10 @@
 							</div>
 						</form>
 					</div>
-					<div id="submitButtonContainer">
-    					<button id="submitButton" type="button">OK</button>
+					<div class="row d-flex justify-content-center" id="submitButtonContainer">
+						<div class="col-12 col-md-12 mb-4">
+    						<button id="submitButton" type="button">OK</button>
+    					</div>
 					</div>
 				</div>
 			</div>

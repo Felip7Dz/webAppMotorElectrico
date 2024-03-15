@@ -1,25 +1,29 @@
 <header>
 	<div class="row justify-content-between align-items-center mt-2 ml-2 mb-2">
-		<div class="col-6">
+		<div class="col-6" id="localeDiv">
 			<a id="langURLES" th:href="@{/changeLocale(lang='es')}"><img id="langIMG" th:src="@{/images/esp.png}"></a>
 			<span> | </span>
 			<a id="langURLEN" th:href="@{/changeLocale(lang='en')}"><img id="langIMG" th:src="@{/images/eng.png}"></a>
 		</div>
 		<div class="col-6 d-flex justify-content-end align-items-center">
-			<a th:href="@{/webAppMotorElectrico/adminAccount}" id="manageLink">
-				<span class="material-symbols-outlined" style="font-size: 44px;">account_circle</span>
+			<input type="hidden" id="loggedUserFlag" th:value="${loggedUser}">
+			<a th:href="@{/webAppMotorElectrico/adminAccount}" id="manageLink" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.login.manage}">
+				<span class="material-symbols-outlined" style="vertical-align: middle;">account_circle</span>
 			</a>
 			<form th:action="@{/webAppMotorElectrico/adminUsers}" method="get">
-				<button id="adminUsersBtt" type="submit" value="adminUsersBtt" th:text="#{view.landing.admin.users.btt}"></button>
+				<button id="adminUsersBtt" type="submit" value="adminUsersBtt" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.admin.users.btt}">
+					<span class="material-symbols-outlined" style="vertical-align: middle;">manage_accounts</span>
+				</button>
 			</form>
-			<input type="hidden" id="loggedUserFlag" th:value="${loggedUser}">
 			<form th:action="@{/logout}" method="post">
-				<button id="logout" type="submit" value="Logout" th:text="#{view.landing.logout}"></button>
+				<button id="logout" type="submit" value="Logout" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.logout}">
+					<span class="material-symbols-outlined" style="vertical-align: middle;">logout</span>
+				</button>
 			</form>
 		</div>
 	</div>
 	<div class="row align-items-center" id="headID">
-		<div class="col-12 col-md-8 mb-4">
+		<div class="col-12 col-md-8">
 			<a th:href="@{/webAppMotorElectrico/home}" style="color: black;">
 				<h1 class="responsive-h1" th:text="#{view.home.main}"></h1>
 			</a>

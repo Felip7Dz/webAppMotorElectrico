@@ -86,7 +86,8 @@ input[type=password],
 input[type=email],
 button[type=submit],
 button[type=button],
-#back-btt {
+#back-btt,
+#manageLink {
 	width: auto;
 	max-width: 100%;
 	color: #444;
@@ -99,7 +100,8 @@ button[type=button],
 input[type=file]::file-selector-button,
 button[type=submit],
 button[type=button],
-#back-btt {
+#back-btt,
+#manageLink {
 	margin-right: 20px;
 	border: none;
 	background: #084cdf;
@@ -174,8 +176,8 @@ button[type=button]:hover,
 	height: auto;
 	padding: 5px;
 	max-height: 238px;
-    overflow-y: auto;
-    overflow-x: hidden;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 #mi-div-home-right {
@@ -209,6 +211,10 @@ button[type=button]:hover,
 }
 
 @media (max-width: 768px) {
+	h1.responsive-h1 {
+		margin-bottom: 3%;
+	}
+
 	.responsive-h4 {
 		font-size: 16px;
 	}
@@ -230,17 +236,18 @@ button[type=button]:hover,
 	}
 
 	#logoCran {
-		width: 100px;
+		width: 110px;
 	}
 
 	#logoUniovi {
-		width: 130px;
+		width: 140px;
 	}
 
 	@media screen and (max-width: 600px) {
+
 		#usersTable th:not(:first-child):not(:nth-child(2)):not(:last-child),
-    	#usersTable td:not(:first-child):not(:nth-child(2)):not(:last-child) {
-        	display: none;
+		#usersTable td:not(:first-child):not(:nth-child(2)):not(:last-child) {
+			display: none;
 		}
 	}
 
