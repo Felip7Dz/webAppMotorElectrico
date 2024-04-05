@@ -171,7 +171,7 @@ public class BaseController {
 
 		try {
 			info = electricService.getDatasetInfo(data2Run.getNombre_req());
-			if (info.getMax_to_check() >= data2Run.getAnalyzed_number_req() && info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
+			if (data2Run.getAnalyzed_number_req() > 0 && data2Run.getHealthy_number_req() > 0 && info.getMax_to_check() >= data2Run.getAnalyzed_number_req() && info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
 				response = electricService.run(data2Run, this.sessionActual, 0);
@@ -201,21 +201,21 @@ public class BaseController {
 				}
 
 			} else {
-				if(info.getMax_to_check() <= data2Run.getHealthy_number_req()) {
+				if(info.getMax_to_check() <= data2Run.getHealthy_number_req() || data2Run.getHealthy_number_req() == 0) {
 					if ("en".equals(this.language)) {
 						errors = "Value of healthy samples " + data2Run.getHealthy_number_req()
-								+ " out of range. Should be equal or lower than " + info.getMax_to_check();
+								+ " out of range. Should be equal or lower than " + info.getMax_to_check() + " and bigger than 0.";
 					} else {
 						errors = "Valor de muestras sanas " + data2Run.getHealthy_number_req()
-								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
+								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check() + " y mayor que 0.";
 					}
 				}else {
 					if ("en".equals(this.language)) {
 						errors = "Value " + data2Run.getAnalyzed_number_req()
-								+ " out of range. Should be equal or lower than " + info.getMax_to_check();
+								+ " out of range. Should be equal or lower than " + info.getMax_to_check() + " and bigger than 0.";
 					} else {
 						errors = "Valor " + data2Run.getAnalyzed_number_req()
-								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
+								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check() + " y mayor que 0.";
 					}
 				}
 				info.setMin_to_check(data2Run.getFirst_sample_req());
@@ -238,6 +238,7 @@ public class BaseController {
 					model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
 					model.addAttribute("faults_" + response.getFault_type().get(i), response.getFault_details().get(i));
 				}
+				model.addAttribute("faultInfoTimming", response.getFault_info());
 			}
 		}
 
@@ -297,14 +298,25 @@ public class BaseController {
 
 	@GetMapping(MappingConstants.SAVE_DATASET)
 	public String saveDataset(DatasetInformationDTO infoForm, Model model) {
-		try {
-			if (infoForm.getId() == null) {
-				electricService.createDatasetInDB(infoForm);
-			} else {
-				electricService.updateDatasetInDB(infoForm);
+		if(infoForm.getBpfi() > 0.0 && infoForm.getBpfo() > 0.0 && infoForm.getBsf() > 0.0 && infoForm.getCarga() > 0.0 && infoForm.getFtf() > 0.0 && 
+				infoForm.getSampling_frequency() > 0.0 && infoForm.getShaft_frequency() > 0.0 && !infoForm.getBearing_type().equals("")) {
+			try {
+				if (infoForm.getId() == null) {
+					electricService.createDatasetInDB(infoForm);
+				} else {
+					electricService.updateDatasetInDB(infoForm);
+				}
+			} catch (ConnectException e) {
+				System.err.println("Error al conectar con la API: " + e.getMessage());
 			}
-		} catch (ConnectException e) {
-			System.err.println("Error al conectar con la API: " + e.getMessage());
+		}else {
+			String errorsVals = "";
+			if ("en".equals(this.language)) {
+				errorsVals = "None of the values can be empty or 0.0.";
+			} else {
+				errorsVals = "Ninguno de los valores puede ser vacio o 0.0.";
+			}
+			model.addAttribute("errorsVals", errorsVals);
 		}
 
 		return ViewConstants.REDIRECT_NEWLOADED_PAGE + infoForm.getNombre();
@@ -371,7 +383,7 @@ public class BaseController {
 
 		try {
 			info = electricService.getDatasetInfo(data2Run.getNombre_req());
-			if (info.getMax_to_check() >= data2Run.getAnalyzed_number_req() && info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
+			if (data2Run.getAnalyzed_number_req() > 0 && data2Run.getHealthy_number_req() > 0 && info.getMax_to_check() >= data2Run.getAnalyzed_number_req() && info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
 				response = electricService.run(data2Run, this.sessionActual, 1);
@@ -401,21 +413,21 @@ public class BaseController {
 				}
 
 			} else {
-				if(info.getMax_to_check() <= data2Run.getHealthy_number_req()) {
+				if(info.getMax_to_check() <= data2Run.getHealthy_number_req() || data2Run.getHealthy_number_req() == 0) {
 					if ("en".equals(this.language)) {
 						errors = "Value of healthy samples " + data2Run.getHealthy_number_req()
-								+ " out of range. Should be equal or lower than " + info.getMax_to_check();
+								+ " out of range. Should be equal or lower than " + info.getMax_to_check() + " and bigger than 0.";
 					} else {
 						errors = "Valor de muestras sanas " + data2Run.getHealthy_number_req()
-								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
+								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check() + " y mayor que 0.";
 					}
 				}else {
 					if ("en".equals(this.language)) {
 						errors = "Value " + data2Run.getAnalyzed_number_req()
-								+ " out of range. Should be equal or lower than " + info.getMax_to_check();
+								+ " out of range. Should be equal or lower than " + info.getMax_to_check() + " and bigger than 0.";
 					} else {
 						errors = "Valor " + data2Run.getAnalyzed_number_req()
-								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check();
+								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check() + " y mayor que 0.";
 					}
 				}
 				info.setMin_to_check(data2Run.getFirst_sample_req());
@@ -438,6 +450,7 @@ public class BaseController {
 					model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
 					model.addAttribute("faults_" + response.getFault_type().get(i), response.getFault_details().get(i));
 				}
+				model.addAttribute("faultInfoTimming", response.getFault_info());
 			}
 		}
 

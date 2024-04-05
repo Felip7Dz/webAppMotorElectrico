@@ -22,7 +22,10 @@
 				<h1 id="loginTitle" th:text="#{view.landing.login.title}"></h1>
 			</div>
 			<div class="row justify-content-center align-items-center">
-				<form name='f' action="login" method='POST'>
+				<form name='f' action="/webAppMotorElectrico/login" method='POST'>
+					<div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        				<span th:text="${errorMessage}"></span>
+    				</div>
 					<div class="mb-4" id="mi-div">
 						<div class="row justify-content-center align-items-center mt-2 mb-4">
 							<div class="col-3">
@@ -60,7 +63,7 @@
 				<h1 id="regisTitle" th:text="#{view.landing.login.signup}"></h1>
 			</div>
 			<div class="row justify-content-center align-items-center">
-				<form id="registerForm" action="/register" method="POST">
+				<form id="registerForm" action="/webAppMotorElectrico/register" method="POST">
 					<div class="mb-4" id="mi-div">
 						<div class="row justify-content-center align-items-center mt-2 mb-4">
 							<div class="col-3">
@@ -145,7 +148,6 @@
 			$("#notMail").hide();
 			$("#manageLink").hide();
 			$("#adminUsersBtt").hide();
-			$("#localeDiv").hide();
 		});
 		$("#signUp").click(function () {
 			$("#loginSection").hide();

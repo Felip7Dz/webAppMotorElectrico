@@ -29,7 +29,7 @@ h1.responsive-h1 {
 	font-size: 32px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1130px) {
 	h1.responsive-h1 {
 		font-size: 28px;
 	}
@@ -45,7 +45,7 @@ h1.responsive-h1 {
 	font-size: 18px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1130px) {
 	.responsive-h4 {
 		font-size: 16px;
 	}
@@ -210,7 +210,7 @@ button[type=button]:hover,
 	width: 200px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1130px) {
 	h1.responsive-h1 {
 		margin-bottom: 3%;
 	}
@@ -243,14 +243,14 @@ button[type=button]:hover,
 		width: 140px;
 	}
 
-	@media screen and (max-width: 600px) {
+}
 
-		#usersTable th:not(:first-child):not(:nth-child(2)):not(:last-child),
-		#usersTable td:not(:first-child):not(:nth-child(2)):not(:last-child) {
-			display: none;
-		}
+@media screen and (max-width: 730px) {
+
+	#usersTable th:not(:first-child):not(:nth-child(2)):not(:last-child),
+	#usersTable td:not(:first-child):not(:nth-child(2)):not(:last-child) {
+		display: none;
 	}
-
 }
 
 .circle {

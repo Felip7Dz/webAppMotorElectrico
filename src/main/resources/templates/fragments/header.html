@@ -1,9 +1,9 @@
 <header>
 	<div class="row justify-content-between align-items-center mt-2 ml-2 mb-2">
 		<div class="col-6" id="localeDiv">
-			<a id="langURLES" th:href="@{/changeLocale(lang='es')}"><img id="langIMG" th:src="@{/images/esp.png}"></a>
+			<a id="langURLES" th:href="@{/webAppMotorElectrico/changeLocale(lang='es')}"><img id="langIMG" th:src="@{/images/esp.png}"></a>
 			<span> | </span>
-			<a id="langURLEN" th:href="@{/changeLocale(lang='en')}"><img id="langIMG" th:src="@{/images/eng.png}"></a>
+			<a id="langURLEN" th:href="@{/webAppMotorElectrico/changeLocale(lang='en')}"><img id="langIMG" th:src="@{/images/eng.png}"></a>
 		</div>
 		<div class="col-6 d-flex justify-content-end align-items-center">
 			<input type="hidden" id="loggedUserFlag" th:value="${loggedUser}">

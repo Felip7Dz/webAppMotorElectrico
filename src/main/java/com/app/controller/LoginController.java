@@ -37,7 +37,15 @@ public class LoginController {
 	}
 
 	@GetMapping(MappingConstants.LOGIN_ROOT)
-	public String login(Model model) {
+	public String login(Model model, @RequestParam(name = "error", required = false) String error, HttpServletRequest request) {
+		Locale currentLocale = RequestContextUtils.getLocale(request);
+		if (error != null) {
+			if("en".equals(currentLocale.getLanguage())) {
+				model.addAttribute("errorMessage", "User or Password not found. Please try again.");
+			}else {
+				model.addAttribute("errorMessage", "Usuario o Contraseña no encontrada. Por favor, intentelo de nuevo.");
+			}
+        }
 		return ViewConstants.VIEW_LOGIN_PAGE;
 	}
 
@@ -110,8 +118,15 @@ public class LoginController {
 				String tmpPass = passwEncoder.encode(user2Update.getPassw());
 				user2Update.setPassw(tmpPass);
 				loginService.updateCurrentUser(user2Update);
+				usr = loginService.getCurrentUser(loggedUser.getName());
+			}else {
+				if("admin".equals(loggedUser.getName())) {
+					String tmpPass = passwEncoder.encode(user2Update.getPassw());
+					user2Update.setPassw(tmpPass);
+					loginService.updateCurrentUser(user2Update);
+					usr = loginService.getCurrentUser(user2Update.getUsuario());
+				}
 			}
-			usr = loginService.getCurrentUser(loggedUser.getName());
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
@@ -127,6 +142,11 @@ public class LoginController {
 			model.addAttribute("userCreated", "Usuario Actualizado con Exito");
 		}
 		model.addAttribute("loggedUser", request.getUserPrincipal().getName());
+		
+		if("admin".equals(loggedUser.getName())) {
+			return "redirect:/webAppMotorElectrico/adminUsers";
+		}
+		
 		return ViewConstants.VIEW_MANAGE_ACCOUNT_PAGE;
 	}
 	

@@ -43,9 +43,9 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 			.authorizeHttpRequests((authorize) -> authorize
-				.requestMatchers( "/webAppMotorElectrico/login").permitAll()
-				.requestMatchers( "/webAppMotorElectrico/register").permitAll()
-				.requestMatchers( "/webAppMotorElectrico/changeLocale").permitAll()
+				.requestMatchers("/webAppMotorElectrico/login").permitAll()
+				.requestMatchers("/webAppMotorElectrico/register").permitAll()
+				.requestMatchers("/webAppMotorElectrico/changeLocale").permitAll()
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.anyRequest().authenticated()
 			).csrf(AbstractHttpConfigurer::disable)
@@ -56,6 +56,7 @@ public class SecurityConfig {
 		        .loginPage("/webAppMotorElectrico/login")
 		        .permitAll()
 		        .defaultSuccessUrl("/webAppMotorElectrico/home", true)
+		        .failureUrl("/webAppMotorElectrico/login?error=true")
 		);
 
 		return http.build();

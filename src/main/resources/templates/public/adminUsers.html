@@ -6,7 +6,7 @@
 	<br>
 	<main>
 		<div class="row justify-content-center align-items-center mb-4">
-			<h1 class="responsive-h1" th:text="#{view.landing.admin.users.btt}"></h1>
+			<h1 class="responsive-h1" id="manageUserTitle" th:text="#{view.landing.admin.users.btt}"></h1>
 		</div>
 		<div class="row justify-content-center align-items-center mb-4">
 			<table id="usersTable" border="1">
@@ -21,7 +21,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="usuario : ${userCreated}">
+					<tr th:each="usuario, iterStat : ${userCreated}">
 						<td th:text="${usuario.usuario}"></td>
 						<td th:text="${usuario.nombre}"></td>
 						<td th:text="${usuario.apellido}"></td>
@@ -29,11 +29,25 @@
 						<td th:text="${usuario.role}"></td>
 						<td>
 							<a title="Edit" id="editUser" th:href="@{/webAppMotorElectrico/adminAccount(usuario=${usuario.usuario})}"><span class="material-symbols-outlined">edit</span></a>
-							<a title="Delete" id="deleteUser" th:onclick="eliminarUser(/*[[${usuario.usuario}]]*/)"><span class="material-symbols-outlined">close</span></a>
+							<a title="Delete" id="deleteUser" th:onclick="confirmDelete(/*[[${usuario.usuario}]]*/)" th:style="${iterStat.index == 0 ? 'display:none;' : ''}"><span class="material-symbols-outlined">close</span></a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+		</div>
+		<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<span th:text="#{view.modal.body.deleteUser}"></span>
+						<span id="userNameToDelete"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" onclick="$('#confirmDeleteModal').modal('hide');" th:text="#{view.modal.delete.candel.btt}"></button>
+						<button type="button" class="btn btn-danger" id="confirmDeleteButton" th:text="#{view.modal.delete.btt}"></button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</main>
 	<th:block th:insert="~{/fragments/footer}"></th:block>
@@ -41,9 +55,9 @@
 <script>
 	$(document).ready(function () {
 		var userLang;
-		if($("#logout").text() == "Logout"){
+		if($("#manageUserTitle").text() == "Manage Users") {
 			userLang="en";
-		}else{
+		}else {
 			userLang="es-ES";
 		}
 		new DataTable('#usersTable', {
@@ -58,5 +72,12 @@
 			}
 		});
 	});
+    function confirmDelete(usuario) {
+        document.getElementById("confirmDeleteButton").setAttribute("onclick", "eliminarUser('" + usuario + "')");
+        
+        document.getElementById("userNameToDelete").innerText = usuario;
+        
+        $('#confirmDeleteModal').modal('show');
+    }
 </script>
 </html>

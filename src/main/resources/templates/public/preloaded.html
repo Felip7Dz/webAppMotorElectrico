@@ -17,126 +17,128 @@
 			</div>
 		</div>
 		<div class="row justify-content-between mt-4">
-			<div class="col-12 col-md-2 align-items-center mb-4" id="mi-div">
+			<div class="col-12 col-xl-2 align-items-center mb-4" id="mi-div">
 				<form id="formData" name="formData" th:object="${formData}">
 					<label style="font-weight: bold;" th:text="#{view.load.in.info.static}">:</label>
 					<div class="row align-items-center mt-4">
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.shaft}">:</span>
 						</div>
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="hidden" th:field="*{id}">
 							<input type="hidden" th:field="*{nombre}">
 							<input type="text" class="readonly-input" th:field="*{shaft_frequency}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.sampling}">:</span>
 						</div>
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{sampling_frequency}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.load}">:</span>
 						</div>
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{carga}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Kn</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.bearing}">:</span>
 						</div>
-						<div class="col-12 col-md-7 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-7 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{bearing_type}" readonly
 								style="text-align: center;" maxlength="15">
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.bpfo}">:</span>
 						</div>
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{bpfo}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.bpfi}">:</span>
 						</div>
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{bpfi}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.bsf}">:</span>
 						</div>
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{bsf}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 					<br>
 					<div class="row align-items-center">
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.in.ftf}">:</span>
 						</div>
-						<div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" class="readonly-input" th:field="*{ftf}" readonly
 								style="text-align: center;" maxlength="10">
 						</div>
-						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
 						</div>
 					</div>
 				</form>
 			</div>
 			<br>
-			<div class="col-12 col-md-9">
+			<div class="col-12 col-xl-9">
 				<div class="row">
 					<div class="col-12" id="mi-div">
+						<h4 id="faultInfoTimming" th:text="${faultInfoTimming}" style="text-align: center;"></h4>
 						<div class="row" style="text-align: center;">
-							<div class="col-12 col-md-6">
+							<div class="col-12 col-xl-6">
 								<img th:src="@{/images/test_graf.png}" style="width: 66%;" id="imgph1">
 								<div th:if="${img2Front1Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1"
 										style="width: 66%;" id="img1" data-toggle="modal" data-target="#imagenModal1">
 									<br>
 									<span th:text="#{view.load.info.faults}"></span>
-									<span th:text="${faults_Outer_race}"></span>							
+									<span th:text="${faults_Outer_race}"></span>	
+									<span>Hz</span>						
 								</div>
 								<div th:if="${img2Front3Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front3Encoded}}" alt="Imagen 1"
@@ -144,9 +146,10 @@
 									<br>
 									<span th:text="#{view.load.info.faults}"></span>
 									<span th:text="${faults_Bearing_Balls}"></span>
+									<span>Hz</span>
 								</div>
 							</div>
-							<div class="col-12 col-md-6">
+							<div class="col-12 col-xl-6">
 								<img th:src="@{/images/test_graf.png}" style="width: 66%;" id="imgph2">
 								<div th:if="${img2Front2Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2"
@@ -154,6 +157,7 @@
 									<br>
 									<span th:text="#{view.load.info.faults}"></span>
 									<span th:text="${faults_Inner_race}"></span>
+									<span>Hz</span>
 								</div>
 								<div th:if="${img2Front4Encoded}">
 									<img th:src="@{'data:image/png;base64,' + ${img2Front4Encoded}}" alt="Imagen 2"
@@ -161,6 +165,7 @@
 									<br>
 									<span th:text="#{view.load.info.faults}"></span>
 									<span th:text="${faults_Cage}"></span>
+									<span>Hz</span>
 								</div>
 							</div>
 						</div>
@@ -178,19 +183,19 @@
 				<div class="row mt-3">
 					<div class="col-12" id="mi-div">
 						<div class="row" style="text-align: center;">
-							<div class="col-12 col-md-3">
+							<div class="col-12 col-xl-3">
 								<div class="circle" id="colorCircle1"></div>
 								<span style="font-weight: bold;" th:text="#{view.load.tl.outer}"></span>
 							</div>
-							<div class="col-12 col-md-3">
+							<div class="col-12 col-xl-3">
 								<div class="circle" id="colorCircle2"></div>
 								<span style="font-weight: bold;" th:text="#{view.load.tl.inner}"></span>
 							</div>
-							<div class="col-12 col-md-3">
+							<div class="col-12 col-xl-3">
 								<div class="circle" id="colorCircle3"></div>
 								<span style="font-weight: bold;" th:text="#{view.load.tl.bear}"></span>
 							</div>
-							<div class="col-12 col-md-3">
+							<div class="col-12 col-xl-3">
 								<div class="circle" id="colorCircle4"></div>
 								<span style="font-weight: bold;" th:text="#{view.load.tl.cage}"></span>
 							</div>
@@ -201,39 +206,39 @@
 		</div>
 		<br>
 		<div class="row align-items-center justify-content-between">
-			<div class="col-12 col-md-5 mb-4" id="mi-div">
+			<div class="col-12 col-xl-5 mb-4" id="mi-div">
 				<form id="formDataCheck" name="formDataCheck" th:object="${formDataCheck}">
 					<div class="row justify-content-between align-items-center">
-						<div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-4 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.select.healthy}"></span>
 						</div>
-						<div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-3 d-flex justify-content-center align-items-center">
 							<input type="text" placeholder="0" id="n_healthy_data" style="text-align: center;"
 								pattern="[0-9]*\.?[0-9]*" class="onlyNums" minlength="1" maxlength="6" required>
 						</div>
-						<div class="col-12 col-md-3 d-flex justify-content-center align-items-center"></div>
-						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center"></div>
-						<div class="col-12 col-md-3 d-flex justify-content-center align-items-center"></div>
+						<div class="col-12 col-xl-3 d-flex justify-content-center align-items-center"></div>
+						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center"></div>
+						<div class="col-12 col-xl-3 d-flex justify-content-center align-items-center"></div>
 					</div>
 					<div class="row justify-content-between align-items-center mt-2">
-						<div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-4 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.select.check}"></span>
 						</div>
-						<div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-3 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{min_to_check}" style="text-align: center;"
 								pattern="[0-9]*\.?[0-9]*" class="onlyNums" minlength="1" maxlength="6">
 						</div>
-						<div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span th:text="#{view.load.select.to}"></span>
 						</div>
-						<div class="col-12 col-md-3 d-flex justify-content-center align-items-center">
+						<div class="col-12 col-xl-3 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{max_to_check}" style="text-align: center;"
 								pattern="[0-9]*\.?[0-9]*" class="onlyNums" minlength="1" maxlength="6">
 						</div>
 					</div>
 				</form>
 			</div>
-			<div class="col-12 col-md-2 d-flex justify-content-center align-items-center mb-4">
+			<div class="col-12 col-xl-2 d-flex justify-content-center align-items-center mb-4">
 				<form id="runPreform" action="/webAppMotorElectrico/runPreloaded" method="post">
 					<input type="hidden" id="nombre_req" name="nombre_req" th:value="${nombre_req}" />
 					<input type="hidden" id="sampling_frequency_req" name="sampling_frequency_req"
@@ -249,7 +254,7 @@
 					<button id="back-btt" type="button" th:text="#{view.load.bck.btt}" onclick="window.location.href = '/webAppMotorElectrico/home';"></button>
 				</form>
 			</div>
-			<div class="col-12 col-md-5 d-flex justify-content-center align-items-center mb-4">
+			<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center mb-4">
 				<button type="button" id="pdf1" style="display: none;">
 					<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
 					<span th:text="#{view.load.exp.btt}" style="vertical-align: middle;"></span>
@@ -276,14 +281,15 @@
 	</main>
 	<div class="modal fade" id="imagenModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" 
 		aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front1Encoded}">
                     	<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1" style="width: 100%;">
                     	<br>
 						<span th:text="#{view.load.info.faults}"></span>
-						<span th:text="${faults_Outer_race}"></span>	
+						<span th:text="${faults_Outer_race}"></span>
+						<span>Hz</span>	
 					</div>
                 </div>
                 <div class="modal-footer">
@@ -294,7 +300,7 @@
     </div>
 	<div class="modal fade" id="imagenModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" 
 		aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front3Encoded}">
@@ -302,6 +308,7 @@
                     	<br>
 						<span th:text="#{view.load.info.faults}"></span>
 						<span th:text="${faults_Bearing_Balls}"></span>
+						<span>Hz</span>
 					</div>
                 </div>
                 <div class="modal-footer">
@@ -312,7 +319,7 @@
     </div>
 	<div class="modal fade" id="imagenModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front2Encoded}">
@@ -320,6 +327,7 @@
 						<br>
 						<span th:text="#{view.load.info.faults}"></span>
 						<span th:text="${faults_Inner_race}"></span>
+						<span>Hz</span>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -330,7 +338,7 @@
 	</div>
 	<div class="modal fade" id="imagenModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+		<div class="modal-dialog modal-xl modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front4Encoded}">
@@ -338,6 +346,7 @@
 						<br>
 						<span th:text="#{view.load.info.faults}"></span>
 						<span th:text="${faults_Cage}"></span>
+						<span>Hz</span>
 					</div>
 				</div>
 				<div class="modal-footer">
