@@ -3,9 +3,10 @@ package com.app.controller;
 import java.net.ConnectException;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.app.constants.MappingConstants;
 import com.app.constants.ViewConstants;
@@ -29,22 +29,28 @@ public class LoginController {
 	@Autowired
 	private final LoginService loginService;
 	
+	@Autowired
+	private MessageSource messageSource;
+	
 	BCryptPasswordEncoder passwEncoder;
 
 	public LoginController(LoginService loginService, BCryptPasswordEncoder passwEncoder) {
 		this.loginService = loginService;
 		this.passwEncoder = passwEncoder;
 	}
+	
+	public String getMessage(String messageKey) {
+		return this.getMessage(messageKey, null);
+	}
+	
+	public String getMessage(String messageKey, Object[] args) {
+		return this.messageSource.getMessage(messageKey, args, LocaleContextHolder.getLocale());
+	}
 
 	@GetMapping(MappingConstants.LOGIN_ROOT)
 	public String login(Model model, @RequestParam(name = "error", required = false) String error, HttpServletRequest request) {
-		Locale currentLocale = RequestContextUtils.getLocale(request);
 		if (error != null) {
-			if("en".equals(currentLocale.getLanguage())) {
-				model.addAttribute("errorMessage", "User or Password not found. Please try again.");
-			}else {
-				model.addAttribute("errorMessage", "Usuario o Contraseña no encontrada. Por favor, intentelo de nuevo.");
-			}
+			model.addAttribute("errorMessage", this.getMessage("view.cont.user.not"));
         }
 		return ViewConstants.VIEW_LOGIN_PAGE;
 	}
@@ -56,7 +62,6 @@ public class LoginController {
 
 	@PostMapping(MappingConstants.REGISTER_ROOT)
 	public String register(UserDTO user, Model model, HttpServletRequest request) {
-		Locale currentLocale = RequestContextUtils.getLocale(request);
 		try {
 			String tmpCheck = loginService.checkUserInDB(user.getUsuario());
 			if ("1".equals(tmpCheck)) {
@@ -64,17 +69,9 @@ public class LoginController {
 				user.setPassw(tmpPass);
 				user.setRole("USER");
 				loginService.createUserInDB(user);
-				if("en".equals(currentLocale.getLanguage())) {
-					model.addAttribute("userCreated", "User Created Successfully");
-				}else {
-					model.addAttribute("userCreated", "Usuario Creado con Exito");
-				}
+				model.addAttribute("userCreated", this.getMessage("view.cont.user.created"));
 			} else {
-				if("en".equals(currentLocale.getLanguage())) {
-					model.addAttribute("userAlreadyExists", "User Already Exists");
-				}else {
-					model.addAttribute("userAlreadyExists", "El Nombre de Usuario ya Existe");
-				}
+				model.addAttribute("userAlreadyExists", this.getMessage("view.cont.user.exists"));
 			}
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
@@ -110,7 +107,6 @@ public class LoginController {
 	@PostMapping(MappingConstants.UPDATE_ACCOUNT)
 	public String updateAccount(UserDTO user2Update, HttpServletRequest request, Model model) {
 		Principal loggedUser = request.getUserPrincipal();
-		Locale currentLocale = RequestContextUtils.getLocale(request);
 		UserDTO usr = new UserDTO();
 		
 		try {
@@ -136,11 +132,7 @@ public class LoginController {
 		model.addAttribute("surname_register", usr.getApellido());
 		model.addAttribute("mail_register", usr.getEmail());
 		
-		if("en".equals(currentLocale.getLanguage())) {
-			model.addAttribute("userCreated", "User Updated Successfully");
-		}else {
-			model.addAttribute("userCreated", "Usuario Actualizado con Exito");
-		}
+		model.addAttribute("userCreated", this.getMessage("view.cont.user.updated"));
 		model.addAttribute("loggedUser", request.getUserPrincipal().getName());
 		
 		if("admin".equals(loggedUser.getName())) {

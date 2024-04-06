@@ -7,11 +7,13 @@ import java.net.ConnectException;
 import java.security.Principal;
 import java.util.Base64;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -20,10 +22,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
-import com.app.constants.ViewConstants;
 import com.app.constants.MappingConstants;
+import com.app.constants.ViewConstants;
 import com.app.dto.DatasetInformationDTO;
 import com.app.dto.DatasetsResponseDTO;
 import com.app.dto.RunRequestDTO;
@@ -35,23 +36,31 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping(MappingConstants.ROOT)
 public class BaseController {
+	
+	@Autowired
+	private MessageSource messageSource;
 
 	private final ElectricService electricService;
 	private String errorsH = "";
-	private String language = "";
 	private String sessionActual = "";
 
 	public BaseController(ElectricService electricService) {
 		this.electricService = electricService;
 	}
 
+	public String getMessage(String messageKey) {
+		return this.getMessage(messageKey, null);
+	}
+	
+	public String getMessage(String messageKey, Object[] args) {
+		return this.messageSource.getMessage(messageKey, args, LocaleContextHolder.getLocale());
+	}
+	
 	@GetMapping(MappingConstants.HOME_ROOT)
 	public String home(Model model, HttpServletRequest request) {
-		Locale currentLocale = RequestContextUtils.getLocale(request);
 		Principal test = request.getUserPrincipal();
 	
 		this.sessionActual = test.getName();
-		this.language = currentLocale.getLanguage();
 
 		try {
 			List<String> pdatasets = electricService.getAllDatasets();
@@ -109,24 +118,15 @@ public class BaseController {
 		try {
 			String extension = StringUtils.getFilenameExtension(archivo.getOriginalFilename());
 			if (!"csv".equalsIgnoreCase(extension)) {
-				if ("en".equals(this.language)) {
-					this.errorsH = "Extension ." + extension + " not allowed. Only .csv allowed.";
-				} else {
-					this.errorsH = "Extensión ." + extension + " no permitida. Solo .csv permitida.";
-				}
+				this.errorsH = this.getMessage("view.cont.ext.first") + extension + this.getMessage("view.cont.ext.second");
 				return ViewConstants.REDIRECT_HOME_PAGE;
 			}
 			
 			List<String> savedatasets = electricService.getAllSavedDatasets(this.sessionActual);
 			for (int i = 0; i < savedatasets.size(); i++) {
 				if (archivo.getOriginalFilename().equals(savedatasets.get(i))) {
-					if ("en".equals(this.language)) {
-						this.errorsH = "A file with name " + archivo.getOriginalFilename()
-								+ " already exists in the file system.";
-					} else {
-						this.errorsH = "Un archivo con nombe " + archivo.getOriginalFilename()
-								+ " ya existe en el sistema.";
-					}
+					this.errorsH = this.getMessage("view.cont.name.first") + archivo.getOriginalFilename()
+							+ this.getMessage("view.cont.name.second");
 					return ViewConstants.REDIRECT_HOME_PAGE;
 				}
 			}
@@ -202,21 +202,13 @@ public class BaseController {
 
 			} else {
 				if(info.getMax_to_check() <= data2Run.getHealthy_number_req() || data2Run.getHealthy_number_req() == 0) {
-					if ("en".equals(this.language)) {
-						errors = "Value of healthy samples " + data2Run.getHealthy_number_req()
-								+ " out of range. Should be equal or lower than " + info.getMax_to_check() + " and bigger than 0.";
-					} else {
-						errors = "Valor de muestras sanas " + data2Run.getHealthy_number_req()
-								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check() + " y mayor que 0.";
-					}
-				}else {
-					if ("en".equals(this.language)) {
-						errors = "Value " + data2Run.getAnalyzed_number_req()
-								+ " out of range. Should be equal or lower than " + info.getMax_to_check() + " and bigger than 0.";
-					} else {
-						errors = "Valor " + data2Run.getAnalyzed_number_req()
-								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check() + " y mayor que 0.";
-					}
+					errors = this.getMessage("view.cont.value.healthy.first") + data2Run.getHealthy_number_req()
+							+ this.getMessage("view.cont.value.second") + info.getMax_to_check()
+							+ this.getMessage("view.cont.value.third");
+				} else {
+					errors = this.getMessage("view.cont.value.first") + data2Run.getAnalyzed_number_req()
+							+ this.getMessage("view.cont.value.second") + info.getMax_to_check()
+							+ this.getMessage("view.cont.value.third");
 				}
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
@@ -238,7 +230,18 @@ public class BaseController {
 					model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
 					model.addAttribute("faults_" + response.getFault_type().get(i), response.getFault_details().get(i));
 				}
-				model.addAttribute("faultInfoTimming", response.getFault_info());
+				switch (response.getFault_info()) {
+				case "A fault has been detected in an early stage":
+					model.addAttribute("faultInfoTimming", this.getMessage("view.landing.title"));
+					break;
+				case "A fault has been detected in a medium stage":
+					model.addAttribute("faultInfoTimming", this.getMessage("view.landing.title"));
+					break;
+				case "A fault has been detected in a last degradation stage":
+					model.addAttribute("faultInfoTimming", this.getMessage("view.landing.title"));
+					break;
+
+				}
 			}
 		}
 
@@ -310,13 +313,7 @@ public class BaseController {
 				System.err.println("Error al conectar con la API: " + e.getMessage());
 			}
 		}else {
-			String errorsVals = "";
-			if ("en".equals(this.language)) {
-				errorsVals = "None of the values can be empty or 0.0.";
-			} else {
-				errorsVals = "Ninguno de los valores puede ser vacio o 0.0.";
-			}
-			model.addAttribute("errorsVals", errorsVals);
+			model.addAttribute("errorsVals", this.getMessage("view.cont.vals.fault"));
 		}
 
 		return ViewConstants.REDIRECT_NEWLOADED_PAGE + infoForm.getNombre();
@@ -339,18 +336,10 @@ public class BaseController {
 					electricService.uploadDataSample(healthy, healthyFileName, id, this.sessionActual);
 					electricService.uploadDataSample(newSample, newSampleFileName, id, this.sessionActual);
 				} else {
-					if ("en".equals(this.language)) {
-						this.errorsH = "Extension ." + extension1 + " not allowed.";
-					} else {
-						this.errorsH = "Extensión ." + extension1 + " no permitida.";
-					}
+					this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + this.getMessage("view.cont.ext.second");
 				}
 			} else {
-				if ("en".equals(this.language)) {
-					this.errorsH = "File not attached.";
-				} else {
-					this.errorsH = "Archivo no adjuntado.";
-				}
+				this.errorsH = this.getMessage("view.cont.file.not");
 			}
 		} catch (Exception e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
@@ -414,21 +403,13 @@ public class BaseController {
 
 			} else {
 				if(info.getMax_to_check() <= data2Run.getHealthy_number_req() || data2Run.getHealthy_number_req() == 0) {
-					if ("en".equals(this.language)) {
-						errors = "Value of healthy samples " + data2Run.getHealthy_number_req()
-								+ " out of range. Should be equal or lower than " + info.getMax_to_check() + " and bigger than 0.";
-					} else {
-						errors = "Valor de muestras sanas " + data2Run.getHealthy_number_req()
-								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check() + " y mayor que 0.";
-					}
-				}else {
-					if ("en".equals(this.language)) {
-						errors = "Value " + data2Run.getAnalyzed_number_req()
-								+ " out of range. Should be equal or lower than " + info.getMax_to_check() + " and bigger than 0.";
-					} else {
-						errors = "Valor " + data2Run.getAnalyzed_number_req()
-								+ " fuera de rango. Debería ser igual o inferior a " + info.getMax_to_check() + " y mayor que 0.";
-					}
+					errors = this.getMessage("view.cont.value.healthy.first") + data2Run.getHealthy_number_req()
+							+ this.getMessage("view.cont.value.second") + info.getMax_to_check()
+							+ this.getMessage("view.cont.value.third");
+				} else {
+					errors = this.getMessage("view.cont.value.first") + data2Run.getAnalyzed_number_req()
+							+ this.getMessage("view.cont.value.second") + info.getMax_to_check()
+							+ this.getMessage("view.cont.value.third");
 				}
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
@@ -450,7 +431,18 @@ public class BaseController {
 					model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
 					model.addAttribute("faults_" + response.getFault_type().get(i), response.getFault_details().get(i));
 				}
-				model.addAttribute("faultInfoTimming", response.getFault_info());
+				switch (response.getFault_info()) {
+				case "A fault has been detected in an early stage":
+					model.addAttribute("faultInfoTimming", this.getMessage("view.landing.title"));
+					break;
+				case "A fault has been detected in a medium stage":
+					model.addAttribute("faultInfoTimming", this.getMessage("view.landing.title"));
+					break;
+				case "A fault has been detected in a last degradation stage":
+					model.addAttribute("faultInfoTimming", this.getMessage("view.landing.title"));
+					break;
+
+				}
 			}
 		}
 
