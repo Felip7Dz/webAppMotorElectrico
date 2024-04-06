@@ -118,14 +118,14 @@ public class BaseController {
 		try {
 			String extension = StringUtils.getFilenameExtension(archivo.getOriginalFilename());
 			if (!"csv".equalsIgnoreCase(extension)) {
-				this.errorsH = this.getMessage("view.cont.ext.first") + extension + this.getMessage("view.cont.ext.second");
+				this.errorsH = this.getMessage("view.cont.ext.first") + extension + " " + this.getMessage("view.cont.ext.second");
 				return ViewConstants.REDIRECT_HOME_PAGE;
 			}
 			
 			List<String> savedatasets = electricService.getAllSavedDatasets(this.sessionActual);
 			for (int i = 0; i < savedatasets.size(); i++) {
 				if (archivo.getOriginalFilename().equals(savedatasets.get(i))) {
-					this.errorsH = this.getMessage("view.cont.name.first") + archivo.getOriginalFilename()
+					this.errorsH = this.getMessage("view.cont.name.first") + archivo.getOriginalFilename() + " "
 							+ this.getMessage("view.cont.name.second");
 					return ViewConstants.REDIRECT_HOME_PAGE;
 				}
@@ -202,12 +202,12 @@ public class BaseController {
 
 			} else {
 				if(info.getMax_to_check() <= data2Run.getHealthy_number_req() || data2Run.getHealthy_number_req() == 0) {
-					errors = this.getMessage("view.cont.value.healthy.first") + data2Run.getHealthy_number_req()
-							+ this.getMessage("view.cont.value.second") + info.getMax_to_check()
+					errors = this.getMessage("view.cont.value.healthy.first") + data2Run.getHealthy_number_req() + " "
+							+ this.getMessage("view.cont.value.second") + info.getMax_to_check() + " "
 							+ this.getMessage("view.cont.value.third");
 				} else {
-					errors = this.getMessage("view.cont.value.first") + data2Run.getAnalyzed_number_req()
-							+ this.getMessage("view.cont.value.second") + info.getMax_to_check()
+					errors = this.getMessage("view.cont.value.first") + data2Run.getAnalyzed_number_req() + " "
+							+ this.getMessage("view.cont.value.second") + info.getMax_to_check() + " "
 							+ this.getMessage("view.cont.value.third");
 				}
 				info.setMin_to_check(data2Run.getFirst_sample_req());
@@ -336,7 +336,7 @@ public class BaseController {
 					electricService.uploadDataSample(healthy, healthyFileName, id, this.sessionActual);
 					electricService.uploadDataSample(newSample, newSampleFileName, id, this.sessionActual);
 				} else {
-					this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + this.getMessage("view.cont.ext.second");
+					this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + " " + this.getMessage("view.cont.ext.second");
 				}
 			} else {
 				this.errorsH = this.getMessage("view.cont.file.not");
@@ -403,12 +403,12 @@ public class BaseController {
 
 			} else {
 				if(info.getMax_to_check() <= data2Run.getHealthy_number_req() || data2Run.getHealthy_number_req() == 0) {
-					errors = this.getMessage("view.cont.value.healthy.first") + data2Run.getHealthy_number_req()
-							+ this.getMessage("view.cont.value.second") + info.getMax_to_check()
+					errors = this.getMessage("view.cont.value.healthy.first") + data2Run.getHealthy_number_req() + " "
+							+ this.getMessage("view.cont.value.second") + info.getMax_to_check() + " "
 							+ this.getMessage("view.cont.value.third");
 				} else {
-					errors = this.getMessage("view.cont.value.first") + data2Run.getAnalyzed_number_req()
-							+ this.getMessage("view.cont.value.second") + info.getMax_to_check()
+					errors = this.getMessage("view.cont.value.first") + data2Run.getAnalyzed_number_req() + " "
+							+ this.getMessage("view.cont.value.second") + info.getMax_to_check() + " "
 							+ this.getMessage("view.cont.value.third");
 				}
 				info.setMin_to_check(data2Run.getFirst_sample_req());
