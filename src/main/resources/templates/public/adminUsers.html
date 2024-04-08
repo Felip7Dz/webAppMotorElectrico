@@ -1,5 +1,5 @@
 <th:block th:insert="~{/fragments/head}"></th:block>
-<title th:text="#{view.landing.title}"></title>
+<title th:text="#{view.landing.admin.users.btt}"></title>
 
 <body>
 	<th:block th:insert="~{/fragments/header :: header}"></th:block>
@@ -35,6 +35,9 @@
 				</tbody>
 			</table>
 		</div>
+		<div class="row justify-content-end align-items-center mb-4">
+			<button id="back-btt" type="button" th:text="#{view.load.bck.btt}" onclick="window.location.href = '/webAppMotorElectrico/home';" style="margin-right: 12%;"></button>
+		</div>
 		<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
@@ -54,6 +57,9 @@
 </body>
 <script>
 	$(document).ready(function () {
+		$("#manageLink").css({"display": "inline"});
+		$("#logout").css({"display": "inline"});
+		
 		var userLang;
 		if($("#manageUserTitle").text() == "Manage Users") {
 			userLang="en";

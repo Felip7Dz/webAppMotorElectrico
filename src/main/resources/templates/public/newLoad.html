@@ -415,8 +415,15 @@
 	<th:block th:insert="~{/fragments/footer}"></th:block>
 </body>
 <script>
-	$("#saveDatasetInfoBtt").click(function() {
-		if($("#nombre").val() == "New Dataset"){
+	$(document).ready(function () {
+		$("#manageLink").css({"display": "inline"});
+		if ($("#loggedUserFlag").val() == 'admin') {
+			$("#adminUsersBtt").css({"display": "inline"});
+		}
+		$("#logout").css({"display": "inline"});
+	});
+	$("#saveDatasetInfoBtt").click(function () {
+		if ($("#nombre").val() == "New Dataset") {
 			event.preventDefault();
 			$("#dataInfoNotFoundH4").text("You must change the name.");
 			$("#warningsDivNew").css({"background-color": "red", "border": "red"});

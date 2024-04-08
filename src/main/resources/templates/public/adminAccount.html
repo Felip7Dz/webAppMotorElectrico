@@ -1,5 +1,5 @@
 <th:block th:insert="~{/fragments/head}"></th:block>
-<title th:text="#{view.landing.title}"></title>
+<title th:text="#{view.landing.login.manage}"></title>
 
 <body>
 	<th:block th:insert="~{/fragments/header :: header}"></th:block>
@@ -52,7 +52,7 @@
 							<div class="col-9">
 								<input type='email' th:value="${mail_register}" id="mail_register" maxlength="30" autocomplete="off"
 									style="width: 100%;" required>
-								<span id="notMail" style="color: red;" th:text="#{view.landing.login.mail.fail}"></span>
+								<span id="notMail" style="color: red; display: none;" th:text="#{view.landing.login.mail.fail}"></span>
 							</div>
 						</div>
 						<div class="row justify-content-center align-items-center mb-4">
@@ -74,11 +74,14 @@
 							</div>
 						</div>
 						<div class="row justify-content-center align-items-center mb-2">
-							<span id="notEqual" style="color: red;" th:text="#{view.landing.login.pass.fail}"></span>
+							<span id="notEqual" style="color: red; display: none;" th:text="#{view.landing.login.pass.fail}"></span>
 						</div>
 					</div>
 					<div class="row justify-content-center align-items-center mb-4">
-						<div class="col-12">
+						<div class="col-6">
+							<button id="back-btt" style="width: 100%;" type="button" th:text="#{view.load.bck.btt}" onclick="window.location.href = '/webAppMotorElectrico/home';"></button>
+						</div>
+						<div class="col-6">
 							<input type="hidden" id="usuario" name="usuario" th:value="${usuario}" />
 							<input type="hidden" id="nombre" name="nombre" th:value="${nombre}" />
 							<input type="hidden" id="apellido" name="apellido" th:value="${apellido}" />
@@ -95,8 +98,11 @@
 	<th:block th:insert="~{/fragments/footer}"></th:block>
 	<script>
 		$(document).ready(function () {
-			$("#notEqual").hide();
-			$("#notMail").hide();
+			$("#manageLink").css({"display": "inline"});
+			if ($("#loggedUserFlag").val() == 'admin') {
+				$("#adminUsersBtt").css({"display": "inline"});
+			}
+			$("#logout").css({"display": "inline"});
 		});
 		$("#updateAccount").click(function () {
 			var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

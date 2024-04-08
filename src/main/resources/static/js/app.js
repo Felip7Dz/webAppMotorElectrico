@@ -120,6 +120,7 @@ $(document).ready(function() {
 		$("#manageLink").hide();
 		$("#adminUsersBtt").hide();
 		$("#submitButton").hide();
+		$("#newDatasetBtt").hide();
 	}
 
 	$("#id2send").val($("#id").val());

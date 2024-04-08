@@ -7,16 +7,16 @@
 		</div>
 		<div class="col-6 d-flex justify-content-end align-items-center">
 			<input type="hidden" id="loggedUserFlag" th:value="${loggedUser}">
-			<a th:href="@{/webAppMotorElectrico/adminAccount}" id="manageLink" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.login.manage}">
+			<a th:href="@{/webAppMotorElectrico/adminAccount}" id="manageLink" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.login.manage}" style="display: none;">
 				<span class="material-symbols-outlined" style="vertical-align: middle;">account_circle</span>
 			</a>
 			<form th:action="@{/webAppMotorElectrico/adminUsers}" method="get">
-				<button id="adminUsersBtt" type="submit" value="adminUsersBtt" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.admin.users.btt}">
+				<button id="adminUsersBtt" type="submit" value="adminUsersBtt" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.admin.users.btt}" style="display: none;">
 					<span class="material-symbols-outlined" style="vertical-align: middle;">manage_accounts</span>
 				</button>
 			</form>
 			<form th:action="@{/logout}" method="post">
-				<button id="logout" type="submit" value="Logout" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.logout}">
+				<button id="logout" type="submit" value="Logout" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.logout}" style="display: none;">
 					<span class="material-symbols-outlined" style="vertical-align: middle;">logout</span>
 				</button>
 			</form>

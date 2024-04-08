@@ -58,7 +58,7 @@
 				</form>
 			</div>
 		</div>
-		<div id="singUpSection">
+		<div id="singUpSection" style="display: none;">
 			<div class="row justify-content-center align-items-center mb-4">
 				<h1 id="regisTitle" th:text="#{view.landing.login.signup}"></h1>
 			</div>
@@ -99,7 +99,7 @@
 							<div class="col-9">
 								<input type='email' id="mail_register" maxlength="30" autocomplete="off"
 									style="width: 100%;" required>
-								<span id="notMail" style="color: red;" th:text="#{view.landing.login.mail.fail}"></span>
+								<span id="notMail" style="color: red; display: none;" th:text="#{view.landing.login.mail.fail}"></span>
 							</div>
 						</div>
 						<div class="row justify-content-center align-items-center mb-4">
@@ -121,7 +121,7 @@
 							</div>
 						</div>
 						<div class="row justify-content-center align-items-center mb-2">
-							<span id="notEqual" style="color: red;" th:text="#{view.landing.login.pass.fail}"></span>
+							<span id="notEqual" style="color: red; display: none;" th:text="#{view.landing.login.pass.fail}"></span>
 						</div>
 					</div>
 					<div class="row justify-content-center align-items-center mb-4">
@@ -142,15 +142,15 @@
 	<th:block th:insert="~{/fragments/footer}"></th:block>
 	<script>
 		$(document).ready(function () {
-			$("#logout").hide();
-			$("#singUpSection").hide();
-			$("#notEqual").hide();
-			$("#notMail").hide();
-			$("#manageLink").hide();
-			$("#adminUsersBtt").hide();
+			$("#logout").css({"display": "none"});
+			$("#singUpSection").css({"display": "none"});
+			$("#notEqual").css({"display": "none"});
+			$("#notMail").css({"display": "none"});
+			$("#manageLink").css({"display": "none"});
+			$("#adminUsersBtt").css({"display": "none"});
 		});
 		$("#signUp").click(function () {
-			$("#loginSection").hide();
+			$("#loginSection").css({"display": "none"});
 			$("#singUpSection").show();
 		});
 		$("#registerBtt").click(function () {
