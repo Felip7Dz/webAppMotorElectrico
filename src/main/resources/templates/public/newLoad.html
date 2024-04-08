@@ -5,11 +5,17 @@
 	<th:block th:insert="~{/fragments/header :: header}"></th:block>
 	<br>
 	<main>
+		<div th:if="${errors}">
+			<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDiv">
+				<span class="material-symbols-outlined">warning </span>
+				<h4 th:text="${errors}" style="margin-bottom: 0; margin-left: 1%;"></h4>
+			</div>
+		</div>
 		<form id="formData" name="formData" th:object="${formData}" action="/webAppMotorElectrico/saveDataset" method="get">
 			<div th:if="${formData.id == null}">
 				<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDivNew">
 					<span class="material-symbols-outlined">warning </span>
-					<h4 th:text="#{view.load.check.exists}" style="margin-bottom: 0; margin-left: 1%;"></h4>
+					<h4 th:text="#{view.load.check.exists}" id="dataInfoNotFoundH4" style="margin-bottom: 0; margin-left: 1%;"></h4>
 				</div>
 			</div>
 			<div th:if="${errorsVals}">
@@ -25,7 +31,7 @@
 					<input type="text" class="head-new-input" th:field="*{nombre}" maxlength="15">
 				</div>
 				<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
-					<button type="submit" style="width: 100%; margin: auto;" th:text="#{view.load.save.btt}"></button>
+					<button type="submit" id="saveDatasetInfoBtt" style="width: 100%; margin: auto;" th:text="#{view.load.save.btt}"></button>
 				</div>
 			</div>
 			<div class="row justify-content-between mt-4">
@@ -33,7 +39,7 @@
 					<label style="font-weight: bold;" th:text="#{view.load.in.info}">:</label>
 					<div class="row align-items-center mt-4">
 						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
-							<span th:text="#{view.load.in.shaft}">:</span>
+							<span th:text="#{view.load.in.shaft}" style="text-align: center;">:</span>
 						</div>
 						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{shaft_frequency}" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
@@ -46,7 +52,7 @@
 					<br>
 					<div class="row align-items-center">
 						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
-							<span th:text="#{view.load.in.sampling}">:</span>
+							<span th:text="#{view.load.in.sampling}" style="text-align: center;">:</span>
 						</div>
 						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{sampling_frequency}" pattern="[0-9]*\.?[0-9]*"
@@ -72,7 +78,7 @@
 					<br>
 					<div class="row align-items-center">
 						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
-							<span th:text="#{view.load.in.bearing}">:</span>
+							<span th:text="#{view.load.in.bearing}" style="text-align: center;">:</span>
 						</div>
 						<div class="col-12 col-xl-7 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{bearing_type}" style="text-align: center;" maxlength="15">
@@ -408,5 +414,13 @@
 	</div>
 	<th:block th:insert="~{/fragments/footer}"></th:block>
 </body>
-
+<script>
+	$("#saveDatasetInfoBtt").click(function() {
+		if($("#nombre").val() == "New Dataset"){
+			event.preventDefault();
+			$("#dataInfoNotFoundH4").text("You must change the name.");
+			$("#warningsDivNew").css({"background-color": "red", "border": "red"});
+		}
+	});
+</script>
 </html>

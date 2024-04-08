@@ -54,15 +54,38 @@ $(document).ready(function() {
 		var faultTypes = $("#fault_type").val();
 
 		var faultTypesArray = faultTypes.split(',');
+		
+		if ($("#fault_info").val() == 'A fault has been detected in an early stage') {
+			$(".circle").each(function() {
+				var circleId = $(this).attr("id");
+				var circleType = getCircleType(circleId);
 
-		$(".circle").each(function() {
-			var circleId = $(this).attr("id");
-			var circleType = getCircleType(circleId);
+				if (faultTypesArray.includes(circleType)) {
+					$(this).css("background-color", "yellow");
+				}
+			});
+		}
+		if ($("#fault_info").val() == 'A fault has been detected in a medium stage') {
+			$(".circle").each(function() {
+				var circleId = $(this).attr("id");
+				var circleType = getCircleType(circleId);
 
-			if (faultTypesArray.includes(circleType)) {
-				$(this).css("background-color", "red");
-			}
-		});
+				if (faultTypesArray.includes(circleType)) {
+					$(this).css("background-color", "orange");
+				}
+			});
+		}
+		if ($("#fault_info").val() == 'A fault has been detected in a last degradation stage') {
+			$(".circle").each(function() {
+				var circleId = $(this).attr("id");
+				var circleType = getCircleType(circleId);
+
+				if (faultTypesArray.includes(circleType)) {
+					$(this).css("background-color", "red");
+				}
+			});
+		}
+		
 		$("#pdf1").css("display", "inline");
 		$("#pdf2").css("display", "inline");
 		$("#imgph1").hide();

@@ -67,7 +67,7 @@ public class BaseController {
 			List<String> savedatasets = electricService.getAllSavedDatasets(this.sessionActual);
 			
 			if(pdatasets.size() == 0) {
-				model.addAttribute("errorsAPI", "API Connection Error");
+				model.addAttribute("errorsAPI", this.getMessage("view.home.api.connection"));
 			}
 
 			List<String> pdatasetsNames = pdatasets.stream().map(dataset -> dataset.split("\\.")[0])
@@ -108,7 +108,7 @@ public class BaseController {
 		}
 		return ViewConstants.REDIRECT_HOME_PAGE;
 	}
-
+	/**
 	@PostMapping(MappingConstants.UPLOAD_DATASET)
 	public String guardarArchivo(@RequestParam("model2Save") MultipartFile archivo, Model model) {
 		this.errorsH = "";
@@ -137,7 +137,7 @@ public class BaseController {
 
 		return ViewConstants.REDIRECT_HOME_PAGE;
 	}
-
+	 */
 	@GetMapping(MappingConstants.PRE_LOADED)
 	public String preload(@RequestParam(name = "selectedModel", required = true) String selectedModel, Model model) {
 
@@ -198,6 +198,7 @@ public class BaseController {
 					BufferedImage imgNotFault = electricService.getImage("faultless", 1);
 					String img2FrontNotFaultEncoded = encodeImageToBase64(imgNotFault);
 					model.addAttribute("img2FrontNotFaultEncoded", img2FrontNotFaultEncoded);
+					model.addAttribute("faultInfoTimming", this.getMessage("view.cont.faultless"));
 				}
 
 			} else {
@@ -232,13 +233,13 @@ public class BaseController {
 				}
 				switch (response.getFault_info()) {
 				case "A fault has been detected in an early stage":
-					model.addAttribute("faultInfoTimming", this.getMessage("view.landing.title"));
+					model.addAttribute("faultInfoTimming", this.getMessage("view.cont.fault.info.first"));
 					break;
 				case "A fault has been detected in a medium stage":
-					model.addAttribute("faultInfoTimming", this.getMessage("view.landing.title"));
+					model.addAttribute("faultInfoTimming", this.getMessage("view.cont.fault.info.second"));
 					break;
 				case "A fault has been detected in a last degradation stage":
-					model.addAttribute("faultInfoTimming", this.getMessage("view.landing.title"));
+					model.addAttribute("faultInfoTimming", this.getMessage("view.cont.fault.info.third"));
 					break;
 
 				}
@@ -301,11 +302,14 @@ public class BaseController {
 
 	@GetMapping(MappingConstants.SAVE_DATASET)
 	public String saveDataset(DatasetInformationDTO infoForm, Model model) {
+		if("New Dataset".equals(infoForm.getNombre())) {
+			return ViewConstants.REDIRECT_NEWLOADED_PAGE + infoForm.getNombre();
+		}
 		if(infoForm.getBpfi() > 0.0 && infoForm.getBpfo() > 0.0 && infoForm.getBsf() > 0.0 && infoForm.getCarga() > 0.0 && infoForm.getFtf() > 0.0 && 
-				infoForm.getSampling_frequency() > 0.0 && infoForm.getShaft_frequency() > 0.0 && !infoForm.getBearing_type().equals("")) {
+				infoForm.getSampling_frequency() > 0.0 && infoForm.getShaft_frequency() > 0.0 && !infoForm.getBearing_type().equals("") && !infoForm.getBearing_type().equals(" ")) {
 			try {
 				if (infoForm.getId() == null) {
-					electricService.createDatasetInDB(infoForm);
+					electricService.createDatasetInDB(infoForm, this.sessionActual);
 				} else {
 					electricService.updateDatasetInDB(infoForm);
 				}
@@ -399,6 +403,7 @@ public class BaseController {
 					BufferedImage imgNotFault = electricService.getImage("faultless", 1);
 					String img2FrontNotFaultEncoded = encodeImageToBase64(imgNotFault);
 					model.addAttribute("img2FrontNotFaultEncoded", img2FrontNotFaultEncoded);
+					model.addAttribute("faultInfoTimming", this.getMessage("view.cont.faultless"));
 				}
 
 			} else {
@@ -433,13 +438,13 @@ public class BaseController {
 				}
 				switch (response.getFault_info()) {
 				case "A fault has been detected in an early stage":
-					model.addAttribute("faultInfoTimming", this.getMessage("view.landing.title"));
+					model.addAttribute("faultInfoTimming", this.getMessage("view.cont.fault.info.first"));
 					break;
 				case "A fault has been detected in a medium stage":
-					model.addAttribute("faultInfoTimming", this.getMessage("view.landing.title"));
+					model.addAttribute("faultInfoTimming", this.getMessage("view.cont.fault.info.second"));
 					break;
 				case "A fault has been detected in a last degradation stage":
-					model.addAttribute("faultInfoTimming", this.getMessage("view.landing.title"));
+					model.addAttribute("faultInfoTimming", this.getMessage("view.cont.fault.info.third"));
 					break;
 
 				}

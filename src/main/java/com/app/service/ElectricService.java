@@ -142,8 +142,8 @@ public class ElectricService {
 		}
 	}
 
-	public String createDatasetInDB(DatasetInformationDTO info) throws ConnectException {
-		String url = "http://127.0.0.1:5000/createDataset";
+	public String createDatasetInDB(DatasetInformationDTO info, String user) throws ConnectException {
+		String url = "http://127.0.0.1:5000/createDataset/" + user;
 		String response = null;
 
 		HttpHeaders headers = new HttpHeaders();
