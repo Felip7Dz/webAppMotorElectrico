@@ -97,6 +97,7 @@ public class ElectricService {
 		}
 	}
 
+	/**
 	public ResponseEntity<String> uploadDataset(MultipartFile file, String user) {
 		String apiUrl = "http://127.0.0.1:5000/guardar_archivo/" + user;
 
@@ -123,7 +124,8 @@ public class ElectricService {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el archivo");
 		}
 	}
-
+	*/
+	
 	public DatasetInformationDTO getDatasetInfo(String name) throws ConnectException {
 		String url = "http://127.0.0.1:5000/getDatasetByName/" + name;
 		DatasetInformationDTO response = null;
