@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +30,9 @@ import com.app.dto.DatasetInformationDTO;
 import com.app.dto.DatasetsResponseDTO;
 import com.app.dto.RunRequestDTO;
 import com.app.dto.RunResponseDTO;
+import com.app.dto.UserDTO;
 import com.app.service.ElectricService;
+import com.app.service.LoginService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -43,8 +46,12 @@ public class BaseController {
 	@Autowired
 	private ElectricService electricService;
 	
+	@Autowired
+	private LoginService loginService;
+	
 	private String errorsH = "";
-	private String sessionActual = "";
+	private String loggedUser = "";
+	private String loggedUserRole = "";
 
 	public BaseController(ElectricService electricService) {
 		this.electricService = electricService;
@@ -62,14 +69,22 @@ public class BaseController {
 	public String home(Model model, HttpServletRequest request) {
 		Principal test = request.getUserPrincipal();
 	
-		this.sessionActual = test.getName();
-
+		this.loggedUser = test.getName();
+		
 		try {
 			List<String> pdatasets = electricService.getAllDatasets();
 			List<String> savedatasets = null;
 			
-			if(!"admin".equals(this.sessionActual)) {
-				savedatasets = electricService.getSavedDatasets(this.sessionActual);
+			ArrayList<UserDTO>listUsers = loginService.getAllUsers();
+			for (int i = 0; i < listUsers.size(); i++) {
+				if(listUsers.get(i).getUsuario().equals(this.loggedUser)) {
+					this.loggedUserRole = listUsers.get(i).getRole();
+					break;
+				}
+			}			
+			
+			if(!"ADMIN".equals(this.loggedUserRole) ) {
+				savedatasets = electricService.getSavedDatasets(this.loggedUser);
 			}else {
 				savedatasets = electricService.getAllSavedDatasets();
 			}
@@ -94,7 +109,7 @@ public class BaseController {
 
 			model.addAttribute("resultDatatest", show);
 			model.addAttribute("resultSavedDatatest", showSavec);
-			model.addAttribute("loggedUser", this.sessionActual);
+			model.addAttribute("loggedUser", this.loggedUser);
 
 			if (!this.errorsH.isEmpty()) {
 				model.addAttribute("errorsH", errorsH);
@@ -110,7 +125,7 @@ public class BaseController {
 	@PostMapping(MappingConstants.DELETE_DATASET)
 	public String delete(@RequestParam("item") String item) {
 		try {
-			electricService.delete(item, this.sessionActual);
+			electricService.delete(item, this.loggedUser);
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
@@ -165,7 +180,7 @@ public class BaseController {
 			model.addAttribute("formData", info);
 			model.addAttribute("formDataCheck", info);
 		}
-		model.addAttribute("loggedUser", this.sessionActual);
+		model.addAttribute("loggedUser", this.loggedUser);
 		return ViewConstants.VIEW_PRELOADED_PAGE;
 	}
 
@@ -184,11 +199,11 @@ public class BaseController {
 			if (data2Run.getAnalyzed_number_req() > 0 && data2Run.getHealthy_number_req() > 0 && info.getMax_to_check() >= data2Run.getAnalyzed_number_req() && info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
-				response = electricService.run(data2Run, this.sessionActual, 0);
-				img1 = electricService.getImage(this.sessionActual, 1);
-				img2 = electricService.getImage(this.sessionActual, 2);
-				img3 = electricService.getImage(this.sessionActual, 3);
-				img4 = electricService.getImage(this.sessionActual, 4);
+				response = electricService.run(data2Run, this.loggedUser, 0);
+				img1 = electricService.getImage(this.loggedUser, 1);
+				img2 = electricService.getImage(this.loggedUser, 2);
+				img3 = electricService.getImage(this.loggedUser, 3);
+				img4 = electricService.getImage(this.loggedUser, 4);
 
 				if (img1 != null) {
 					String img2Front1Encoded = encodeImageToBase64(img1);
@@ -260,7 +275,7 @@ public class BaseController {
 			model.addAttribute("errors", errors);
 		}
 		model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
-		model.addAttribute("loggedUser", this.sessionActual);
+		model.addAttribute("loggedUser", this.loggedUser);
 		return ViewConstants.VIEW_PRELOADED_PAGE;
 	}
 
@@ -276,7 +291,7 @@ public class BaseController {
 			Model model) {
 		DatasetInformationDTO info = new DatasetInformationDTO();
 		String[] tmp = selectedSavedModel.split("\\.");
-		if("admin".equals(this.sessionActual)) {
+		if("ADMIN".equals(this.loggedUserRole)) {
 			String[] tmp2 = tmp[0].split("\\(");
 			tmp[0] = tmp2[0];
 		}
@@ -310,7 +325,7 @@ public class BaseController {
 			model.addAttribute("formData", info);
 		}
 		this.errorsH = "";
-		model.addAttribute("loggedUser", this.sessionActual);
+		model.addAttribute("loggedUser", this.loggedUser);
 		return ViewConstants.VIEW_NEWLOADED_PAGE;
 	}
 
@@ -323,7 +338,7 @@ public class BaseController {
 				infoForm.getSampling_frequency() > 0.0 && infoForm.getShaft_frequency() > 0.0 && !infoForm.getBearing_type().equals("") && !infoForm.getBearing_type().equals(" ")) {
 			try {
 				if (infoForm.getId() == null) {
-					electricService.createDatasetInDB(infoForm, this.sessionActual);
+					electricService.createDatasetInDB(infoForm, this.loggedUser);
 				} else {
 					electricService.updateDatasetInDB(infoForm);
 				}
@@ -351,8 +366,8 @@ public class BaseController {
 					String healthyFileName = "healthy" + name + "." + extension1;
 					String newSampleFileName = name + "." + extension2;
 					
-					electricService.uploadDataSample(healthy, healthyFileName, id, this.sessionActual);
-					electricService.uploadDataSample(newSample, newSampleFileName, id, this.sessionActual);
+					electricService.uploadDataSample(healthy, healthyFileName, id, this.loggedUser);
+					electricService.uploadDataSample(newSample, newSampleFileName, id, this.loggedUser);
 				} else {
 					this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + " " + this.getMessage("view.cont.ext.second");
 				}
@@ -371,7 +386,7 @@ public class BaseController {
 		String healthyName = "healthy" + nombre + ".csv";
 		String regularName = nombre + ".csv";
 		try {
-			electricService.deleteSample(healthyName, regularName, id, this.sessionActual);
+			electricService.deleteSample(healthyName, regularName, id, this.loggedUser);
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
@@ -393,11 +408,11 @@ public class BaseController {
 			if (data2Run.getAnalyzed_number_req() > 0 && data2Run.getHealthy_number_req() > 0 && info.getMax_to_check() >= data2Run.getAnalyzed_number_req() && info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
-				response = electricService.run(data2Run, this.sessionActual, 1);
-				img1 = electricService.getImage(this.sessionActual, 1);
-				img2 = electricService.getImage(this.sessionActual, 2);
-				img3 = electricService.getImage(this.sessionActual, 3);
-				img4 = electricService.getImage(this.sessionActual, 4);
+				response = electricService.run(data2Run, this.loggedUser, 1);
+				img1 = electricService.getImage(this.loggedUser, 1);
+				img2 = electricService.getImage(this.loggedUser, 2);
+				img3 = electricService.getImage(this.loggedUser, 3);
+				img4 = electricService.getImage(this.loggedUser, 4);
 
 				if (img1 != null) {
 					String img2Front1Encoded = encodeImageToBase64(img1);
@@ -469,7 +484,7 @@ public class BaseController {
 			model.addAttribute("errors", errors);
 		}
 		model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
-		model.addAttribute("loggedUser", this.sessionActual);
+		model.addAttribute("loggedUser", this.loggedUser);
 		return ViewConstants.VIEW_NEWLOADED_PAGE;
 	}
 }

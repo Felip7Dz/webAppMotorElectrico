@@ -19,6 +19,7 @@ public class Usuario {
 	private String apellido;
 	private String email;
 	private String passw;
+	private String roles;
 
 	public int getId() {
 		return id;
@@ -66,5 +67,13 @@ public class Usuario {
 
 	public void setPassword(String passw) {
 		this.passw = passw;
+	}
+
+	public String getRoles() {
+		return roles;
+	}
+
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
 }
