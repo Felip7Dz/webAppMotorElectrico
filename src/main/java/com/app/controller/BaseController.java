@@ -39,8 +39,10 @@ public class BaseController {
 	
 	@Autowired
 	private MessageSource messageSource;
-
-	private final ElectricService electricService;
+	
+	@Autowired
+	private ElectricService electricService;
+	
 	private String errorsH = "";
 	private String sessionActual = "";
 
@@ -64,7 +66,13 @@ public class BaseController {
 
 		try {
 			List<String> pdatasets = electricService.getAllDatasets();
-			List<String> savedatasets = electricService.getAllSavedDatasets(this.sessionActual);
+			List<String> savedatasets = null;
+			
+			if(!"admin".equals(this.sessionActual)) {
+				savedatasets = electricService.getSavedDatasets(this.sessionActual);
+			}else {
+				savedatasets = electricService.getAllSavedDatasets();
+			}
 			
 			if(pdatasets.size() == 0) {
 				model.addAttribute("errorsAPI", this.getMessage("view.home.api.connection"));
@@ -79,7 +87,7 @@ public class BaseController {
 			DatasetsResponseDTO show = new DatasetsResponseDTO();
 			show.setModelsList(pdatasets);
 			show.setModelsNames(pdatasetsNames);
-
+			
 			DatasetsResponseDTO showSavec = new DatasetsResponseDTO();
 			showSavec.setModelsList(savedatasets);
 			showSavec.setModelsNames(savedatasetsNames);
@@ -268,6 +276,10 @@ public class BaseController {
 			Model model) {
 		DatasetInformationDTO info = new DatasetInformationDTO();
 		String[] tmp = selectedSavedModel.split("\\.");
+		if("admin".equals(this.sessionActual)) {
+			String[] tmp2 = tmp[0].split("\\(");
+			tmp[0] = tmp2[0];
+		}
 
 		try {
 			info = electricService.getDatasetInfo(tmp[0]);

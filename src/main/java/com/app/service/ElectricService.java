@@ -58,8 +58,26 @@ public class ElectricService {
 		}
 	}
 
-	public List<String> getAllSavedDatasets(String user) throws ConnectException {
+	public List<String> getSavedDatasets(String user) throws ConnectException {
 		String url = "http://127.0.0.1:5000/getSavedModelsList/" + user;
+		DatasetsResponseDTO response = null;
+
+		try {
+			response = restTemplate.getForObject(url, DatasetsResponseDTO.class);
+		} catch (ResourceAccessException e) {
+			System.err.println("Error de conexión con la API: " + e.getMessage());
+			return Collections.emptyList();
+		}
+
+		if (response != null) {
+			return response.getModelsList();
+		} else {
+			return Collections.emptyList();
+		}
+	}
+	
+	public List<String> getAllSavedDatasets() throws ConnectException {
+		String url = "http://127.0.0.1:5000/getAllSavedModelsList";
 		DatasetsResponseDTO response = null;
 
 		try {
