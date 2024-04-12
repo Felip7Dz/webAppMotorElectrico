@@ -5,7 +5,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,7 +74,7 @@ public class BaseController {
 			List<String> pdatasets = electricService.getAllDatasets();
 			List<String> savedatasets = null;
 			
-			ArrayList<UserDTO>listUsers = loginService.getAllUsers();
+			List<UserDTO>listUsers = loginService.getAllUsers();
 			for (int i = 0; i < listUsers.size(); i++) {
 				if(listUsers.get(i).getUsuario().equals(this.loggedUser)) {
 					this.loggedUserRole = listUsers.get(i).getRole();
@@ -131,37 +130,6 @@ public class BaseController {
 		}
 		return ViewConstants.REDIRECT_HOME_PAGE;
 	}
-	
-	/**
-	@PostMapping(MappingConstants.UPLOAD_DATASET)
-	public String guardarArchivo(@RequestParam("model2Save") MultipartFile archivo, Model model) {
-		this.errorsH = "";
-		if (archivo.isEmpty()) {
-			return ViewConstants.REDIRECT_HOME_PAGE;
-		}
-		try {
-			String extension = StringUtils.getFilenameExtension(archivo.getOriginalFilename());
-			if (!"csv".equalsIgnoreCase(extension)) {
-				this.errorsH = this.getMessage("view.cont.ext.first") + extension + " " + this.getMessage("view.cont.ext.second");
-				return ViewConstants.REDIRECT_HOME_PAGE;
-			}
-			
-			List<String> savedatasets = electricService.getAllSavedDatasets(this.sessionActual);
-			for (int i = 0; i < savedatasets.size(); i++) {
-				if (archivo.getOriginalFilename().equals(savedatasets.get(i))) {
-					this.errorsH = this.getMessage("view.cont.name.first") + archivo.getOriginalFilename() + " "
-							+ this.getMessage("view.cont.name.second");
-					return ViewConstants.REDIRECT_HOME_PAGE;
-				}
-			}
-			electricService.uploadDataset(archivo, this.sessionActual);
-		} catch (Exception e) {
-			System.err.println("Error al conectar con la API: " + e.getMessage());
-		}
-
-		return ViewConstants.REDIRECT_HOME_PAGE;
-	}
-	 */
 	
 	@GetMapping(MappingConstants.PRE_LOADED)
 	public String preload(@RequestParam(name = "selectedModel", required = true) String selectedModel, Model model) {

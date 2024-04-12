@@ -114,14 +114,16 @@
 	<th:block th:insert="~{/fragments/footer}"></th:block>
 </body>
 <script>
-	$(document).ready(function() {
-		$("#manageLink").css({"display": "inline"});
-		if($("#loggedUserFlag").val() == 'admin'){
-			$("#adminUsersBtt").css({"display": "inline"});
+	$(document).ready(function () {
+		if (!$("#warningsDivAPI").is(":visible")) {
+			$("#manageLink").css({"display": "inline"});
+			if ($("#loggedUserFlag").val() == 'admin') {
+				$("#adminUsersBtt").css({"display": "inline"});
+			}
+			$("#logout").css({"display": "inline"});
 		}
-		$("#logout").css({"display": "inline"});
 	});
-	
+
 	function confirmDelete(usuario) {
 		document.getElementById("confirmDeleteButton").setAttribute("onclick", "eliminarItem('" + usuario + "')");
 

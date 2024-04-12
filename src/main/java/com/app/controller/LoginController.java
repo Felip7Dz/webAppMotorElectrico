@@ -3,6 +3,7 @@ package com.app.controller;
 import java.net.ConnectException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -150,7 +151,7 @@ public class LoginController {
 			return ViewConstants.REDIRECT_HOME_PAGE;
 		}
 		
-		ArrayList<UserDTO> listUsers = new ArrayList<>();
+		List<UserDTO> listUsers = new ArrayList<>();
 		try {
 			listUsers = loginService.getAllUsers();
 		} catch (ConnectException e) {

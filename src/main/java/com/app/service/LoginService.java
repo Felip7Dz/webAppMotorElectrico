@@ -3,6 +3,7 @@ package com.app.service;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -106,17 +107,22 @@ public class LoginService {
 		}
 	}
 
-	public ArrayList<UserDTO> getAllUsers() throws ConnectException {
+	public List<UserDTO> getAllUsers() throws ConnectException {
 		String url = "http://127.0.0.1:5000/getAllUsers";
-		ArrayList<UserDTO> listUsers = new ArrayList<>();
+        ArrayList<UserDTO> listUsers = new ArrayList<>();
 
-		ResponseEntity<UserDTO[]> response = restTemplate.getForEntity(url, UserDTO[].class);
-		if (response.getStatusCode() == HttpStatus.OK) {
-			Collections.addAll(listUsers, response.getBody());
-		}
+        try {
+            ResponseEntity<UserDTO[]> response = restTemplate.getForEntity(url, UserDTO[].class);
+            if (response.getStatusCode() == HttpStatus.OK) {
+                Collections.addAll(listUsers, response.getBody());
+            }
+        } catch (ResourceAccessException e) {
+            System.err.println("Error de conexión con la API: " + e.getMessage());
+            return Collections.emptyList();
+        }
 
-		return listUsers;
-	}
+        return listUsers;
+    }
 
 	public void deleteUser(String user) throws ConnectException {
 	    String url = "http://127.0.0.1:5000/deleteUser/" + user;
