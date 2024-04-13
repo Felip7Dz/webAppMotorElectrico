@@ -104,6 +104,13 @@ $(document).ready(function() {
 		$("#formDataCheckNew").show();
 		$("#runNew").show();
 	}
+	if ($("#files_added").val() == 2) {
+		$("#formNewUpload").hide();
+		$("#allDataLoaded").hide();
+		$("#formDataCheckNew").show();
+		$("#onlyHealthyLoaded").show();
+		$("#runNew").hide();
+	}
 	if ($("#files_added").val() == 0) {
 		$("#formNewUpload").show();
 		$("#formDataCheckNew").hide();
@@ -186,6 +193,24 @@ $("#saveDatasetBtt").click(function() {
 $("#uploadDataSamples").click(function() {
 	$('#uploadingModal').modal('show');
 	$("#formNewUpload").submit();
+});
+
+$("#saveDatasetInfoBtt").click(function() {
+	if ($("#nombre").val() == "New Dataset") {
+		event.preventDefault();
+		$("#dataInfoNotFoundH4").text("You must change the name.");
+		$("#warningsDivNew").css({ "background-color": "red", "border": "red" });
+	}
+});
+
+$("#uploadDataSampleBtt").click(function() {
+	if ($("#uploadDataSampleInput").val() == '') {
+		event.preventDefault();
+	} else {
+		$("#name2send2").val($("#name2send").val());
+		$("#id2send2").val($("#id2send").val());
+		$('#uploadingModal').modal('show');
+	}
 });
 
 $("#runPre").click(function() {

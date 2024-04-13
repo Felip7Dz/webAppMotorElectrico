@@ -11,11 +11,13 @@
 				<h4 th:text="${errors}" style="margin-bottom: 0; margin-left: 1%;"></h4>
 			</div>
 		</div>
-		<form id="formData" name="formData" th:object="${formData}" action="/webAppMotorElectrico/saveDataset" method="get">
+		<form id="formData" name="formData" th:object="${formData}" action="/webAppMotorElectrico/saveDataset"
+			method="get">
 			<div th:if="${formData.id == null}">
 				<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDivNew">
 					<span class="material-symbols-outlined">warning </span>
-					<h4 th:text="#{view.load.check.exists}" id="dataInfoNotFoundH4" style="margin-bottom: 0; margin-left: 1%;"></h4>
+					<h4 th:text="#{view.load.check.exists}" id="dataInfoNotFoundH4"
+						style="margin-bottom: 0; margin-left: 1%;"></h4>
 				</div>
 			</div>
 			<div th:if="${errorsVals}">
@@ -31,7 +33,8 @@
 					<input type="text" class="head-new-input" th:field="*{nombre}" maxlength="15">
 				</div>
 				<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
-					<button type="submit" id="saveDatasetInfoBtt" style="width: 100%; margin: auto;" th:text="#{view.load.save.btt}"></button>
+					<button type="submit" id="saveDatasetInfoBtt" style="width: 100%; margin: auto;"
+						th:text="#{view.load.save.btt}"></button>
 				</div>
 			</div>
 			<div class="row justify-content-between mt-4">
@@ -225,7 +228,8 @@
 		<br>
 		<div class="row align-items-center justify-content-between">
 			<div class="col-12 col-xl-5 mb-4">
-				<form id="formNewUpload" method="post" action="/webAppMotorElectrico/uploadNewData" enctype="multipart/form-data">
+				<form id="formNewUpload" method="post" action="/webAppMotorElectrico/uploadNewData"
+					enctype="multipart/form-data">
 					<input type="hidden" id="id2send" name="id2send" value="">
 					<input type="hidden" id="name2send" name="name2send" value="">
 					<div class="col-8">
@@ -236,16 +240,10 @@
 							</div>
 						</div>
 						<div class="row align-items-center">
-							<div class="col-6">
+							<div class="col-12">
 								<label for="healthyData" class="drop-container" id="dropcontainer">
 									<span class="drop-title" th:text="#{view.load.health.btt}"></span>
-									<input type="file" id="file1" name="healthyData2Save" required>
-								</label>
-							</div>
-							<div class="col-6">
-								<label for="newData" class="drop-container" id="dropcontainer">
-									<span class="drop-title" th:text="#{view.load.new.btt}"></span>
-									<input type="file" id="file2" name="newSample2Save" required>
+									<input type="file" id="file1" name="healthyData2Save" multiple required>
 								</label>
 							</div>
 						</div>
@@ -267,10 +265,11 @@
 							<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center mb-2"></div>
 							<div class="col-12 col-xl-3 d-flex justify-content-center align-items-center">
 								<button type="button" th:onclick="eliminarSample(/*[[*{nombre}]]*/, /*[[*{id}]]*/)"
-									style="width: 100%; margin: auto;" th:text="#{view.load.erase.data}">Erase Data</button>
+									style="width: 100%; margin: auto;" th:text="#{view.load.erase.data}">Erase
+									Data</button>
 							</div>
 						</div>
-						<div class="row justify-content-between align-items-center mt-2">
+						<div class="row justify-content-between align-items-center mt-2" id="allDataLoaded">
 							<div class="col-12 col-xl-4 d-flex justify-content-center align-items-center">
 								<span th:text="#{view.load.select.check}"></span>
 							</div>
@@ -286,38 +285,52 @@
 									class="onlyNums" maxlength="6" th:field="*{max_to_check}">
 							</div>
 						</div>
+				</form>
+				<form id="formUploadDataSample" method="post" action="/webAppMotorElectrico/uploadDataSample"
+					enctype="multipart/form-data">
+					<input type="hidden" id="id2send2" name="id2send2" value="">
+					<input type="hidden" id="name2send2" name="name2send2" value="">
+					<div class="row justify-content-between align-items-center mt-2" id="onlyHealthyLoaded" style="display: none;">
+						<div class="col-12 col-xl-9 d-flex justify-content-center align-items-center">
+							<input type="file" value="" id="uploadDataSampleInput" name="uploadDataSampleInput" style="width: 100%;">
+						</div>
+						<div class="col-12 col-xl-3 d-flex justify-content-center align-items-center">
+							<button type="submit" id="uploadDataSampleBtt" th:text="#{view.home.save.btt}"
+								style="width: 100%; margin: auto;"></button>
+						</div>
+					</div>
 					</div>
 				</form>
-			</div>
-			<div class="col-12 col-xl-2 d-flex justify-content-center align-items-center mb-4">
-				<form id="runNewform" name="runNewform" action="/webAppMotorElectrico/runNewload" method="post">
-					<input type="hidden" id="nombre_req" name="nombre_req" th:value="${nombre_req}" />
-					<input type="hidden" id="sampling_frequency_req" name="sampling_frequency_req"
-						th:value="${sampling_frequency_req}" />
-					<input type="hidden" id="bpfo_req" name="bpfo_req" th:value="${bpfo_req}" />
-					<input type="hidden" id="bpfi_req" name="bpfi_req" th:value="${bpfi_req}" />
-					<input type="hidden" id="bsf_req" name="bsf_req" th:value="${bsf_req}" />
-					<input type="hidden" id="ftf_req" name="ftf_req" th:value="${ftf_req}" />
-					<input type="hidden" id="first_sample_req" name="first_sample_req" th:value="${first_sample_req}" />
-					<input type="hidden" id="analyzed_number_req" name="analyzed_number_req"
-						th:value="${analyzed_number_req}" />
-					<input type="hidden" id="healthy_number_req" name="healthy_number_req"
-						th:value="${healthy_number_req}" />
-					<button id="runNew" type="button" th:text="#{view.load.run.btt}"></button>
-					<button id="back-btt" type="button" th:text="#{view.load.bck.btt}"
-						onclick="window.location.href = '/webAppMotorElectrico/home';"></button>
-				</form>
-			</div>
-			<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center mb-4">
-				<button type="button" id="pdf1" style="display: none;">
-					<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
-					<span th:text="#{view.load.exp.btt}" style="vertical-align: middle;"></span>
-				</button>
-				<button type="button" id="pdf2" style="display: none;">
-					<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
-					<span th:text="#{view.load.int.btt}" style="vertical-align: middle;"></span>
-				</button>
-			</div>
+		</div>
+		<div class="col-12 col-xl-2 d-flex justify-content-center align-items-center mb-4">
+			<form id="runNewform" name="runNewform" action="/webAppMotorElectrico/runNewload" method="post">
+				<input type="hidden" id="nombre_req" name="nombre_req" th:value="${nombre_req}" />
+				<input type="hidden" id="sampling_frequency_req" name="sampling_frequency_req"
+					th:value="${sampling_frequency_req}" />
+				<input type="hidden" id="bpfo_req" name="bpfo_req" th:value="${bpfo_req}" />
+				<input type="hidden" id="bpfi_req" name="bpfi_req" th:value="${bpfi_req}" />
+				<input type="hidden" id="bsf_req" name="bsf_req" th:value="${bsf_req}" />
+				<input type="hidden" id="ftf_req" name="ftf_req" th:value="${ftf_req}" />
+				<input type="hidden" id="first_sample_req" name="first_sample_req" th:value="${first_sample_req}" />
+				<input type="hidden" id="analyzed_number_req" name="analyzed_number_req"
+					th:value="${analyzed_number_req}" />
+				<input type="hidden" id="healthy_number_req" name="healthy_number_req"
+					th:value="${healthy_number_req}" />
+				<button id="runNew" type="button" th:text="#{view.load.run.btt}"></button>
+				<button id="back-btt" type="button" th:text="#{view.load.bck.btt}"
+					onclick="window.location.href = '/webAppMotorElectrico/home';"></button>
+			</form>
+		</div>
+		<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center mb-4">
+			<button type="button" id="pdf1" style="display: none;">
+				<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
+				<span th:text="#{view.load.exp.btt}" style="vertical-align: middle;"></span>
+			</button>
+			<button type="button" id="pdf2" style="display: none;">
+				<span class="material-symbols-outlined" style="vertical-align: middle;">download</span>
+				<span th:text="#{view.load.int.btt}" style="vertical-align: middle;"></span>
+			</button>
+		</div>
 		</div>
 		<form id="runResForm" name="runResForm" th:object="${runResForm}">
 			<div th:if="${runResForm}">
@@ -342,7 +355,8 @@
 			<div class="modal-content">
 				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front1Encoded}">
-						<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1" style="width: 100%;">
+						<img th:src="@{'data:image/png;base64,' + ${img2Front1Encoded}}" alt="Imagen 1"
+							style="width: 100%;">
 						<br>
 						<span th:text="#{view.load.info.faults}"></span>
 						<span th:text="${faults_Outer_race}"></span>
@@ -361,7 +375,8 @@
 			<div class="modal-content">
 				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front3Encoded}">
-						<img th:src="@{'data:image/png;base64,' + ${img2Front3Encoded}}" alt="Imagen 3" style="width: 100%;">
+						<img th:src="@{'data:image/png;base64,' + ${img2Front3Encoded}}" alt="Imagen 3"
+							style="width: 100%;">
 						<br>
 						<span th:text="#{view.load.info.faults}"></span>
 						<span th:text="${faults_Bearing_Balls}"></span>
@@ -380,7 +395,8 @@
 			<div class="modal-content">
 				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front2Encoded}">
-						<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2" style="width: 100%;">
+						<img th:src="@{'data:image/png;base64,' + ${img2Front2Encoded}}" alt="Imagen 2"
+							style="width: 100%;">
 						<br>
 						<span th:text="#{view.load.info.faults}"></span>
 						<span th:text="${faults_Inner_race}"></span>
@@ -399,7 +415,8 @@
 			<div class="modal-content">
 				<div class="modal-body d-flex align-items-center justify-content-center">
 					<div th:if="${img2Front4Encoded}">
-						<img th:src="@{'data:image/png;base64,' + ${img2Front4Encoded}}" alt="Imagen 4" style="width: 100%;">
+						<img th:src="@{'data:image/png;base64,' + ${img2Front4Encoded}}" alt="Imagen 4"
+							style="width: 100%;">
 						<br>
 						<span th:text="#{view.load.info.faults}"></span>
 						<span th:text="${faults_Cage}"></span>
@@ -421,19 +438,12 @@
 			$("#adminUsersBtt").css({"display": "inline"});
 		}
 		$("#logout").css({"display": "inline"});
-		
-		if(!$("#dataInfoNotFoundH4").is(":visible")){
+
+		if (!$("#dataInfoNotFoundH4").is(":visible")) {
 			$("#semaforoDiv").css({"display": "inline"});
 			$("#allImagesDiv").css({"display": "inline"});
 		}
 	});
-	
-	$("#saveDatasetInfoBtt").click(function () {
-		if ($("#nombre").val() == "New Dataset") {
-			event.preventDefault();
-			$("#dataInfoNotFoundH4").text("You must change the name.");
-			$("#warningsDivNew").css({"background-color": "red", "border": "red"});
-		}
-	});
 </script>
+
 </html>

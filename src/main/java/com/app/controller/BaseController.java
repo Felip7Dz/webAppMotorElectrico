@@ -307,6 +307,7 @@ public class BaseController {
 			try {
 				if (infoForm.getId() == null) {
 					electricService.createDatasetInDB(infoForm, this.loggedUser);
+					return ViewConstants.REDIRECT_HOME_PAGE;
 				} else {
 					electricService.updateDatasetInDB(infoForm);
 				}
@@ -321,26 +322,68 @@ public class BaseController {
 	}
 
 	@PostMapping(MappingConstants.UPLOAD_NEW_DATASET)
-	public String guardarNewArchivos(@RequestParam("healthyData2Save") MultipartFile healthy,
-			@RequestParam("newSample2Save") MultipartFile newSample,
+	public String guardarNewArchivos(@RequestParam("healthyData2Save") MultipartFile[] dataFiles,
 			@RequestParam("name2send") String name, @RequestParam("id2send") int id, Model model) {
-		
+		if (dataFiles.length > 2) {
+			return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
+		}
+		if (dataFiles[0].isEmpty()) {
+			this.errorsH = this.getMessage("view.cont.file.not");
+			return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
+		}
 		this.errorsH = "";
 		try {
-			if (!healthy.isEmpty() && !newSample.isEmpty()) {
-				String extension1 = StringUtils.getFilenameExtension(healthy.getOriginalFilename());
-				String extension2 = StringUtils.getFilenameExtension(newSample.getOriginalFilename());
+			if (dataFiles.length == 2) {
+				String extension1 = StringUtils.getFilenameExtension(dataFiles[0].getOriginalFilename());
+				String extension2 = StringUtils.getFilenameExtension(dataFiles[1].getOriginalFilename());
 				if ("csv".equalsIgnoreCase(extension1) && "csv".equalsIgnoreCase(extension2)) {
 					String healthyFileName = "healthy" + name + "." + extension1;
 					String newSampleFileName = name + "." + extension2;
-					
-					electricService.uploadDataSample(healthy, healthyFileName, id, this.loggedUser);
-					electricService.uploadDataSample(newSample, newSampleFileName, id, this.loggedUser);
+					if (dataFiles[0].getSize() < dataFiles[1].getSize()) {
+						electricService.uploadDataSample(dataFiles[0], healthyFileName, id, this.loggedUser);
+						electricService.uploadDataSample(dataFiles[1], newSampleFileName, id, this.loggedUser);
+					} else {
+						electricService.uploadDataSample(dataFiles[1], healthyFileName, id, this.loggedUser);
+						electricService.uploadDataSample(dataFiles[0], newSampleFileName, id, this.loggedUser);
+					}
 				} else {
-					this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + " " + this.getMessage("view.cont.ext.second");
+					this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + " "
+							+ this.getMessage("view.cont.ext.second");
 				}
+			}
+			if (dataFiles.length == 1) {
+				String extension1 = StringUtils.getFilenameExtension(dataFiles[0].getOriginalFilename());
+				if ("csv".equalsIgnoreCase(extension1)) {
+					String healthyFileName = "healthy" + name + "." + extension1;
+					electricService.uploadDataSample(dataFiles[0], healthyFileName, id, this.loggedUser);
+				} else {
+					this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + " "
+							+ this.getMessage("view.cont.ext.second");
+				}
+			}
+		} catch (Exception e) {
+			System.err.println("Error al conectar con la API: " + e.getMessage());
+		}
+
+		return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
+	}
+	
+	@PostMapping("/uploadDataSample")
+	public String guardarNewDataSample(@RequestParam("uploadDataSampleInput") MultipartFile dataFiles,
+			@RequestParam("name2send2") String name, @RequestParam("id2send2") int id, Model model) {
+		if (dataFiles.isEmpty()) {
+			this.errorsH = this.getMessage("view.cont.file.not");
+			return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
+		}
+		this.errorsH = "";
+		try {
+			String extension1 = StringUtils.getFilenameExtension(dataFiles.getOriginalFilename());
+			if ("csv".equalsIgnoreCase(extension1)) {
+				String newSampleFileName = name + "." + extension1;
+				electricService.uploadDataSample(dataFiles, newSampleFileName, id, this.loggedUser);
 			} else {
-				this.errorsH = this.getMessage("view.cont.file.not");
+				this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + " "
+						+ this.getMessage("view.cont.ext.second");
 			}
 		} catch (Exception e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
