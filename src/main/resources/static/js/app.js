@@ -37,7 +37,10 @@ $(document).ready(function() {
 		if (selectedCheckbox.length === 1) {
 			formToSubmit.submit();
 		} else {
-			$('#myModal').modal('show');
+			$('#myModal').modal({
+            backdrop: 'static',
+            keyboard: false 
+        }).modal('show');
 		}
 	});
 
@@ -186,12 +189,18 @@ function eliminarSample(nombre, id) {
 }
 
 $("#saveDatasetBtt").click(function() {
-	$('#uploadingModal').modal('show');
+	$('#uploadingModal').modal({
+            backdrop: 'static',
+            keyboard: false 
+        }).modal('show');
 	$("#formUpload").submit();
 });
 
 $("#uploadDataSamples").click(function() {
-	$('#uploadingModal').modal('show');
+	$('#uploadingModal').modal({
+            backdrop: 'static',
+            keyboard: false 
+        }).modal('show');
 	$("#formNewUpload").submit();
 });
 
@@ -209,7 +218,10 @@ $("#uploadDataSampleBtt").click(function() {
 	} else {
 		$("#name2send2").val($("#name2send").val());
 		$("#id2send2").val($("#id2send").val());
-		$('#uploadingModal').modal('show');
+		$('#uploadingModal').modal({
+            backdrop: 'static',
+            keyboard: false 
+        }).modal('show');
 	}
 });
 

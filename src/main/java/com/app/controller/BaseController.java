@@ -51,6 +51,7 @@ public class BaseController {
 	private String errorsH = "";
 	private String loggedUser = "";
 	private String loggedUserRole = "";
+	private String ownerUser = "";
 
 	public BaseController(ElectricService electricService) {
 		this.electricService = electricService;
@@ -118,6 +119,7 @@ public class BaseController {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
 		this.errorsH = "";
+		this.ownerUser = "";
 		return ViewConstants.VIEW_HOME_PAGE;
 	}
 
@@ -261,7 +263,10 @@ public class BaseController {
 		String[] tmp = selectedSavedModel.split("\\.");
 		if("ADMIN".equals(this.loggedUserRole)) {
 			String[] tmp2 = tmp[0].split("\\(");
-			tmp[0] = tmp2[0];
+			tmp[0] = tmp2[0].trim();
+			if(this.ownerUser == "") {
+				this.ownerUser = tmp2[1].trim().substring(0, tmp2[1].length() - 1);
+			}
 		}
 
 		try {
@@ -324,6 +329,14 @@ public class BaseController {
 	@PostMapping(MappingConstants.UPLOAD_NEW_DATASET)
 	public String guardarNewArchivos(@RequestParam("healthyData2Save") MultipartFile[] dataFiles,
 			@RequestParam("name2send") String name, @RequestParam("id2send") int id, Model model) {
+		
+		String owner = "";
+		if(this.ownerUser != "") {
+			owner = this.ownerUser;
+		}else {
+			owner = this.loggedUser;
+		}
+		
 		if (dataFiles.length > 2) {
 			return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
 		}
@@ -340,11 +353,11 @@ public class BaseController {
 					String healthyFileName = "healthy" + name + "." + extension1;
 					String newSampleFileName = name + "." + extension2;
 					if (dataFiles[0].getSize() < dataFiles[1].getSize()) {
-						electricService.uploadDataSample(dataFiles[0], healthyFileName, id, this.loggedUser);
-						electricService.uploadDataSample(dataFiles[1], newSampleFileName, id, this.loggedUser);
+						electricService.uploadDataSample(dataFiles[0], healthyFileName, id, owner);
+						electricService.uploadDataSample(dataFiles[1], newSampleFileName, id, owner);
 					} else {
-						electricService.uploadDataSample(dataFiles[1], healthyFileName, id, this.loggedUser);
-						electricService.uploadDataSample(dataFiles[0], newSampleFileName, id, this.loggedUser);
+						electricService.uploadDataSample(dataFiles[1], healthyFileName, id, owner);
+						electricService.uploadDataSample(dataFiles[0], newSampleFileName, id, owner);
 					}
 				} else {
 					this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + " "
@@ -355,7 +368,7 @@ public class BaseController {
 				String extension1 = StringUtils.getFilenameExtension(dataFiles[0].getOriginalFilename());
 				if ("csv".equalsIgnoreCase(extension1)) {
 					String healthyFileName = "healthy" + name + "." + extension1;
-					electricService.uploadDataSample(dataFiles[0], healthyFileName, id, this.loggedUser);
+					electricService.uploadDataSample(dataFiles[0], healthyFileName, id, owner);
 				} else {
 					this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + " "
 							+ this.getMessage("view.cont.ext.second");
@@ -364,7 +377,6 @@ public class BaseController {
 		} catch (Exception e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
-
 		return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
 	}
 	
@@ -376,11 +388,19 @@ public class BaseController {
 			return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
 		}
 		this.errorsH = "";
+		
+		String owner = "";
+		if(this.ownerUser != "") {
+			owner = this.ownerUser;
+		}else {
+			owner = this.loggedUser;
+		}
+		
 		try {
 			String extension1 = StringUtils.getFilenameExtension(dataFiles.getOriginalFilename());
 			if ("csv".equalsIgnoreCase(extension1)) {
 				String newSampleFileName = name + "." + extension1;
-				electricService.uploadDataSample(dataFiles, newSampleFileName, id, this.loggedUser);
+				electricService.uploadDataSample(dataFiles, newSampleFileName, id, owner);
 			} else {
 				this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + " "
 						+ this.getMessage("view.cont.ext.second");
@@ -388,7 +408,6 @@ public class BaseController {
 		} catch (Exception e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
-
 		return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
 	}
 	
@@ -396,8 +415,14 @@ public class BaseController {
 	public String deleteSample(@RequestParam("nombre") String nombre, @RequestParam("id") int id) {
 		String healthyName = "healthy" + nombre + ".csv";
 		String regularName = nombre + ".csv";
+		String owner = "";
+		if(this.ownerUser != "") {
+			owner = this.ownerUser;
+		}else {
+			owner = this.loggedUser;
+		}
 		try {
-			electricService.deleteSample(healthyName, regularName, id, this.loggedUser);
+			electricService.deleteSample(healthyName, regularName, id, owner);
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
@@ -413,17 +438,24 @@ public class BaseController {
 		BufferedImage img2 = null;
 		BufferedImage img3 = null;
 		BufferedImage img4 = null;
-
+		
+		String owner = "";
+		if(this.ownerUser != "") {
+			owner = this.ownerUser;
+		}else {
+			owner = this.loggedUser;
+		}
+		
 		try {
 			info = electricService.getDatasetInfo(data2Run.getNombre_req());
 			if (data2Run.getAnalyzed_number_req() > 0 && data2Run.getHealthy_number_req() > 0 && info.getMax_to_check() >= data2Run.getAnalyzed_number_req() && info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
-				response = electricService.run(data2Run, this.loggedUser, 1);
-				img1 = electricService.getImage(this.loggedUser, 1);
-				img2 = electricService.getImage(this.loggedUser, 2);
-				img3 = electricService.getImage(this.loggedUser, 3);
-				img4 = electricService.getImage(this.loggedUser, 4);
+				response = electricService.run(data2Run, owner, 1);
+				img1 = electricService.getImage(owner, 1);
+				img2 = electricService.getImage(owner, 2);
+				img3 = electricService.getImage(owner, 3);
+				img4 = electricService.getImage(owner, 4);
 
 				if (img1 != null) {
 					String img2Front1Encoded = encodeImageToBase64(img1);
