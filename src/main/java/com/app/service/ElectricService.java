@@ -204,8 +204,8 @@ public class ElectricService {
 		}
 	}
 
-	public RunResponseDTO run(RunRequestDTO data2Run, String sess, int flag) {
-		String url = "http://127.0.0.1:5000/analyze_data/" + sess + "/" + flag;
+	public RunResponseDTO run(RunRequestDTO data2Run, String user, int flag) {
+		String url = "http://127.0.0.1:5000/analyze_data/" + user + "/" + flag;
 
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
@@ -262,7 +262,14 @@ public class ElectricService {
 
 			HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-			return restTemplate.postForEntity(apiUrl, requestEntity, String.class);
+	        ResponseEntity<String> response = restTemplate.postForEntity(apiUrl, requestEntity, String.class);
+
+	        // Manejar el código de estado 400 (Bad Request)
+	        if (response.getStatusCode() == HttpStatus.BAD_REQUEST) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El archivo no cumple con los requisitos.");
+	        }
+
+	        return response;
 
 		} catch (IOException e) {
 			System.err.println("Error de E/S al leer el archivo: " + e.getMessage());

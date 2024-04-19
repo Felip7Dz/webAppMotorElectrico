@@ -1,9 +1,9 @@
 $(document).ready(function() {
-	
-	if($("#loggedUserFlag").val() != "admin"){
+
+	if ($("#loggedUserFlag").val() != "admin") {
 		$("#adminUsersBtt").hide();
 	}
-	
+
 	const dropContainer = $("#dropcontainer");
 	const fileInput = $("#file");
 
@@ -38,9 +38,9 @@ $(document).ready(function() {
 			formToSubmit.submit();
 		} else {
 			$('#myModal').modal({
-            backdrop: 'static',
-            keyboard: false 
-        }).modal('show');
+				backdrop: 'static',
+				keyboard: false
+			}).modal('show');
 		}
 	});
 
@@ -57,7 +57,7 @@ $(document).ready(function() {
 		var faultTypes = $("#fault_type").val();
 
 		var faultTypesArray = faultTypes.split(',');
-		
+
 		if ($("#fault_info").val() == 'A fault has been detected in an early stage') {
 			$(".circle").each(function() {
 				var circleId = $(this).attr("id");
@@ -88,7 +88,7 @@ $(document).ready(function() {
 				}
 			});
 		}
-		
+
 		$("#pdf1").css("display", "inline");
 		$("#pdf2").css("display", "inline");
 		$("#imgph1").hide();
@@ -105,6 +105,8 @@ $(document).ready(function() {
 	if ($("#files_added").val() == 1) {
 		$("#formNewUpload").hide();
 		$("#formDataCheckNew").show();
+		$("#semaforoDiv").show();
+		$("#allImagesDiv").show();
 		$("#runNew").show();
 	}
 	if ($("#files_added").val() == 2) {
@@ -112,11 +114,15 @@ $(document).ready(function() {
 		$("#allDataLoaded").hide();
 		$("#formDataCheckNew").show();
 		$("#onlyHealthyLoaded").show();
+		$("#semaforoDiv").hide();
+		$("#allImagesDiv").hide();
 		$("#runNew").hide();
 	}
 	if ($("#files_added").val() == 0) {
 		$("#formNewUpload").show();
 		$("#formDataCheckNew").hide();
+		$("#semaforoDiv").hide();
+		$("#allImagesDiv").hide();
 		$("#runNew").hide();
 	}
 
@@ -143,10 +149,10 @@ $(document).ready(function() {
 });
 
 $(document).on('keydown', function(event) {
-    if ($('#loadingModal').is(':visible') && event.keyCode === 27) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
+	if ($('#loadingModal').is(':visible') && event.keyCode === 27) {
+		event.preventDefault();
+		event.stopPropagation();
+	}
 });
 
 function eliminarUser(item) {
@@ -190,17 +196,17 @@ function eliminarSample(nombre, id) {
 
 $("#saveDatasetBtt").click(function() {
 	$('#uploadingModal').modal({
-            backdrop: 'static',
-            keyboard: false 
-        }).modal('show');
+		backdrop: 'static',
+		keyboard: false
+	}).modal('show');
 	$("#formUpload").submit();
 });
 
 $("#uploadDataSamples").click(function() {
 	$('#uploadingModal').modal({
-            backdrop: 'static',
-            keyboard: false 
-        }).modal('show');
+		backdrop: 'static',
+		keyboard: false
+	}).modal('show');
 	$("#formNewUpload").submit();
 });
 
@@ -219,14 +225,15 @@ $("#uploadDataSampleBtt").click(function() {
 		$("#name2send2").val($("#name2send").val());
 		$("#id2send2").val($("#id2send").val());
 		$('#uploadingModal').modal({
-            backdrop: 'static',
-            keyboard: false 
-        }).modal('show');
+			backdrop: 'static',
+			keyboard: false
+		}).modal('show');
 	}
 });
 
 $("#runPre").click(function() {
 	var nombre = $("#nombre").val();
+	var shaftFrequency = $("#shaft_frequency").val();
 	var samplingFrequency = $("#sampling_frequency").val();
 	var bpfo = $("#bpfo").val();
 	var bpfi = $("#bpfi").val();
@@ -238,6 +245,7 @@ $("#runPre").click(function() {
 
 	if (n_healthy != '' && firstSample != '' && analyzedNumber != '') {
 		$("#nombre_req").val(nombre);
+		$("#shaft_frequency_req").val(shaftFrequency);
 		$("#sampling_frequency_req").val(samplingFrequency);
 		$("#bpfo_req").val(bpfo);
 		$("#bpfi_req").val(bpfi);
@@ -248,18 +256,19 @@ $("#runPre").click(function() {
 		$("#healthy_number_req").val(n_healthy);
 
 		$('#loadingModal').modal({
-            backdrop: 'static',
-            keyboard: false 
-        }).modal('show');
-		
+			backdrop: 'static',
+			keyboard: false
+		}).modal('show');
+
 		$("#runPreform").submit();
-	}else{
+	} else {
 		location.reload();
 	}
 });
 
 $("#runNew").click(function() {
 	var nombre = $("#nombre").val();
+	var shaftFrequency = $("#shaft_frequency").val();
 	var samplingFrequency = $("#sampling_frequency").val();
 	var bpfo = $("#bpfo").val();
 	var bpfi = $("#bpfi").val();
@@ -271,6 +280,7 @@ $("#runNew").click(function() {
 
 	if (n_healthy != '' && firstSample != '' && analyzedNumber != '') {
 		$("#nombre_req").val(nombre);
+		$("#shaft_frequency_req").val(shaftFrequency);
 		$("#sampling_frequency_req").val(samplingFrequency);
 		$("#bpfo_req").val(bpfo);
 		$("#bpfi_req").val(bpfi);
@@ -281,12 +291,12 @@ $("#runNew").click(function() {
 		$("#healthy_number_req").val(n_healthy);
 
 		$('#loadingModal').modal({
-            backdrop: 'static',
-            keyboard: false 
-        }).modal('show');
-		
+			backdrop: 'static',
+			keyboard: false
+		}).modal('show');
+
 		$("#runNewform").submit();
-	}else{
+	} else {
 		location.reload();
 	}
 });
@@ -344,17 +354,41 @@ $("#pdf2").click(function() {
 	var fault_type = $("#fault_type").val();
 	var fault_details = $("#fault_details").val();
 	var analysis_result = $("#analysis_result").val();
+	var details_out = parseStringToList($("#fault_details_Outer_race").val());
+	var details_in = parseStringToList($("#fault_details_Inner_race").val());
+	var details_balls = parseStringToList($("#fault_details_Bearing_Balls").val());
+	var details_cage = parseStringToList($("#fault_details_Cage").val());
+	
+	if(details_out == ""){
+		details_out = [];
+	}
+	if(details_in == ""){
+		details_in = [];
+	}
+	if(details_balls == ""){
+		details_balls = [];
+	}
+	if(details_cage == ""){
+		details_cage = [];
+	}	
+	
+	var data = {
+        fault_detected: fault_detected,
+        fault_info: fault_info,
+        fault_type: fault_type,
+        fault_details: fault_details,
+        analysis_result: analysis_result,
+        details_out: details_out,
+        details_in: details_in,
+        details_balls: details_balls,
+        details_cage: details_cage
+    };
 
 	$.ajax({
-		type: "GET",
-		url: "/generate-pdf",
-		data: {
-			fault_detected: fault_detected,
-			fault_info: fault_info,
-			fault_type: fault_type,
-			fault_details: fault_details,
-			analysis_result: analysis_result
-		},
+		type: "POST",
+		url: "/generateInt",
+		contentType: "application/json",
+        data: JSON.stringify(data),
 		success: function(data) {
 			var blob = b64toBlob(data, 'application/pdf');
 			var link = document.createElement('a');
@@ -391,4 +425,14 @@ function b64toBlob(base64, contentType) {
 	}
 
 	return new Blob(byteArrays, { type: contentType });
+}
+
+function parseStringToList(string) {
+    var trimmedString = string.trim().slice(1, -1);
+    var elements = trimmedString.split(',');
+    var list = elements.map(function(element) {
+        return parseFloat(element.trim());
+    });
+
+    return list;
 }

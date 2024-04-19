@@ -299,12 +299,13 @@
 								style="width: 100%; margin: auto;"></button>
 						</div>
 					</div>
-					</div>
 				</form>
-		</div>
+				</div>
+			</div>
 		<div class="col-12 col-xl-2 d-flex justify-content-center align-items-center mb-4">
 			<form id="runNewform" name="runNewform" action="/webAppMotorElectrico/runNewload" method="post">
 				<input type="hidden" id="nombre_req" name="nombre_req" th:value="${nombre_req}" />
+				<input type="hidden" id="shaft_frequency_req" name="shaft_frequency_req" th:value="${shaft_frequency_req}" />
 				<input type="hidden" id="sampling_frequency_req" name="sampling_frequency_req"
 					th:value="${sampling_frequency_req}" />
 				<input type="hidden" id="bpfo_req" name="bpfo_req" th:value="${bpfo_req}" />
@@ -438,11 +439,6 @@
 			$("#adminUsersBtt").css({"display": "inline"});
 		}
 		$("#logout").css({"display": "inline"});
-
-		if (!$("#dataInfoNotFoundH4").is(":visible")) {
-			$("#semaforoDiv").css({"display": "inline"});
-			$("#allImagesDiv").css({"display": "inline"});
-		}
 	});
 </script>
 

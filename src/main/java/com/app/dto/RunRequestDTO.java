@@ -2,6 +2,7 @@ package com.app.dto;
 
 public class RunRequestDTO {
 	private String nombre_req;
+	private Double shaft_frequency_req;
 	private Double sampling_frequency_req;
 	private Double bpfo_req;
 	private Double bpfi_req;
@@ -17,6 +18,14 @@ public class RunRequestDTO {
 
 	public void setNombre_req(String nombre_req) {
 		this.nombre_req = nombre_req;
+	}
+
+	public Double getShaft_frequency_req() {
+		return shaft_frequency_req;
+	}
+
+	public void setShaft_frequency_req(Double shaft_frequency_req) {
+		this.shaft_frequency_req = shaft_frequency_req;
 	}
 
 	public Double getSampling_frequency_req() {

@@ -14,6 +14,8 @@ import javax.imageio.ImageIO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -166,7 +168,10 @@ public class BaseController {
 
 		try {
 			info = electricService.getDatasetInfo(data2Run.getNombre_req());
-			if (data2Run.getAnalyzed_number_req() > 0 && data2Run.getHealthy_number_req() > 0 && info.getMax_to_check() >= data2Run.getAnalyzed_number_req() && info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
+			if (data2Run.getAnalyzed_number_req() >= 5 && data2Run.getHealthy_number_req() >= 30 
+					&& info.getMax_to_check() >= data2Run.getAnalyzed_number_req() 
+					&& info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
+				
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
 				response = electricService.run(data2Run, this.loggedUser, 0);
@@ -197,10 +202,9 @@ public class BaseController {
 				}
 
 			} else {
-				if(info.getMax_to_check() <= data2Run.getHealthy_number_req() || data2Run.getHealthy_number_req() == 0) {
+				if(info.getMax_to_check() <= data2Run.getHealthy_number_req() || data2Run.getHealthy_number_req() <= 30) {
 					errors = this.getMessage("view.cont.value.healthy.first") + data2Run.getHealthy_number_req() + " "
-							+ this.getMessage("view.cont.value.second") + info.getMax_to_check() + " "
-							+ this.getMessage("view.cont.value.third");
+							+ this.getMessage("view.cont.value.healthy.second") + info.getMax_to_check();
 				} else {
 					errors = this.getMessage("view.cont.value.first") + data2Run.getAnalyzed_number_req() + " "
 							+ this.getMessage("view.cont.value.second") + info.getMax_to_check() + " "
@@ -261,7 +265,7 @@ public class BaseController {
 			Model model) {
 		DatasetInformationDTO info = new DatasetInformationDTO();
 		String[] tmp = selectedSavedModel.split("\\.");
-		if("ADMIN".equals(this.loggedUserRole)) {
+		if("ADMIN".equals(this.loggedUserRole) && !selectedSavedModel.equals("New Dataset")) {
 			String[] tmp2 = tmp[0].split("\\(");
 			tmp[0] = tmp2[0].trim();
 			if(this.ownerUser == "") {
@@ -352,13 +356,29 @@ public class BaseController {
 				if ("csv".equalsIgnoreCase(extension1) && "csv".equalsIgnoreCase(extension2)) {
 					String healthyFileName = "healthy" + name + "." + extension1;
 					String newSampleFileName = name + "." + extension2;
-					if (dataFiles[0].getSize() < dataFiles[1].getSize()) {
-						electricService.uploadDataSample(dataFiles[0], healthyFileName, id, owner);
-						electricService.uploadDataSample(dataFiles[1], newSampleFileName, id, owner);
-					} else {
-						electricService.uploadDataSample(dataFiles[1], healthyFileName, id, owner);
-						electricService.uploadDataSample(dataFiles[0], newSampleFileName, id, owner);
-					}
+					 if (dataFiles[0].getSize() < dataFiles[1].getSize()) {
+		                    ResponseEntity<String> response1 = electricService.uploadDataSample(dataFiles[0], healthyFileName, id, owner);
+		                    if (response1.getStatusCode() == HttpStatus.BAD_REQUEST) {
+		                        model.addAttribute("errorsH", this.getMessage("view.cont.file.healthy.lines"));
+		                        return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
+		                    }
+		                    ResponseEntity<String> response2 = electricService.uploadDataSample(dataFiles[1], newSampleFileName, id, owner);
+		                    if (response2.getStatusCode() == HttpStatus.BAD_REQUEST) {
+		                        model.addAttribute("errorsH", this.getMessage("view.cont.file.regular.lines"));
+		                        return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
+		                    }
+		                } else {
+		                    ResponseEntity<String> response1 = electricService.uploadDataSample(dataFiles[1], healthyFileName, id, owner);
+		                    if (response1.getStatusCode() == HttpStatus.BAD_REQUEST) {
+		                        model.addAttribute("errorsH", this.getMessage("view.cont.file.healthy.lines"));
+		                        return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
+		                    }
+		                    ResponseEntity<String> response2 = electricService.uploadDataSample(dataFiles[0], newSampleFileName, id, owner);
+		                    if (response2.getStatusCode() == HttpStatus.BAD_REQUEST) {
+		                        model.addAttribute("errorsH", this.getMessage("view.cont.file.regular.lines"));
+		                        return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
+		                    }
+		                }
 				} else {
 					this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + " "
 							+ this.getMessage("view.cont.ext.second");
@@ -400,7 +420,11 @@ public class BaseController {
 			String extension1 = StringUtils.getFilenameExtension(dataFiles.getOriginalFilename());
 			if ("csv".equalsIgnoreCase(extension1)) {
 				String newSampleFileName = name + "." + extension1;
-				electricService.uploadDataSample(dataFiles, newSampleFileName, id, owner);
+				ResponseEntity<String> response1 = electricService.uploadDataSample(dataFiles, newSampleFileName, id, owner);
+				if (response1.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                    model.addAttribute("errorsH", this.getMessage("view.cont.file.regular.lines"));
+                    return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
+                }
 			} else {
 				this.errorsH = this.getMessage("view.cont.ext.first") + extension1 + " "
 						+ this.getMessage("view.cont.ext.second");
@@ -448,10 +472,15 @@ public class BaseController {
 		
 		try {
 			info = electricService.getDatasetInfo(data2Run.getNombre_req());
-			if (data2Run.getAnalyzed_number_req() > 0 && data2Run.getHealthy_number_req() > 0 && info.getMax_to_check() >= data2Run.getAnalyzed_number_req() && info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
+			if (data2Run.getAnalyzed_number_req() >= 5 && data2Run.getHealthy_number_req() >= 30 
+					&& info.getMax_to_check() >= data2Run.getAnalyzed_number_req() 
+					&& info.getMax_to_check() >= data2Run.getHealthy_number_req()) {
+				
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
+				
 				response = electricService.run(data2Run, owner, 1);
+				
 				img1 = electricService.getImage(owner, 1);
 				img2 = electricService.getImage(owner, 2);
 				img3 = electricService.getImage(owner, 3);
@@ -479,10 +508,9 @@ public class BaseController {
 				}
 
 			} else {
-				if(info.getMax_to_check() <= data2Run.getHealthy_number_req() || data2Run.getHealthy_number_req() == 0) {
+				if(info.getMax_to_check() <= data2Run.getHealthy_number_req() || data2Run.getHealthy_number_req() <= 30) {
 					errors = this.getMessage("view.cont.value.healthy.first") + data2Run.getHealthy_number_req() + " "
-							+ this.getMessage("view.cont.value.second") + info.getMax_to_check() + " "
-							+ this.getMessage("view.cont.value.third");
+							+ this.getMessage("view.cont.value.healthy.second") + info.getMax_to_check();
 				} else {
 					errors = this.getMessage("view.cont.value.first") + data2Run.getAnalyzed_number_req() + " "
 							+ this.getMessage("view.cont.value.second") + info.getMax_to_check() + " "

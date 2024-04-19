@@ -9,8 +9,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
-import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
 public class Configi18 implements WebMvcConfigurer{
@@ -23,11 +23,14 @@ public class Configi18 implements WebMvcConfigurer{
 		return bundleMessageSource;
 	}
 	
-    @Bean
+    @SuppressWarnings("deprecation")
+	@Bean
     public LocaleResolver localeResolver() {
-        SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-        sessionLocaleResolver.setDefaultLocale(new Locale("en"));
-        return sessionLocaleResolver;
+        CookieLocaleResolver resolver = new CookieLocaleResolver();
+        resolver.setDefaultLocale(new Locale("en")); // Establece un idioma predeterminado si no se puede determinar uno desde la cookie
+        resolver.setCookieName("lang"); // Nombre de la cookie
+        resolver.setCookieMaxAge(604800); // Tiempo de vida de la cookie en segundos (aquí: 1 hora)
+        return resolver;
     }
 
     @Bean
