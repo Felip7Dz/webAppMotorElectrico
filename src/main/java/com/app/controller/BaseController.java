@@ -203,12 +203,9 @@ public class BaseController {
 
 			} else {
 				if(info.getMax_to_check() <= data2Run.getHealthy_number_req() || data2Run.getHealthy_number_req() <= 30) {
-					errors = this.getMessage("view.cont.value.healthy.first") + data2Run.getHealthy_number_req() + " "
-							+ this.getMessage("view.cont.value.healthy.second") + info.getMax_to_check();
+					errors = this.getMessage("view.cont.value.healthy");
 				} else {
-					errors = this.getMessage("view.cont.value.first") + data2Run.getAnalyzed_number_req() + " "
-							+ this.getMessage("view.cont.value.second") + info.getMax_to_check() + " "
-							+ this.getMessage("view.cont.value.third");
+					errors = this.getMessage("view.cont.value.regular");
 				}
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
@@ -509,12 +506,9 @@ public class BaseController {
 
 			} else {
 				if(info.getMax_to_check() <= data2Run.getHealthy_number_req() || data2Run.getHealthy_number_req() <= 30) {
-					errors = this.getMessage("view.cont.value.healthy.first") + data2Run.getHealthy_number_req() + " "
-							+ this.getMessage("view.cont.value.healthy.second") + info.getMax_to_check();
+					errors = this.getMessage("view.cont.value.healthy");
 				} else {
-					errors = this.getMessage("view.cont.value.first") + data2Run.getAnalyzed_number_req() + " "
-							+ this.getMessage("view.cont.value.second") + info.getMax_to_check() + " "
-							+ this.getMessage("view.cont.value.third");
+					errors = this.getMessage("view.cont.value.regular");
 				}
 				info.setMin_to_check(data2Run.getFirst_sample_req());
 				info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
