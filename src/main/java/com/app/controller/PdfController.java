@@ -71,18 +71,18 @@ public class PdfController {
 		String[] freqTitles = { "HI", "Fund. Filtered", "BPFO Filtered", "BPFI Filtered", "FTF Filtered",
 				"BSF Filtered", "Fundamental", "BPFO", "BPFI", "FTF", "BSF" };
 
-		String timeLabel = this.getMessage("view.exp.time.uno") + " ";
-		String freqLabel = this.getMessage("view.exp.freq.uno") + " ";
+		String timeLabel = this.getMessage("view.exp.time.uno");
+		String freqLabel = this.getMessage("view.exp.freq.uno");
 
 		for (int i = 0; i < data.getResultTimeReport().size(); i++) {
 			if (data.getResultTimeReport().get(i) > 0.59) {
-				timeLabel += timeTitles[i] + " " + this.getMessage("view.exp.time.dos") + " "
+				timeLabel += " " +  timeTitles[i] + " " + this.getMessage("view.exp.time.dos") + " "
 						+ data.getResultTimeReport().get(i);
 				contador++;
 			}
 			if (contador > 1 && data.getResultTimeReport().get(i) > 0.59
 					&& i == data.getResultTimeReport().size() - 1) {
-				timeLabel += " " + this.getMessage("view.exp.time.tres") + " " + timeTitles[i] + " "
+				timeLabel += ", " + this.getMessage("view.exp.time.tres") + " " + timeTitles[i] + " "
 						+ this.getMessage("view.exp.time.dos") + " " + data.getResultTimeReport().get(i) + ".";
 			}
 			if (i == data.getResultTimeReport().size() - 1 && contador == 1) {
@@ -92,13 +92,13 @@ public class PdfController {
 		contador = 0;
 		for (int i = 0; i < data.getResultFreqReport().size(); i++) {
 			if (data.getResultFreqReport().get(i) > 0.59) {
-				freqLabel += freqTitles[i] + " " + this.getMessage("view.exp.time.dos") + " "
+				freqLabel += " " + freqTitles[i] + " " + this.getMessage("view.exp.time.dos") + " "
 						+ data.getResultFreqReport().get(i);
 				contador++;
 			}
 			if (contador > 1 && data.getResultFreqReport().get(i) > 0.59
 					&& i == data.getResultFreqReport().size() - 1) {
-				freqLabel += " " + this.getMessage("view.exp.time.tres") + " " + freqTitles[i] + " "
+				freqLabel += ", " + this.getMessage("view.exp.time.tres") + " " + freqTitles[i] + " "
 						+ this.getMessage("view.exp.time.dos") + " " + data.getResultFreqReport().get(i) + ".";
 			}
 			if (i == data.getResultFreqReport().size() - 1 && contador == 1) {
@@ -155,9 +155,12 @@ public class PdfController {
 			float imageWidth = pdImage.getWidth() * scale;
 			float imageHeight = pdImage.getHeight() * scale;
 			float imageX = startX + (width - imageWidth) / 2;
-			float imageY = yPosition - imageHeight * 1.05f;
+			float imageY = 0;
 			if (i == 1 || i == 3) {
-				imageY = yPosition - imageHeight * 1.00f;
+				imageY = yPosition - imageHeight * 0.95f;
+			}
+			if (i == 0 || i == 2) {
+				imageY = yPosition - imageHeight * 1.10f;
 			}
 			contentStream.drawImage(pdImage, imageX, imageY, imageWidth, imageHeight);
 
