@@ -219,6 +219,12 @@ public class BaseController {
 			model.addAttribute("formData", info);
 			model.addAttribute("formDataCheck", info);
 		}
+		
+		if (response == null) {
+			model.addAttribute("n_healthy_used", data2Run.getHealthy_number_req());
+			model.addAttribute("loggedUser", this.loggedUser);
+			return ViewConstants.VIEW_PRELOADED_PAGE;
+		}
 
 		if (response.getAnalysis_result() != null) {
 			model.addAttribute("runResForm", response);

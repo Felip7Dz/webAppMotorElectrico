@@ -3,7 +3,7 @@ package com.app.dto;
 import java.util.List;
 
 public class InterpretabilityReportDTO {
-	
+
 	private String fault_info;
 	private String fault_type;
 	private String analysis_result;
@@ -67,5 +67,4 @@ public class InterpretabilityReportDTO {
 	public void setDetails_cage(List<Double> details_cage) {
 		this.details_cage = details_cage;
 	}
-
 }

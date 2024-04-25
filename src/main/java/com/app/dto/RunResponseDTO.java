@@ -8,6 +8,8 @@ public class RunResponseDTO {
 	private List<String> fault_type;
 	private List<List<Double>> fault_details;
 	private String analysis_result;
+	private List<Double> resultTimeReport;
+	private List<Double> resultFreqReport;
 
 	public boolean isFault_detected() {
 		return fault_detected;
@@ -49,4 +51,19 @@ public class RunResponseDTO {
 		this.analysis_result = analysis_result;
 	}
 
+	public List<Double> getResultTimeReport() {
+		return resultTimeReport;
+	}
+
+	public void setResultTimeReport(List<Double> resultTimeReport) {
+		this.resultTimeReport = resultTimeReport;
+	}
+
+	public List<Double> getResultFreqReport() {
+		return resultFreqReport;
+	}
+
+	public void setResultFreqReport(List<Double> resultFreqReport) {
+		this.resultFreqReport = resultFreqReport;
+	}
 }

@@ -308,7 +308,7 @@ function getCircleType(circleId) {
 		case "colorCircle2":
 			return "Inner_race";
 		case "colorCircle3":
-			return "Bearing_balls";
+			return "Bearing_Balls";
 		case "colorCircle4":
 			return "Cage";
 		default:
@@ -322,6 +322,8 @@ $("#pdf1").click(function() {
 	var fault_type = $("#fault_type").val();
 	var fault_details = $("#fault_details").val();
 	var analysis_result = $("#analysis_result").val();
+	var resultTimeReport = parseStringToList($("#resultTimeReport").val());
+	var resultFreqReport = parseStringToList($("#resultFreqReport").val());
 
 	$.ajax({
 		type: "GET",
@@ -331,7 +333,9 @@ $("#pdf1").click(function() {
 			fault_info: fault_info,
 			fault_type: fault_type,
 			fault_details: fault_details,
-			analysis_result: analysis_result
+			analysis_result: analysis_result,
+			resultTimeReport: resultTimeReport,
+			resultFreqReport: resultFreqReport
 		},
 		success: function(data) {
 			var blob = b64toBlob(data, 'application/pdf');
@@ -358,37 +362,37 @@ $("#pdf2").click(function() {
 	var details_in = parseStringToList($("#fault_details_Inner_race").val());
 	var details_balls = parseStringToList($("#fault_details_Bearing_Balls").val());
 	var details_cage = parseStringToList($("#fault_details_Cage").val());
-	
-	if(details_out == ""){
+
+	if (details_out == "") {
 		details_out = [];
 	}
-	if(details_in == ""){
+	if (details_in == "") {
 		details_in = [];
 	}
-	if(details_balls == ""){
+	if (details_balls == "") {
 		details_balls = [];
 	}
-	if(details_cage == ""){
+	if (details_cage == "") {
 		details_cage = [];
-	}	
-	
+	}
+
 	var data = {
-        fault_detected: fault_detected,
-        fault_info: fault_info,
-        fault_type: fault_type,
-        fault_details: fault_details,
-        analysis_result: analysis_result,
-        details_out: details_out,
-        details_in: details_in,
-        details_balls: details_balls,
-        details_cage: details_cage
-    };
+		fault_detected: fault_detected,
+		fault_info: fault_info,
+		fault_type: fault_type,
+		fault_details: fault_details,
+		analysis_result: analysis_result,
+		details_out: details_out,
+		details_in: details_in,
+		details_balls: details_balls,
+		details_cage: details_cage
+	};
 
 	$.ajax({
 		type: "POST",
 		url: "/generateInt",
 		contentType: "application/json",
-        data: JSON.stringify(data),
+		data: JSON.stringify(data),
 		success: function(data) {
 			var blob = b64toBlob(data, 'application/pdf');
 			var link = document.createElement('a');
@@ -428,11 +432,11 @@ function b64toBlob(base64, contentType) {
 }
 
 function parseStringToList(string) {
-    var trimmedString = string.trim().slice(1, -1);
-    var elements = trimmedString.split(',');
-    var list = elements.map(function(element) {
-        return parseFloat(element.trim());
-    });
+	var trimmedString = string.trim().slice(1, -1);
+	var elements = trimmedString.split(',');
+	var list = elements.map(function(element) {
+		return parseFloat(element.trim());
+	});
 
-    return list;
+	return list;
 }
