@@ -115,35 +115,6 @@ public class ElectricService {
 		}
 	}
 
-	/**
-	public ResponseEntity<String> uploadDataset(MultipartFile file, String user) {
-		String apiUrl = "http://127.0.0.1:5000/guardar_archivo/" + user;
-
-		try {
-			ByteArrayResource fileResource = new ByteArrayResource(file.getBytes()) {
-				@Override
-				public String getFilename() {
-					return file.getOriginalFilename();
-				}
-			};
-
-			MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-			body.add("archivo", fileResource);
-
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-
-			HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-
-			return restTemplate.postForEntity(apiUrl, requestEntity, String.class);
-
-		} catch (IOException e) {
-			System.err.println("Error de E/S al leer el archivo: " + e.getMessage());
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al procesar el archivo");
-		}
-	}
-	*/
-	
 	public DatasetInformationDTO getDatasetInfo(String name) throws ConnectException {
 		String url = "http://127.0.0.1:5000/getDatasetByName/" + name;
 		DatasetInformationDTO response = null;

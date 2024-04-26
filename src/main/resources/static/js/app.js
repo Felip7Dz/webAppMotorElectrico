@@ -94,41 +94,40 @@ $(document).ready(function() {
 		$("#imgph1").hide();
 		$("#imgph2").hide();
 		$("#n_healthy_data").val($("#n_healthy_used").val());
+		$("#n_healthy_data_upload").val($("#n_healthy_used").val());
 	}
 
 	if ($("#fault_detected").val() == 'false') {
 		$("#imgph1").hide();
 		$("#imgph2").hide();
 		$("#n_healthy_data").val($("#n_healthy_used").val());
+		$("#n_healthy_data_upload").val($("#n_healthy_used").val());
 	}
 
 	if ($("#files_added").val() == 1) {
 		$("#formNewUpload").hide();
 		$("#formDataCheckNew").show();
+		$("#formDataCheckNewDos").show();
+		$("#deleteDatasetFakeBtt").show();
 		$("#semaforoDiv").show();
 		$("#allImagesDiv").show();
 		$("#runNew").show();
 	}
-	if ($("#files_added").val() == 2) {
-		$("#formNewUpload").hide();
-		$("#allDataLoaded").hide();
-		$("#formDataCheckNew").show();
-		$("#onlyHealthyLoaded").show();
-		$("#semaforoDiv").hide();
-		$("#allImagesDiv").hide();
-		$("#runNew").hide();
-	}
 	if ($("#files_added").val() == 0) {
 		$("#formNewUpload").show();
 		$("#formDataCheckNew").hide();
+		$("#formDataCheckNewDos").hide();
 		$("#semaforoDiv").hide();
 		$("#allImagesDiv").hide();
 		$("#runNew").hide();
+		$("#deleteDatasetFakeBtt").hide();
 	}
 
 	if ($("#warningsDivNew").is(":visible")) {
 		$("#formNewUpload").hide();
 		$("#formDataCheckNew").hide();
+		$("#formDataCheckNewDos").hide();
+		$("#deleteDatasetFakeBtt").hide();
 	}
 
 	if ($("#warningsDivAPI").is(":visible")) {
@@ -146,6 +145,8 @@ $(document).ready(function() {
 		$("#imgph1").hide();
 		$("#imgph2").hide();
 	}
+
+	actualizarEstadoBoton();
 });
 
 $(document).on('keydown', function(event) {
@@ -194,6 +195,14 @@ function eliminarSample(nombre, id) {
 	}
 }
 
+function actualizarEstadoBoton() {
+	if ($('#regularNewAnalisys').is(':checked') || $('#upload4NewAnalisys').is(':checked')) {
+		$('#runNew').prop('disabled', false);
+	} else {
+		$('#runNew').prop('disabled', true);
+	}
+}
+
 $("#saveDatasetBtt").click(function() {
 	$('#uploadingModal').modal({
 		backdrop: 'static',
@@ -212,22 +221,9 @@ $("#uploadDataSamples").click(function() {
 
 $("#saveDatasetInfoBtt").click(function() {
 	if ($("#nombre").val() == "New Dataset") {
-		event.preventDefault();
+		e.preventDefault();
 		$("#dataInfoNotFoundH4").text("You must change the name.");
 		$("#warningsDivNew").css({ "background-color": "red", "border": "red" });
-	}
-});
-
-$("#uploadDataSampleBtt").click(function() {
-	if ($("#uploadDataSampleInput").val() == '') {
-		event.preventDefault();
-	} else {
-		$("#name2send2").val($("#name2send").val());
-		$("#id2send2").val($("#id2send").val());
-		$('#uploadingModal').modal({
-			backdrop: 'static',
-			keyboard: false
-		}).modal('show');
 	}
 });
 
@@ -266,6 +262,21 @@ $("#runPre").click(function() {
 	}
 });
 
+$('#regularNewAnalisys').change(function() {
+	if ($(this).is(':checked')) {
+		$('#upload4NewAnalisys').prop('checked', false);
+	}
+	actualizarEstadoBoton()
+});
+
+$('#upload4NewAnalisys').change(function() {
+	if ($(this).is(':checked')) {
+		$('#regularNewAnalisys').prop('checked', false);
+	}
+	actualizarEstadoBoton()
+});
+
+
 $("#runNew").click(function() {
 	var nombre = $("#nombre").val();
 	var shaftFrequency = $("#shaft_frequency").val();
@@ -278,26 +289,49 @@ $("#runNew").click(function() {
 	var analyzedNumber = $("#max_to_check").val();
 	var n_healthy = $("#n_healthy_data").val();
 
-	if (n_healthy != '' && firstSample != '' && analyzedNumber != '') {
-		$("#nombre_req").val(nombre);
-		$("#shaft_frequency_req").val(shaftFrequency);
-		$("#sampling_frequency_req").val(samplingFrequency);
-		$("#bpfo_req").val(bpfo);
-		$("#bpfi_req").val(bpfi);
-		$("#bsf_req").val(bsf);
-		$("#ftf_req").val(ftf);
-		$("#first_sample_req").val(firstSample);
-		$("#analyzed_number_req").val(analyzedNumber - firstSample);
-		$("#healthy_number_req").val(n_healthy);
+	if ($('#regularNewAnalisys').is(':checked')) {
+		if (n_healthy != '' && firstSample != '' && analyzedNumber != '') {
+			$("#nombre_req").val(nombre);
+			$("#shaft_frequency_req").val(shaftFrequency);
+			$("#sampling_frequency_req").val(samplingFrequency);
+			$("#bpfo_req").val(bpfo);
+			$("#bpfi_req").val(bpfi);
+			$("#bsf_req").val(bsf);
+			$("#ftf_req").val(ftf);
+			$("#first_sample_req").val(firstSample);
+			$("#analyzed_number_req").val(analyzedNumber - firstSample);
+			$("#healthy_number_req").val(n_healthy);
 
-		$('#loadingModal').modal({
-			backdrop: 'static',
-			keyboard: false
-		}).modal('show');
+			$('#loadingModal').modal({
+				backdrop: 'static',
+				keyboard: false
+			}).modal('show');
 
-		$("#runNewform").submit();
-	} else {
-		location.reload();
+			$("#runNewform").submit();
+		} else {
+			e.preventDefault();
+		}
+	}
+	if ($('#upload4NewAnalisys').is(':checked')) {
+		n_healthy = $("#n_healthy_data_upload").val();
+		if (n_healthy != ''){
+			$("#id_upp").val($("#id").val());
+			$("#nombre_req_upp").val(nombre);
+			$("#shaft_frequency_req_upp").val(shaftFrequency);
+			$("#sampling_frequency_req_upp").val(samplingFrequency);
+			$("#bpfo_req_upp").val(bpfo);
+			$("#bpfi_req_upp").val(bpfi);
+			$("#bsf_req_upp").val(bsf);
+			$("#ftf_req_upp").val(ftf);
+			$("#healthy_number_req_upp").val(n_healthy);
+			
+			$('#loadingModal').modal({
+				backdrop: 'static',
+				keyboard: false
+			}).modal('show');
+
+			$("#formDataCheckNewDos").submit();
+		}
 	}
 });
 
