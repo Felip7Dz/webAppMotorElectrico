@@ -57,6 +57,9 @@ public class MappingConstants {
 	/** RUN_NEWLOAD */
 	public static final String RUN_NEWLOAD = "/runNewload";
 	
-	/** RUN_NEWLOAD */
-	public static final String GENERATE_PDF = "/generate-pdf";
+	/** GENERATE_EXP */
+	public static final String GENERATE_EXP = "/generateExp";
+	
+	/** GENERATE_INT */
+	public static final String GENERATE_INT = "/generateInt";
 }

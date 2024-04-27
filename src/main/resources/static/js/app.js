@@ -361,7 +361,7 @@ $("#pdf1").click(function() {
 
 	$.ajax({
 		type: "GET",
-		url: "/generate-pdf",
+		url: "/generateExp",
 		data: {
 			fault_detected: fault_detected,
 			fault_info: fault_info,

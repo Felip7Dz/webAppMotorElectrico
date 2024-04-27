@@ -176,7 +176,7 @@ public class ElectricService {
 	}
 
 	public RunResponseDTO run(RunRequestDTO data2Run, String user, int flag) {
-		String url = "http://127.0.0.1:5000/analyze_data/" + user + "/" + flag;
+		String url = "http://127.0.0.1:5000/analyzeData/" + user + "/" + flag;
 
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
@@ -197,7 +197,7 @@ public class ElectricService {
 	}
 	
 	public BufferedImage getImage(String sessionID, int flag) {
-		String url = "http://127.0.0.1:5000/get_image/" + sessionID + "/" + flag;
+		String url = "http://127.0.0.1:5000/getImage/" + sessionID + "/" + flag;
 
 		try {
 			RestTemplate restTemplate = new RestTemplate();
@@ -235,9 +235,9 @@ public class ElectricService {
 
 	        ResponseEntity<String> response = restTemplate.postForEntity(apiUrl, requestEntity, String.class);
 
-	        // Manejar el código de estado 400 (Bad Request)
-	        if (response.getStatusCode() == HttpStatus.BAD_REQUEST) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El archivo no cumple con los requisitos.");
+	        // Manejar el código de estado 202
+	        if (response.getStatusCode() == HttpStatus.ACCEPTED) {
+	            return ResponseEntity.status(HttpStatus.ACCEPTED).body("El archivo no cumple con los requisitos.");
 	        }
 
 	        return response;

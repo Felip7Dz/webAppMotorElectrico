@@ -5,7 +5,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -234,9 +237,19 @@ public class BaseController {
 		if (response.getAnalysis_result() != null) {
 			model.addAttribute("runResForm", response);
 			if (response.isFault_detected()) {
-				for (int i = 0; i < response.getFault_details().size(); i++) {
-					model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
-					model.addAttribute("faults_" + response.getFault_type().get(i), response.getFault_details().get(i));
+		        
+				List<List<Double>> listaSinDuplicadosYOrdenada = new ArrayList<>();
+				for (List<Double> sublista : response.getFault_details()) {
+		            HashSet<Double> conjuntoSinDuplicados = new HashSet<>(sublista);
+		            List<Double> sublistaSinDuplicados = new ArrayList<>(conjuntoSinDuplicados);
+		            Collections.sort(sublistaSinDuplicados);
+		            
+		            listaSinDuplicadosYOrdenada.add(sublistaSinDuplicados);
+		        }
+				
+		        for (int i = 0; i < response.getFault_details().size(); i++) {
+					model.addAttribute("data_" + response.getFault_type().get(i), listaSinDuplicadosYOrdenada.get(i));
+					model.addAttribute("faults_" + response.getFault_type().get(i), listaSinDuplicadosYOrdenada.get(i));
 				}
 				switch (response.getFault_info()) {
 				case "A fault has been detected in an early stage":
@@ -359,10 +372,9 @@ public class BaseController {
 			String extension = StringUtils.getFilenameExtension(dataFiles.getOriginalFilename());
 			if ("csv".equalsIgnoreCase(extension)) {
 				String newSampleFileName = name + "." + extension;
-				ResponseEntity<String> response = electricService.uploadDataSample(dataFiles, newSampleFileName, id,
-						owner);
-				if (response.getStatusCode() == HttpStatus.BAD_REQUEST) {
-					model.addAttribute("errorsH", this.getMessage("view.cont.file.regular.lines"));
+				ResponseEntity<String> response = electricService.uploadDataSample(dataFiles, newSampleFileName, id, owner);
+				if (response.getStatusCode() == HttpStatus.ACCEPTED) {
+					this.errorsH = this.getMessage("view.cont.file.regular.lines");
 					return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
 				}
 			} else {
@@ -534,9 +546,18 @@ public class BaseController {
 		if (response.getAnalysis_result() != null) {
 			model.addAttribute("runResForm", response);
 			if (response.isFault_detected()) {
-				for (int i = 0; i < response.getFault_details().size(); i++) {
-					model.addAttribute("data_" + response.getFault_type().get(i), response.getFault_details().get(i));
-					model.addAttribute("faults_" + response.getFault_type().get(i), response.getFault_details().get(i));
+				List<List<Double>> listaSinDuplicadosYOrdenada = new ArrayList<>();
+				for (List<Double> sublista : response.getFault_details()) {
+		            HashSet<Double> conjuntoSinDuplicados = new HashSet<>(sublista);
+		            List<Double> sublistaSinDuplicados = new ArrayList<>(conjuntoSinDuplicados);
+		            Collections.sort(sublistaSinDuplicados);
+		            
+		            listaSinDuplicadosYOrdenada.add(sublistaSinDuplicados);
+		        }
+				
+		        for (int i = 0; i < response.getFault_details().size(); i++) {
+					model.addAttribute("data_" + response.getFault_type().get(i), listaSinDuplicadosYOrdenada.get(i));
+					model.addAttribute("faults_" + response.getFault_type().get(i), listaSinDuplicadosYOrdenada.get(i));
 				}
 				switch (response.getFault_info()) {
 				case "A fault has been detected in an early stage":

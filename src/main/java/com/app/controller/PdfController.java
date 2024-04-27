@@ -56,7 +56,7 @@ public class PdfController {
 		return this.messageSource.getMessage(messageKey, args, LocaleContextHolder.getLocale());
 	}
 
-	@GetMapping(MappingConstants.GENERATE_PDF)
+	@GetMapping(MappingConstants.GENERATE_EXP)
 	public ResponseEntity<String> generatePdf(HttpServletRequest request, RunResponseDTO data) throws IOException {
 		Principal test = request.getUserPrincipal();
 		int contador = 0;
@@ -76,7 +76,7 @@ public class PdfController {
 
 		for (int i = 0; i < data.getResultTimeReport().size(); i++) {
 			if (data.getResultTimeReport().get(i) > 0.59) {
-				timeLabel += " " +  timeTitles[i] + " " + this.getMessage("view.exp.time.dos") + " "
+				timeLabel += " " + timeTitles[i] + " " + this.getMessage("view.exp.time.dos") + " "
 						+ data.getResultTimeReport().get(i);
 				contador++;
 			}
@@ -136,8 +136,8 @@ public class PdfController {
 		float scale = 0.4f;
 
 		BufferedImage[] images = { img1, img2, img3, img4 };
-		String[] titles = { this.getMessage("view.exp.matrix.one"), this.getMessage("view.exp.matrix.four"),
-				this.getMessage("view.exp.matrix.three"), this.getMessage("view.exp.matrix.two") };
+		String[] titles = { this.getMessage("view.exp.matrix.one"), this.getMessage("view.exp.matrix.two"),
+				this.getMessage("view.exp.matrix.three"), this.getMessage("view.exp.matrix.four") };
 
 		for (int i = 0; i < images.length; i++) {
 
@@ -159,8 +159,11 @@ public class PdfController {
 			if (i == 1 || i == 3) {
 				imageY = yPosition - imageHeight * 0.95f;
 			}
-			if (i == 0 || i == 2) {
+			if (i == 0) {
 				imageY = yPosition - imageHeight * 1.10f;
+			}
+			if (i == 2) {
+				imageY = yPosition - imageHeight * 1.15f;
 			}
 			contentStream.drawImage(pdImage, imageX, imageY, imageWidth, imageHeight);
 
@@ -260,7 +263,7 @@ public class PdfController {
 		return ResponseEntity.ok().headers(headers).body(pdfBase64);
 	}
 
-	@PostMapping("/generateInt")
+	@PostMapping(MappingConstants.GENERATE_INT)
 	public ResponseEntity<String> generateInt(HttpServletRequest request, @RequestBody InterpretabilityReportDTO data)
 			throws IOException {
 		Principal test = request.getUserPrincipal();
@@ -301,44 +304,96 @@ public class PdfController {
 		float yPosition = 700;
 		float scale = 0.4f;
 
-		if (data.getDetails_out().size() > 1) {
+		if (data.getDetails_out().size() == 2) {
 			outer_race_title = this.getMessage("view.int.out.uno") + data.getDetails_out().get(0) + " "
 					+ this.getMessage("view.int.out.dos") + " "
 					+ data.getDetails_out().get(data.getDetails_out().size() - 1) + " "
 					+ this.getMessage("view.int.out.tres");
-		} else {
+		}
+		if (data.getDetails_out().size() == 1) {
 			outer_race_title = this.getMessage("view.int.out.uno") + data.getDetails_out().get(0) + " "
 					+ this.getMessage("view.int.out.tres");
 		}
+		if (data.getDetails_out().size() > 2) {
+			outer_race_title = this.getMessage("view.int.out.uno");
+			for (int i = 0; i < data.getDetails_out().size(); i++) {
+				if (i == (data.getDetails_out().size() - 1)) {
+					outer_race_title += this.getMessage("view.exp.time.tres") + " "
+							+ data.getDetails_out().get(data.getDetails_out().size() - 1) + " ";
+					break;
+				}
+				outer_race_title += data.getDetails_out().get(i) + "Hz, ";
+			}
+			outer_race_title += this.getMessage("view.int.out.tres");
+		}
 
-		if (data.getDetails_in().size() > 1) {
+		if (data.getDetails_in().size() == 2) {
 			inner_race_title = this.getMessage("view.int.inn.uno") + data.getDetails_in().get(0) + " "
 					+ this.getMessage("view.int.out.dos") + " "
 					+ data.getDetails_in().get(data.getDetails_in().size() - 1) + " "
 					+ this.getMessage("view.int.out.tres");
-		} else {
+		}
+		if (data.getDetails_in().size() == 1) {
 			inner_race_title = this.getMessage("view.int.inn.uno") + data.getDetails_in().get(0) + " "
 					+ this.getMessage("view.int.out.tres");
 		}
+		if (data.getDetails_in().size() > 2) {
+			inner_race_title = this.getMessage("view.int.out.uno");
+			for (int i = 0; i < data.getDetails_in().size(); i++) {
+				if (i == (data.getDetails_in().size() - 1)) {
+					inner_race_title += this.getMessage("view.exp.time.tres") + " "
+							+ data.getDetails_in().get(data.getDetails_in().size() - 1) + " ";
+					break;
+				}
+				inner_race_title += data.getDetails_in().get(i) + "Hz, ";
+			}
+			inner_race_title += this.getMessage("view.int.out.tres");
+		}
 
-		if (data.getDetails_balls().size() > 1) {
+		if (data.getDetails_balls().size() == 2) {
 			bearing_balls_title = this.getMessage("view.int.ball.uno") + data.getDetails_balls().get(0) + " "
 					+ this.getMessage("view.int.out.dos") + " "
 					+ data.getDetails_balls().get(data.getDetails_balls().size() - 1) + " "
 					+ this.getMessage("view.int.out.tres");
-		} else {
+		}
+		if (data.getDetails_balls().size() == 1) {
 			bearing_balls_title = this.getMessage("view.int.ball.uno") + data.getDetails_balls().get(0) + " "
 					+ this.getMessage("view.int.out.tres");
 		}
+		if (data.getDetails_balls().size() > 2) {
+			bearing_balls_title = this.getMessage("view.int.out.uno");
+			for (int i = 0; i < data.getDetails_balls().size(); i++) {
+				if (i == (data.getDetails_balls().size() - 1)) {
+					bearing_balls_title += this.getMessage("view.exp.time.tres") + " "
+							+ data.getDetails_balls().get(data.getDetails_balls().size() - 1) + " ";
+					break;
+				}
+				bearing_balls_title += data.getDetails_balls().get(i) + "Hz, ";
+			}
+			bearing_balls_title += this.getMessage("view.int.out.tres");
+		}
 
-		if (data.getDetails_cage().size() > 1) {
+		if (data.getDetails_cage().size() == 2) {
 			cage_title = this.getMessage("view.int.cage.uno") + data.getDetails_cage().get(0) + " "
 					+ this.getMessage("view.int.out.dos") + " "
 					+ data.getDetails_cage().get(data.getDetails_cage().size() - 1) + " "
 					+ this.getMessage("view.int.out.tres");
-		} else {
+		}
+		if (data.getDetails_cage().size() == 1) {
 			cage_title = this.getMessage("view.int.cage.uno") + data.getDetails_cage().get(0) + " "
 					+ this.getMessage("view.int.out.tres");
+		}
+		if (data.getDetails_cage().size() > 2) {
+			cage_title = this.getMessage("view.int.out.uno");
+			for (int i = 0; i < data.getDetails_cage().size(); i++) {
+				if (i == (data.getDetails_cage().size() - 1)) {
+					cage_title += this.getMessage("view.exp.time.tres") + " "
+							+ data.getDetails_cage().get(data.getDetails_cage().size() - 1) + " ";
+					break;
+				}
+ 				cage_title += data.getDetails_cage().get(i) + "Hz, ";
+			}
+			cage_title += this.getMessage("view.int.out.tres");
 		}
 
 		BufferedImage[] images = { electricService.getImage(this.sessionActual, 1),
@@ -404,7 +459,7 @@ public class PdfController {
 			}
 
 			// Actualizar la posición Y para el siguiente título e imagen
-			yPosition -= imageHeight - 15; // Espacio entre imágenes
+			yPosition -= imageHeight - 20; // Espacio entre imágenes
 		}
 
 		String finalText = "";
