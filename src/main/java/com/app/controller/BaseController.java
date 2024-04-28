@@ -53,6 +53,10 @@ public class BaseController {
 
 	@Autowired
 	private LoginService loginService;
+	
+	public void setMessageSource(MessageSource ms){
+        this.messageSource = ms;
+    }
 
 	private String errorsH = "";
 	private String loggedUser = "";

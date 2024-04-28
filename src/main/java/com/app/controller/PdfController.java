@@ -41,6 +41,10 @@ public class PdfController {
 
 	@Autowired
 	private ElectricService electricService;
+	
+	public void setMessageSource(MessageSource ms){
+        this.messageSource = ms;
+    }
 
 	private String sessionActual = "";
 

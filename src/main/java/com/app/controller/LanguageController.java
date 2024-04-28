@@ -26,8 +26,10 @@ public class LanguageController {
 
 		localeResolver.setLocale(request, response, new Locale(lang));
 
-		//String referer = request.getHeader("Referer");
-
 		return ViewConstants.REDIRECT_HOME_PAGE;
+	}
+
+	public CookieLocaleResolver getLocaleResolver() {
+		return localeResolver;
 	}
 }

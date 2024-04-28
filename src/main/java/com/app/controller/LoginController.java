@@ -34,6 +34,10 @@ public class LoginController {
 	private MessageSource messageSource;
 	
 	BCryptPasswordEncoder passwEncoder;
+	
+	public void setMessageSource(MessageSource ms){
+        this.messageSource = ms;
+    }
 
 	public LoginController(LoginService loginService, BCryptPasswordEncoder passwEncoder) {
 		this.loginService = loginService;
