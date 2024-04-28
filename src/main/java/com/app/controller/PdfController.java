@@ -57,7 +57,7 @@ public class PdfController {
 	}
 
 	@GetMapping(MappingConstants.GENERATE_EXP)
-	public ResponseEntity<String> generatePdf(HttpServletRequest request, RunResponseDTO data) throws IOException {
+	public ResponseEntity<String> generateExp(HttpServletRequest request, RunResponseDTO data) throws IOException {
 		Principal test = request.getUserPrincipal();
 		int contador = 0;
 		this.sessionActual = test.getName();
@@ -75,33 +75,47 @@ public class PdfController {
 		String freqLabel = this.getMessage("view.exp.freq.uno");
 
 		for (int i = 0; i < data.getResultTimeReport().size(); i++) {
-			if (data.getResultTimeReport().get(i) > 0.59) {
+			if (data.getResultTimeReport().get(i) > 0.59 && i != data.getResultTimeReport().size() - 1) {
 				timeLabel += " " + timeTitles[i] + " " + this.getMessage("view.exp.time.dos") + " "
-						+ data.getResultTimeReport().get(i);
+						+ data.getResultTimeReport().get(i) + ",";
 				contador++;
 			}
 			if (contador > 1 && data.getResultTimeReport().get(i) > 0.59
 					&& i == data.getResultTimeReport().size() - 1) {
-				timeLabel += ", " + this.getMessage("view.exp.time.tres") + " " + timeTitles[i] + " "
+				if (timeLabel.endsWith(",")) {
+					timeLabel = timeLabel.substring(0, timeLabel.length() - 1);
+		        }
+				timeLabel += " " + this.getMessage("view.exp.time.tres") + " " + timeTitles[i] + " "
 						+ this.getMessage("view.exp.time.dos") + " " + data.getResultTimeReport().get(i) + ".";
+				break;
 			}
-			if (i == data.getResultTimeReport().size() - 1 && contador == 1) {
+			if (i == data.getResultTimeReport().size() - 1 && contador >= 1) {
+				if (timeLabel.endsWith(",")) {
+					timeLabel = timeLabel.substring(0, timeLabel.length() - 1);
+		        }
 				timeLabel += ".";
 			}
 		}
 		contador = 0;
 		for (int i = 0; i < data.getResultFreqReport().size(); i++) {
-			if (data.getResultFreqReport().get(i) > 0.59) {
+			if (data.getResultFreqReport().get(i) > 0.59 && i != data.getResultFreqReport().size() - 1) {
 				freqLabel += " " + freqTitles[i] + " " + this.getMessage("view.exp.time.dos") + " "
-						+ data.getResultFreqReport().get(i);
+						+ data.getResultFreqReport().get(i) + ",";
 				contador++;
 			}
 			if (contador > 1 && data.getResultFreqReport().get(i) > 0.59
 					&& i == data.getResultFreqReport().size() - 1) {
-				freqLabel += ", " + this.getMessage("view.exp.time.tres") + " " + freqTitles[i] + " "
+				if (freqLabel.endsWith(",")) {
+					freqLabel = freqLabel.substring(0, freqLabel.length() - 1);
+		        }
+				freqLabel += " " + this.getMessage("view.exp.time.tres") + " " + freqTitles[i] + " "
 						+ this.getMessage("view.exp.time.dos") + " " + data.getResultFreqReport().get(i) + ".";
+				break;
 			}
-			if (i == data.getResultFreqReport().size() - 1 && contador == 1) {
+			if (i == data.getResultFreqReport().size() - 1 && contador >= 1) {
+				if (freqLabel.endsWith(",")) {
+					freqLabel = freqLabel.substring(0, freqLabel.length() - 1);
+		        }
 				freqLabel += ".";
 			}
 		}
@@ -160,7 +174,7 @@ public class PdfController {
 				imageY = yPosition - imageHeight * 0.95f;
 			}
 			if (i == 0) {
-				imageY = yPosition - imageHeight * 1.10f;
+				imageY = yPosition - imageHeight * 1.20f;
 			}
 			if (i == 2) {
 				imageY = yPosition - imageHeight * 1.15f;
@@ -318,11 +332,14 @@ public class PdfController {
 			outer_race_title = this.getMessage("view.int.out.uno");
 			for (int i = 0; i < data.getDetails_out().size(); i++) {
 				if (i == (data.getDetails_out().size() - 1)) {
-					outer_race_title += this.getMessage("view.exp.time.tres") + " "
+					if (outer_race_title.endsWith(",")) {
+						outer_race_title = outer_race_title.substring(0, outer_race_title.length() - 1);
+			        }
+					outer_race_title += " " + this.getMessage("view.exp.time.tres") + " "
 							+ data.getDetails_out().get(data.getDetails_out().size() - 1) + " ";
 					break;
 				}
-				outer_race_title += data.getDetails_out().get(i) + "Hz, ";
+				outer_race_title += " " +  data.getDetails_out().get(i) + " Hz,";
 			}
 			outer_race_title += this.getMessage("view.int.out.tres");
 		}
@@ -341,11 +358,14 @@ public class PdfController {
 			inner_race_title = this.getMessage("view.int.out.uno");
 			for (int i = 0; i < data.getDetails_in().size(); i++) {
 				if (i == (data.getDetails_in().size() - 1)) {
-					inner_race_title += this.getMessage("view.exp.time.tres") + " "
+					if (inner_race_title.endsWith(",")) {
+						inner_race_title = inner_race_title.substring(0, inner_race_title.length() - 1);
+			        }
+					inner_race_title += " " + this.getMessage("view.exp.time.tres") + " "
 							+ data.getDetails_in().get(data.getDetails_in().size() - 1) + " ";
 					break;
 				}
-				inner_race_title += data.getDetails_in().get(i) + "Hz, ";
+				inner_race_title += " " + data.getDetails_in().get(i) + " Hz,";
 			}
 			inner_race_title += this.getMessage("view.int.out.tres");
 		}
@@ -364,11 +384,14 @@ public class PdfController {
 			bearing_balls_title = this.getMessage("view.int.out.uno");
 			for (int i = 0; i < data.getDetails_balls().size(); i++) {
 				if (i == (data.getDetails_balls().size() - 1)) {
-					bearing_balls_title += this.getMessage("view.exp.time.tres") + " "
+					if (bearing_balls_title.endsWith(",")) {
+						bearing_balls_title = bearing_balls_title.substring(0, bearing_balls_title.length() - 1);
+			        }
+					bearing_balls_title += " " + this.getMessage("view.exp.time.tres") + " "
 							+ data.getDetails_balls().get(data.getDetails_balls().size() - 1) + " ";
 					break;
 				}
-				bearing_balls_title += data.getDetails_balls().get(i) + "Hz, ";
+				bearing_balls_title += " " + data.getDetails_balls().get(i) + " Hz,";
 			}
 			bearing_balls_title += this.getMessage("view.int.out.tres");
 		}
@@ -387,11 +410,14 @@ public class PdfController {
 			cage_title = this.getMessage("view.int.out.uno");
 			for (int i = 0; i < data.getDetails_cage().size(); i++) {
 				if (i == (data.getDetails_cage().size() - 1)) {
-					cage_title += this.getMessage("view.exp.time.tres") + " "
+					if (cage_title.endsWith(",")) {
+						cage_title = cage_title.substring(0, cage_title.length() - 1);
+			        }
+					cage_title += " " + this.getMessage("view.exp.time.tres") + " "
 							+ data.getDetails_cage().get(data.getDetails_cage().size() - 1) + " ";
 					break;
 				}
- 				cage_title += data.getDetails_cage().get(i) + "Hz, ";
+ 				cage_title += " " + data.getDetails_cage().get(i) + " Hz,";
 			}
 			cage_title += this.getMessage("view.int.out.tres");
 		}
@@ -421,7 +447,7 @@ public class PdfController {
 			float imageWidth = pdImage.getWidth() * scale;
 			float imageHeight = pdImage.getHeight() * scale;
 			float imageX = startX + (width - imageWidth) / 2;
-			float imageY = yPosition - imageHeight * 1.02f;
+			float imageY = yPosition - imageHeight * 1.07f;
 			contentStream.drawImage(pdImage, imageX, imageY, imageWidth, imageHeight);
 
 			// Título de la imagen
@@ -485,7 +511,7 @@ public class PdfController {
 		contentStream.setLeading(leading);
 		for (String line : finalTextLines) {
 			contentStream.beginText();
-			contentStream.newLineAtOffset(startX, yPosition + 15);
+			contentStream.newLineAtOffset(startX, yPosition + 10);
 			contentStream.showText(line);
 			contentStream.newLine();
 			contentStream.endText();
