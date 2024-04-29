@@ -178,7 +178,7 @@ public class PdfController {
 				imageY = yPosition - imageHeight * 0.95f;
 			}
 			if (i == 0) {
-				imageY = yPosition - imageHeight * 1.20f;
+				imageY = yPosition - imageHeight * 1.10f;
 			}
 			if (i == 2) {
 				imageY = yPosition - imageHeight * 1.15f;

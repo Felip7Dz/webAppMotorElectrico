@@ -62,6 +62,7 @@ public class BaseController {
 	private String loggedUser = "";
 	private String loggedUserRole = "";
 	private String ownerUser = "";
+	private int numOfUserDataset = 0;
 
 	public BaseController(ElectricService electricService, LoginService loginService) {
 		this.electricService = electricService;
@@ -117,6 +118,8 @@ public class BaseController {
 			DatasetsResponseDTO showSavec = new DatasetsResponseDTO();
 			showSavec.setModelsList(savedatasets);
 			showSavec.setModelsNames(savedatasetsNames);
+			
+			this.numOfUserDataset = savedatasetsNames.size();
 
 			model.addAttribute("resultDatatest", show);
 			model.addAttribute("resultSavedDatatest", showSavec);
@@ -343,8 +346,12 @@ public class BaseController {
 				&& !infoForm.getBearing_type().equals(" ")) {
 			try {
 				if (infoForm.getId() == null) {
-					electricService.createDatasetInDB(infoForm, this.loggedUser);
-					return ViewConstants.REDIRECT_HOME_PAGE;
+					if(this.numOfUserDataset < 10 || "admin".equals(this.loggedUser)) {
+						electricService.createDatasetInDB(infoForm, this.loggedUser);
+						return ViewConstants.REDIRECT_HOME_PAGE;
+					}else {
+						model.addAttribute("errorsVals", this.getMessage("view.cont.max.dataset"));
+					}
 				} else {
 					electricService.updateDatasetInDB(infoForm);
 				}
@@ -498,7 +505,7 @@ public class BaseController {
 					ResponseEntity<String> responseUpp = electricService.uploadDataSample(dataFiles, newSampleFileName,
 							dataUpload2Run.getId_upp(), owner);
 					if (responseUpp.getStatusCode() != HttpStatus.OK) {
-						model.addAttribute("errorsH", this.getMessage("view.cont.file.regular.lines"));
+						this.errorsH = this.getMessage("view.cont.file.healthy.lines");
 						return ViewConstants.REDIRECT_NEWLOADED_PAGE + data2Run.getNombre_req();
 					}
 

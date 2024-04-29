@@ -3,6 +3,25 @@ $(document).ready(function() {
 	if ($("#loggedUserFlag").val() != "admin") {
 		$("#adminUsersBtt").hide();
 	}
+	
+	var userLang;
+	if($("#webAppTitle").text() == "Detection and Diagnosis of Bearing Failures on Electric Motors"){
+		userLang='en';
+	}else{
+		userLang='es-ES';
+	}
+	
+	if(userLang == 'es-ES'){
+		$("#manualLinkEN").hide();
+	}else{
+		$("#manualLinkEN").show();
+	}
+	
+	if(userLang == 'en'){
+		$("#manualLinkES").hide();
+	}else{
+		$("#manualLinkES").show();
+	}
 
 	const dropContainer = $("#dropcontainer");
 	const fileInput = $("#file");

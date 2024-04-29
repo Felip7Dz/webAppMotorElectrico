@@ -7,16 +7,22 @@
 		</div>
 		<div class="col-6 d-flex justify-content-end align-items-center">
 			<input type="hidden" id="loggedUserFlag" th:value="${loggedUser}">
+			<a th:href="@{'/documents/ManualUsuario_es.pdf'}" id="manualLinkES" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.manual.btt}" style="display: none;" target="_blank">
+				<span class="material-symbols-outlined">import_contacts</span>
+			</a>
+			<a th:href="@{'/documents/ManualUsuario_en.pdf'}" id="manualLinkEN" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.manual.btt}" style="display: none;" target="_blank">
+				<span class="material-symbols-outlined">import_contacts</span>
+			</a>
 			<a th:href="@{/webAppMotorElectrico/adminAccount}" id="manageLink" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.login.manage}" style="display: none;">
 				<span class="material-symbols-outlined" style="vertical-align: middle;">account_circle</span>
 			</a>
 			<form th:action="@{/webAppMotorElectrico/adminUsers}" method="get">
-				<button id="adminUsersBtt" type="submit" value="adminUsersBtt" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.admin.users.btt}" style="display: none;">
+				<button id="adminUsersBtt" type="submit" value="adminUsersBtt" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.admin.users.btt}" style="display: none; width: 64px; height: 44px;">
 					<span class="material-symbols-outlined" style="vertical-align: middle;">manage_accounts</span>
 				</button>
 			</form>
 			<form th:action="@{/logout}" method="post">
-				<button id="logout" type="submit" value="Logout" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.logout}" style="display: none;">
+				<button id="logout" type="submit" value="Logout" data-toggle="tooltip" data-placement="bottom" th:title="#{view.landing.logout}" style="display: none; width: 64px; height: 44px;">
 					<span class="material-symbols-outlined" style="vertical-align: middle;">logout</span>
 				</button>
 			</form>
@@ -25,7 +31,7 @@
 	<div class="row align-items-center" id="headID">
 		<div class="col-12 col-md-8">
 			<a th:href="@{/webAppMotorElectrico/home}" style="color: black;">
-				<h1 class="responsive-h1" th:text="#{view.home.main}"></h1>
+				<h1 class="responsive-h1" id="webAppTitle" th:text="#{view.home.main}"></h1>
 			</a>
 		</div>
 		<div class="col-12 col-md-4 d-flex justify-content-around align-items-center">

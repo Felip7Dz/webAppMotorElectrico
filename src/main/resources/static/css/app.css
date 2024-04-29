@@ -73,7 +73,7 @@ h1.responsive-h1 {
 	}
 }
 
-#manageLink {
+#manageLink,#manualLinkES, #manualLinkEN {
 	color: #084cdf;
 	width: 44px;
 	height: 44px;
@@ -87,7 +87,9 @@ input[type=email],
 button[type=submit],
 button[type=button],
 #back-btt,
-#manageLink {
+#manageLink, 
+#manualLinkES,
+#manualLinkEN {
 	width: auto;
 	max-width: 100%;
 	color: #444;
@@ -101,7 +103,9 @@ input[type=file]::file-selector-button,
 button[type=submit],
 button[type=button],
 #back-btt,
-#manageLink {
+#manageLink,
+#manualLinkES,
+#manualLinkEN {
 	margin-right: 20px;
 	border: none;
 	background: #084cdf;
