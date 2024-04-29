@@ -63,8 +63,9 @@ public class BaseController {
 	private String loggedUserRole = "";
 	private String ownerUser = "";
 
-	public BaseController(ElectricService electricService) {
+	public BaseController(ElectricService electricService, LoginService loginService) {
 		this.electricService = electricService;
+		this.loginService = loginService;
 	}
 
 	public String getMessage(String messageKey) {
