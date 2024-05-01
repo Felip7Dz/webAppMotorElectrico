@@ -8,6 +8,7 @@ public class UserDTO {
 	private String email;
 	private String passw;
 	private String role;
+	private int maxdataset;
 
 	public String getUsuario() {
 		return usuario;
@@ -55,6 +56,14 @@ public class UserDTO {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public int getMaxdataset() {
+		return maxdataset;
+	}
+
+	public void setMaxdataset(int maxdataset) {
+		this.maxdataset = maxdataset;
 	}
 
 }

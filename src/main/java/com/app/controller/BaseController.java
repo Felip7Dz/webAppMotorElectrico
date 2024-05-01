@@ -59,10 +59,12 @@ public class BaseController {
     }
 
 	private String errorsH = "";
+	private String errorsVals = "";
 	private String loggedUser = "";
 	private String loggedUserRole = "";
 	private String ownerUser = "";
 	private int numOfUserDataset = 0;
+	private int numMaxDataset = 0;
 
 	public BaseController(ElectricService electricService, LoginService loginService) {
 		this.electricService = electricService;
@@ -91,6 +93,7 @@ public class BaseController {
 			for (int i = 0; i < listUsers.size(); i++) {
 				if (listUsers.get(i).getUsuario().equals(this.loggedUser)) {
 					this.loggedUserRole = listUsers.get(i).getRole();
+					this.numMaxDataset = listUsers.get(i).getMaxdataset();
 					break;
 				}
 			}
@@ -313,6 +316,10 @@ public class BaseController {
 		if (!this.errorsH.isEmpty()) {
 			model.addAttribute("errorsH", errorsH);
 		}
+		
+		if (!this.errorsVals.isEmpty()) {
+			model.addAttribute("errorsVals", errorsVals);
+		}
 
 		if (!"Dataset not found".equals(info.getNombre())) {
 			model.addAttribute("formData", info);
@@ -331,6 +338,7 @@ public class BaseController {
 			model.addAttribute("formData", info);
 		}
 		this.errorsH = "";
+		this.errorsVals = "";
 		model.addAttribute("loggedUser", this.loggedUser);
 		return ViewConstants.VIEW_NEWLOADED_PAGE;
 	}
@@ -346,11 +354,11 @@ public class BaseController {
 				&& !infoForm.getBearing_type().equals(" ")) {
 			try {
 				if (infoForm.getId() == null) {
-					if(this.numOfUserDataset < 10 || "admin".equals(this.loggedUser)) {
+					if(this.numOfUserDataset < this.numMaxDataset) {
 						electricService.createDatasetInDB(infoForm, this.loggedUser);
 						return ViewConstants.REDIRECT_HOME_PAGE;
 					}else {
-						model.addAttribute("errorsVals", this.getMessage("view.cont.max.dataset"));
+						errorsVals = this.getMessage("view.cont.max.dataset");
 					}
 				} else {
 					electricService.updateDatasetInDB(infoForm);
@@ -359,7 +367,7 @@ public class BaseController {
 				System.err.println("Error al conectar con la API: " + e.getMessage());
 			}
 		} else {
-			model.addAttribute("errorsVals", this.getMessage("view.cont.vals.fault"));
+			errorsVals = this.getMessage("view.cont.vals.fault");
 		}
 
 		return ViewConstants.REDIRECT_NEWLOADED_PAGE + infoForm.getNombre();

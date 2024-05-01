@@ -73,7 +73,9 @@ h1.responsive-h1 {
 	}
 }
 
-#manageLink,#manualLinkES, #manualLinkEN {
+#manageLink,#manualLinkES, #manualLinkEN,
+#manualAdminLinkES,
+#manualAdminLinkEN {
 	color: #084cdf;
 	width: 44px;
 	height: 44px;
@@ -89,7 +91,9 @@ button[type=button],
 #back-btt,
 #manageLink, 
 #manualLinkES,
-#manualLinkEN {
+#manualLinkEN,
+#manualAdminLinkES,
+#manualAdminLinkEN {
 	width: auto;
 	max-width: 100%;
 	color: #444;
@@ -105,7 +109,9 @@ button[type=button],
 #back-btt,
 #manageLink,
 #manualLinkES,
-#manualLinkEN {
+#manualLinkEN,
+#manualAdminLinkES,
+#manualAdminLinkEN {
 	margin-right: 20px;
 	border: none;
 	background: #084cdf;

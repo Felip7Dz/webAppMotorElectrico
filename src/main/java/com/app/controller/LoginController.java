@@ -105,6 +105,7 @@ public class LoginController {
 		model.addAttribute("name_register", usr.getNombre());
 		model.addAttribute("surname_register", usr.getApellido());
 		model.addAttribute("mail_register", usr.getEmail());
+		model.addAttribute("maxdataset_register", usr.getMaxdataset());
 		model.addAttribute("loggedUser", request.getUserPrincipal().getName());
 		return ViewConstants.VIEW_MANAGE_ACCOUNT_PAGE;
 	}
@@ -136,6 +137,7 @@ public class LoginController {
 		model.addAttribute("name_register", usr.getNombre());
 		model.addAttribute("surname_register", usr.getApellido());
 		model.addAttribute("mail_register", usr.getEmail());
+		model.addAttribute("maxdataset_register", usr.getMaxdataset());
 		
 		model.addAttribute("userCreated", this.getMessage("view.cont.user.updated"));
 		model.addAttribute("loggedUser", request.getUserPrincipal().getName());

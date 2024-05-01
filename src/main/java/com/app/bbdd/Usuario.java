@@ -20,6 +20,7 @@ public class Usuario {
 	private String email;
 	private String passw;
 	private String roles;
+	private int maxdataset;
 
 	public int getId() {
 		return id;
@@ -65,7 +66,7 @@ public class Usuario {
 		return passw;
 	}
 
-	public void setPassword(String passw) {
+	public void setPassw(String passw) {
 		this.passw = passw;
 	}
 
@@ -75,5 +76,13 @@ public class Usuario {
 
 	public void setRoles(String roles) {
 		this.roles = roles;
+	}
+
+	public int getMaxdataset() {
+		return maxdataset;
+	}
+
+	public void setMaxdataset(int maxdataset) {
+		this.maxdataset = maxdataset;
 	}
 }

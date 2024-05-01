@@ -213,11 +213,14 @@ public class BaseControllerTest {
 		mockInfo.setFiles_added(0);
         when(electricService.createDatasetInDB(any(DatasetInformationDTO.class), anyString())).thenReturn("");
 
+        MessageSource ms = mock(MessageSource.class);
+        baseController.setMessageSource(ms);
+        
         // Execute
         String result = baseController.saveDataset(mockInfo, model);
 
         // Verify
-        assertEquals(ViewConstants.REDIRECT_HOME_PAGE, result);
+        assertEquals(ViewConstants.REDIRECT_NEWLOADED_PAGE + mockInfo.getNombre(), result);
     }
     
     @Test

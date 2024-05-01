@@ -43,7 +43,7 @@
 						</div>
 						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{shaft_frequency}" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
-								style="text-align: center;" maxlength="10">
+								style="text-align: center;" maxlength="10" required>
 						</div>
 						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
@@ -56,7 +56,7 @@
 						</div>
 						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{sampling_frequency}" pattern="[0-9]*\.?[0-9]*"
-								class="onlyNums" style="text-align: center;" maxlength="10">
+								class="onlyNums" style="text-align: center;" maxlength="10" required>
 						</div>
 						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
@@ -69,7 +69,7 @@
 						</div>
 						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{carga}" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
-								style="text-align: center;" maxlength="10">
+								style="text-align: center;" maxlength="10" required>
 						</div>
 						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Kn</span>
@@ -81,7 +81,7 @@
 							<span th:text="#{view.load.in.bearing}" style="text-align: center;">:</span>
 						</div>
 						<div class="col-12 col-xl-7 d-flex justify-content-center align-items-center">
-							<input type="text" th:field="*{bearing_type}" style="text-align: center;" maxlength="15">
+							<input type="text" th:field="*{bearing_type}" style="text-align: center;" maxlength="15" required>
 						</div>
 					</div>
 					<br>
@@ -91,7 +91,7 @@
 						</div>
 						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{bpfo}" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
-								style="text-align: center;" maxlength="10">
+								style="text-align: center;" maxlength="10" required>
 						</div>
 						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
@@ -104,7 +104,7 @@
 						</div>
 						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{bpfi}" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
-								style="text-align: center;" maxlength="10">
+								style="text-align: center;" maxlength="10" required>
 						</div>
 						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
@@ -117,7 +117,7 @@
 						</div>
 						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{bsf}" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
-								style="text-align: center;" maxlength="10">
+								style="text-align: center;" maxlength="10" required>
 						</div>
 						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>
@@ -130,7 +130,7 @@
 						</div>
 						<div class="col-12 col-xl-5 d-flex justify-content-center align-items-center">
 							<input type="text" th:field="*{ftf}" pattern="[0-9]*\.?[0-9]*" class="onlyNums"
-								style="text-align: center;" maxlength="10">
+								style="text-align: center;" maxlength="10" required>
 						</div>
 						<div class="col-12 col-xl-1 d-flex justify-content-center align-items-center">
 							<span>Hz</span>

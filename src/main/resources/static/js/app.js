@@ -3,26 +3,41 @@ $(document).ready(function() {
 	if ($("#loggedUserFlag").val() != "admin") {
 		$("#adminUsersBtt").hide();
 	}
-	
+
 	var userLang;
-	if($("#webAppTitle").text() == "Detection and Diagnosis of Bearing Failures on Electric Motors"){
-		userLang='en';
-	}else{
-		userLang='es-ES';
-	}
-	
-	if(userLang == 'es-ES'){
-		$("#manualLinkEN").hide();
-	}else{
-		$("#manualLinkEN").show();
-	}
-	
-	if(userLang == 'en'){
-		$("#manualLinkES").hide();
-	}else{
-		$("#manualLinkES").show();
+	if ($("#webAppTitle").text() == "Detection and Diagnosis of Bearing Failures on Electric Motors") {
+		userLang = 'en';
+	} else {
+		userLang = 'es-ES';
 	}
 
+	if ($("#loggedUserFlag").val() != "admin") {
+		if (userLang == 'es-ES') {
+			$("#manualLinkEN").hide();
+		} else {
+			$("#manualLinkEN").show();
+		}
+
+		if (userLang == 'en') {
+			$("#manualLinkES").hide();
+		} else {
+			$("#manualLinkES").show();
+		}
+	}
+	if ($("#loggedUserFlag").val() == "admin") {
+		if (userLang == 'es-ES') {
+			$("#manualAdminLinkEN").hide();
+		} else {
+			$("#manualAdminLinkEN").show();
+		}
+
+		if (userLang == 'en') {
+			$("#manualAdminLinkES").hide();
+		} else {
+			$("#manualAdminLinkES").show();
+		}
+	}
+	
 	const dropContainer = $("#dropcontainer");
 	const fileInput = $("#file");
 
@@ -68,6 +83,14 @@ $(document).ready(function() {
 		var currentValue = $(this).val();
 
 		var newValue = currentValue.replace(/[^0-9.,]/g, '');
+
+		$(this).val(newValue);
+	});
+	
+	$(".onlyNumsPlus").on("input", function(e) {
+		var currentValue = $(this).val();
+
+		var newValue = currentValue.replace(/\D/g, '');
 
 		$(this).val(newValue);
 	});
@@ -240,9 +263,9 @@ $("#uploadDataSamples").click(function() {
 
 $("#saveDatasetInfoBtt").click(function() {
 	if ($("#nombre").val() == "New Dataset") {
-		e.preventDefault();
 		$("#dataInfoNotFoundH4").text("You must change the name.");
 		$("#warningsDivNew").css({ "background-color": "red", "border": "red" });
+		e.preventDefault();
 	}
 });
 
@@ -333,7 +356,7 @@ $("#runNew").click(function() {
 	}
 	if ($('#upload4NewAnalisys').is(':checked')) {
 		n_healthy = $("#n_healthy_data_upload").val();
-		if (n_healthy != ''){
+		if (n_healthy != '') {
 			$("#id_upp").val($("#id").val());
 			$("#nombre_req_upp").val(nombre);
 			$("#shaft_frequency_req_upp").val(shaftFrequency);
@@ -343,7 +366,7 @@ $("#runNew").click(function() {
 			$("#bsf_req_upp").val(bsf);
 			$("#ftf_req_upp").val(ftf);
 			$("#healthy_number_req_upp").val(n_healthy);
-			
+
 			$('#loadingModal').modal({
 				backdrop: 'static',
 				keyboard: false
