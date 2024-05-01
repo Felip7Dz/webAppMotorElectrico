@@ -73,6 +73,7 @@ public class LoginController {
 				String tmpPass = passwEncoder.encode(user.getPassw());
 				user.setPassw(tmpPass);
 				user.setRole("USER");
+				user.setMaxdataset(5);
 				loginService.createUserInDB(user);
 				model.addAttribute("userCreated", this.getMessage("view.cont.user.created"));
 			} else {
