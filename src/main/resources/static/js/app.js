@@ -11,7 +11,7 @@ $(document).ready(function() {
 		userLang = 'es-ES';
 	}
 
-	if ($("#loggedUserFlag").val() != "admin") {
+	if ($("#loggedUserFlag").val() != "admin" && $("#loggedUserFlag").val() != "") {
 		if (userLang == 'es-ES') {
 			$("#manualLinkEN").hide();
 		} else {
