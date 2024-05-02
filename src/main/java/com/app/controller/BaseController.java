@@ -493,6 +493,10 @@ public class BaseController {
 					}
 					info.setMin_to_check(data2Run.getFirst_sample_req());
 					info.setMax_to_check(data2Run.getFirst_sample_req() + data2Run.getAnalyzed_number_req());
+					model.addAttribute("errors", errors);
+					model.addAttribute("formData", info);
+					model.addAttribute("formDataCheckNew", info);
+					return ViewConstants.VIEW_NEWLOADED_PAGE;
 				}
 			} else {
 				info = electricService.getDatasetInfo(dataUpload2Run.getNombre_req_upp());
@@ -513,8 +517,11 @@ public class BaseController {
 					ResponseEntity<String> responseUpp = electricService.uploadDataSample(dataFiles, newSampleFileName,
 							dataUpload2Run.getId_upp(), owner);
 					if (responseUpp.getStatusCode() != HttpStatus.OK) {
-						this.errorsH = this.getMessage("view.cont.file.healthy.lines");
-						return ViewConstants.REDIRECT_NEWLOADED_PAGE + data2Run.getNombre_req();
+						errors = this.getMessage("view.cont.file.healthy.lines");
+						model.addAttribute("errors", errors);
+						model.addAttribute("formData", info);
+						model.addAttribute("formDataCheckNew", info);
+						return ViewConstants.VIEW_NEWLOADED_PAGE;
 					}
 
 					response = electricService.run(data2Run, owner, 3);
@@ -549,8 +556,13 @@ public class BaseController {
 					}
 
 				} else {
+					errors = this.getMessage("view.cont.ext.first") + extension + " "
+							+ this.getMessage("view.cont.ext.second");
+					model.addAttribute("errors", errors);
+					model.addAttribute("formData", info);
+					model.addAttribute("formDataCheckNew", info);
 					model.addAttribute("loggedUser", this.loggedUser);
-					return ViewConstants.REDIRECT_NEWLOADED_PAGE + dataUpload2Run.getNombre_req_upp();
+					return ViewConstants.VIEW_NEWLOADED_PAGE;
 				}
 			}
 		} catch (ConnectException e) {
