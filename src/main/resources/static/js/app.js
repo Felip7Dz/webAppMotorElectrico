@@ -165,7 +165,7 @@ $(document).ready(function() {
 		$("#deleteDatasetFakeBtt").hide();
 	}
 
-	if ($("#warningsDivNew").is(":visible")) {
+	if ($("#warningsDivNew").is(":visible") || $("#warningsDiv").is(":visible")) {
 		$("#formNewUpload").hide();
 		$("#formDataCheckNew").hide();
 		$("#formDataCheckNewDos").hide();

@@ -211,8 +211,10 @@ public class BaseControllerTest {
 		mockInfo.setSampling_frequency(300.0);
 		mockInfo.setShaft_frequency(300.0);
 		mockInfo.setFiles_added(0);
+		mockInfo.setId(77);
         when(electricService.createDatasetInDB(any(DatasetInformationDTO.class), anyString())).thenReturn("");
-
+        when(electricService.getDatasetInfo(mockInfo.getNombre())).thenReturn(mockInfo);
+        
         MessageSource ms = mock(MessageSource.class);
         baseController.setMessageSource(ms);
         
@@ -220,7 +222,7 @@ public class BaseControllerTest {
         String result = baseController.saveDataset(mockInfo, model);
 
         // Verify
-        assertEquals(ViewConstants.REDIRECT_NEWLOADED_PAGE + mockInfo.getNombre(), result);
+        assertEquals(ViewConstants.VIEW_NEWLOADED_PAGE, result);
     }
     
     @Test
@@ -239,11 +241,53 @@ public class BaseControllerTest {
 		mockInfo.setFiles_added(0);
 		mockInfo.setId(null);
         when(electricService.createDatasetInDB(any(DatasetInformationDTO.class), anyString())).thenReturn("");
+        when(electricService.getDatasetInfo(mockInfo.getNombre())).thenReturn(mockInfo);
 
         MessageSource ms = mock(MessageSource.class);
         baseController.setMessageSource(ms);
         
         // Execute
+        String result = baseController.saveDataset(mockInfo, model);
+
+        // Verify
+        assertEquals(ViewConstants.REDIRECT_NEWLOADED_PAGE + mockInfo.getNombre(), result);
+    }
+    
+    @Test
+    public void testSaveDataset3() throws Exception {
+        // Mock input data and dependencies
+        DatasetInformationDTO mockInfo = new DatasetInformationDTO();
+        mockInfo.setBearing_type("test");
+		mockInfo.setBpfi(300.0);
+		mockInfo.setBpfo(300.0);
+		mockInfo.setBsf(300.0);
+		mockInfo.setCarga(300.0);
+		mockInfo.setFtf(300.0);
+		mockInfo.setNombre("test");
+		mockInfo.setSampling_frequency(300.0);
+		mockInfo.setShaft_frequency(300.0);
+		mockInfo.setFiles_added(0);
+		mockInfo.setId(null);
+        when(electricService.createDatasetInDB(any(DatasetInformationDTO.class), anyString())).thenReturn("");
+        when(electricService.getDatasetInfo(mockInfo.getNombre())).thenReturn(mockInfo);
+        
+        MessageSource ms = mock(MessageSource.class);
+        baseController.setMessageSource(ms);
+        
+        // Execute
+        String result = baseController.saveDataset(mockInfo, model);
+
+        // Verify
+        assertEquals(ViewConstants.REDIRECT_NEWLOADED_PAGE + mockInfo.getNombre(), result);
+    }
+    
+    @Test
+    public void testSaveDataset4() throws ConnectException {
+        // Setup
+        DatasetInformationDTO mockInfo = new DatasetInformationDTO();
+        mockInfo.setNombre("New Dataset");
+
+        // Test
         String result = baseController.saveDataset(mockInfo, model);
 
         // Verify

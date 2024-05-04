@@ -344,9 +344,28 @@ public class BaseController {
 	}
 
 	@GetMapping(MappingConstants.SAVE_DATASET)
-	public String saveDataset(DatasetInformationDTO infoForm, Model model) {
+	public String saveDataset(DatasetInformationDTO infoForm, Model model) throws ConnectException {
 		if ("New Dataset".equals(infoForm.getNombre())) {
 			return ViewConstants.REDIRECT_NEWLOADED_PAGE + infoForm.getNombre();
+		}
+		
+		DatasetInformationDTO info = new DatasetInformationDTO();
+		info = electricService.getDatasetInfo(infoForm.getNombre());
+		if(info.getId() != null) {
+			errorsVals = this.getMessage("view.load.dataset.exists");
+			info.setBearing_type("");
+			info.setBpfi(0.0);
+			info.setBpfo(0.0);
+			info.setBsf(0.0);
+			info.setCarga(0.0);
+			info.setFtf(0.0);
+			info.setNombre(infoForm.getNombre());
+			info.setSampling_frequency(0.0);
+			info.setShaft_frequency(0.0);
+			info.setFiles_added(0);
+			model.addAttribute("formData", info);
+			model.addAttribute("errorsVals", errorsVals);
+			return ViewConstants.VIEW_NEWLOADED_PAGE;
 		}
 		if (infoForm.getBpfi() > 0.0 && infoForm.getBpfo() > 0.0 && infoForm.getBsf() > 0.0 && infoForm.getCarga() > 0.0
 				&& infoForm.getFtf() > 0.0 && infoForm.getSampling_frequency() > 0.0
@@ -368,6 +387,10 @@ public class BaseController {
 			}
 		} else {
 			errorsVals = this.getMessage("view.cont.vals.fault");
+		}
+		
+		if("ADMIN".equals(this.loggedUserRole)) {
+			return ViewConstants.REDIRECT_NEWLOADED_PAGE + infoForm.getNombre() + " (admin)";
 		}
 
 		return ViewConstants.REDIRECT_NEWLOADED_PAGE + infoForm.getNombre();
