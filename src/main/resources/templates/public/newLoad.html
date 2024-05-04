@@ -13,15 +13,22 @@
 		</div>
 		<form id="formData" name="formData" th:object="${formData}" action="/webAppMotorElectrico/saveDataset"
 			method="get">
-			<div th:if="${formData.id == null}">
+			<div th:if="${formData.id == null and formData.nombre != 'New Dataset'}">
 				<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDivNew">
 					<span class="material-symbols-outlined">warning </span>
 					<h4 th:text="#{view.load.check.exists}" id="dataInfoNotFoundH4"
 						style="margin-bottom: 0; margin-left: 1%;"></h4>
 				</div>
 			</div>
+			<div th:if="${formData.id == null and formData.nombre == 'New Dataset'}">
+				<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDivNew">
+					<span class="material-symbols-outlined">warning </span>
+					<h4 th:text="#{view.load.check.new}" id="dataInfoNotFoundH4"
+						style="margin-bottom: 0; margin-left: 1%;"></h4>
+				</div>
+			</div>
 			<div th:if="${errorsVals}">
-				<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDiv">
+				<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDivNew">
 					<span class="material-symbols-outlined">warning </span>
 					<h4 th:text="${errorsVals}" style="margin-bottom: 0; margin-left: 1%;"></h4>
 				</div>
@@ -327,7 +334,7 @@
 							</div>
 							<div class="col-12 col-xl-8 d-flex justify-content-center align-items-center">
 								<input type="file" value="" id="uploadDataSampleInput" name="uploadDataSampleInput"
-									style="width: 100%;">
+									style="width: 100%;" required>
 							</div>
 						</div>
 					</div>

@@ -548,6 +548,14 @@ public class BaseController {
 					}
 
 					response = electricService.run(data2Run, owner, 3);
+					
+					if("healthy".equals(response.getFault_info())) {
+						errors = this.getMessage("view.cont.file.healthy.healthy");
+						model.addAttribute("errors", errors);
+						model.addAttribute("formData", info);
+						model.addAttribute("formDataCheckNew", info);
+						return ViewConstants.VIEW_NEWLOADED_PAGE;
+					}
 
 					img1 = electricService.getImage(owner, 1);
 					img2 = electricService.getImage(owner, 2);

@@ -178,7 +178,6 @@ public class BaseControllerTest {
         assertEquals(ViewConstants.VIEW_PRELOADED_PAGE, result);
         verify(model).addAttribute(eq("selectedModel"), eq("testDataset"));
         verify(model).addAttribute("runResForm", mockRunResponse);
-        // Add more verifications as needed
     }
     
     @Test
@@ -366,7 +365,6 @@ public class BaseControllerTest {
         assertEquals(ViewConstants.VIEW_NEWLOADED_PAGE, result);
         verify(model).addAttribute(eq("selectedModel"), eq("testDataset"));
         verify(model).addAttribute("runResForm", mockRunResponse);
-        // Add more verifications as needed
     }
     
     @Test
@@ -417,6 +415,33 @@ public class BaseControllerTest {
         assertEquals(ViewConstants.VIEW_NEWLOADED_PAGE, result);
         verify(model).addAttribute(eq("selectedModel"), eq("testDataset"));
         verify(model).addAttribute("runResForm", mockRunResponse);
-        // Add more verifications as needed
+    }
+    
+    @Test
+    public void testRunNewloadedWithFile2() throws Exception {
+        // Mock input data and dependencies
+    	MockMultipartFile mockFile = new MockMultipartFile("dataFiles", "test.h5", "text/csv", "test data".getBytes());
+    	RunRequestDTO mockData = new RunRequestDTO();
+        mockData.setNombre_req("testDataset");
+    	RunUploadFileRequestDTO mockData2Run = new RunUploadFileRequestDTO();
+        mockData2Run.setNombre_req_upp("testDataset");
+        mockData2Run.setHealthy_number_req_upp(300);
+		DatasetInformationDTO mockInfo = new DatasetInformationDTO();
+		mockInfo.setMax_to_check(900);
+		
+        when(electricService.getDatasetInfo(mockData.getNombre_req())).thenReturn(mockInfo);
+
+        MessageSource ms = mock(MessageSource.class);
+        baseController.setMessageSource(ms);
+        
+        // Execute
+        String result = baseController.runNewload(mockFile, mockData, mockData2Run, model);
+
+        // Verify
+        assertEquals(ViewConstants.VIEW_NEWLOADED_PAGE, result);
+        verify(model).addAttribute("errors", "nullh5 null");
+        verify(model).addAttribute("formData", mockInfo);
+        verify(model).addAttribute("formDataCheckNew", mockInfo);
+        verify(model).addAttribute("loggedUser", "");
     }
 }
