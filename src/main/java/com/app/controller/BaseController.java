@@ -351,22 +351,20 @@ public class BaseController {
 		
 		DatasetInformationDTO info = new DatasetInformationDTO();
 		info = electricService.getDatasetInfo(infoForm.getNombre());
-		if(info.getId() != null) {
+		if(info.getId() != null && infoForm.getId() == null) {
 			errorsVals = this.getMessage("view.load.dataset.exists");
-			info.setBearing_type("");
-			info.setBpfi(0.0);
-			info.setBpfo(0.0);
-			info.setBsf(0.0);
-			info.setCarga(0.0);
-			info.setFtf(0.0);
-			info.setNombre(infoForm.getNombre());
-			info.setSampling_frequency(0.0);
-			info.setShaft_frequency(0.0);
-			info.setFiles_added(0);
-			model.addAttribute("formData", info);
+			model.addAttribute("formData", infoForm);
 			model.addAttribute("errorsVals", errorsVals);
 			return ViewConstants.VIEW_NEWLOADED_PAGE;
 		}
+		
+		String owner = "";
+		if (this.ownerUser != "") {
+			owner = this.ownerUser;
+		} else {
+			owner = this.loggedUser;
+		}
+		
 		if (infoForm.getBpfi() > 0.0 && infoForm.getBpfo() > 0.0 && infoForm.getBsf() > 0.0 && infoForm.getCarga() > 0.0
 				&& infoForm.getFtf() > 0.0 && infoForm.getSampling_frequency() > 0.0
 				&& infoForm.getShaft_frequency() > 0.0 && !infoForm.getBearing_type().equals("")
@@ -380,7 +378,7 @@ public class BaseController {
 						errorsVals = this.getMessage("view.cont.max.dataset");
 					}
 				} else {
-					electricService.updateDatasetInDB(infoForm);
+					electricService.updateDatasetInDB(infoForm, owner);
 				}
 			} catch (ConnectException e) {
 				System.err.println("Error al conectar con la API: " + e.getMessage());

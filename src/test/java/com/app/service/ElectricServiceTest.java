@@ -178,7 +178,7 @@ public class ElectricServiceTest {
         when(restTemplate.exchange(anyString(), eq(HttpMethod.PUT), any(HttpEntity.class), eq(Void.class)))
                 .thenReturn(mockResponseEntity);
 
-        assertDoesNotThrow(() -> electricService.updateDatasetInDB(info));
+        assertDoesNotThrow(() -> electricService.updateDatasetInDB(info, "test"));
     }
 
     @Test

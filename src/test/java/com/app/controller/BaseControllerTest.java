@@ -221,7 +221,7 @@ public class BaseControllerTest {
         String result = baseController.saveDataset(mockInfo, model);
 
         // Verify
-        assertEquals(ViewConstants.VIEW_NEWLOADED_PAGE, result);
+        assertEquals(ViewConstants.REDIRECT_NEWLOADED_PAGE + mockInfo.getNombre(), result);
     }
     
     @Test

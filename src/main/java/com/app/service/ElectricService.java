@@ -157,8 +157,8 @@ public class ElectricService {
 		}
 	}
 
-	public void updateDatasetInDB(DatasetInformationDTO info) throws ConnectException {
-		String url = "http://127.0.0.1:5000/updateDataset/" + info.getId();
+	public void updateDatasetInDB(DatasetInformationDTO info, String user) throws ConnectException {
+		String url = "http://127.0.0.1:5000/updateDataset/" + info.getId()+ "/" + user;
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);

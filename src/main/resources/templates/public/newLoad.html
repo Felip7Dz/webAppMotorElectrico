@@ -13,7 +13,7 @@
 		</div>
 		<form id="formData" name="formData" th:object="${formData}" action="/webAppMotorElectrico/saveDataset"
 			method="get">
-			<div th:if="${formData.id == null and formData.nombre != 'New Dataset'}">
+			<div th:if="${formData.id == null and formData.nombre != 'New Dataset' and formData.shaft_frequency == 0.0}">
 				<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDivNew">
 					<span class="material-symbols-outlined">warning </span>
 					<h4 th:text="#{view.load.check.exists}" id="dataInfoNotFoundH4"
@@ -23,7 +23,7 @@
 			<div th:if="${formData.id == null and formData.nombre == 'New Dataset'}">
 				<div class="row d-flex justify-content-center align-items-center mb-4" id="warningsDivNew">
 					<span class="material-symbols-outlined">warning </span>
-					<h4 th:text="#{view.load.check.new}" id="dataInfoNotFoundH4"
+					<h4 th:text="#{view.load.check.new}" id="dataInfoAlreadyExistsH4"
 						style="margin-bottom: 0; margin-left: 1%;"></h4>
 				</div>
 			</div>
@@ -380,6 +380,8 @@
 				</button>
 			</div>
 		</div>
+		<span th:text="#{view.load.change.name}" id="tmp4Exist" hidden></span>
+		<span th:text="#{view.load.change.zero}" id="tmp4Zero" hidden></span>
 		<form id="runResForm" name="runResForm" th:object="${runResForm}">
 			<div th:if="${runResForm}">
 				<input type="hidden" id="n_healthy_used" name="n_healthy_used" th:value="${n_healthy_used}" />

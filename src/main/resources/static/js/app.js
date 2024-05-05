@@ -263,7 +263,12 @@ $("#uploadDataSamples").click(function() {
 
 $("#saveDatasetInfoBtt").click(function() {
 	if ($("#nombre").val() == "New Dataset") {
-		$("#dataInfoNotFoundH4").text("You must change the name.");
+		$("#dataInfoAlreadyExistsH4").text($("#tmp4Exist").text());
+		$("#warningsDivNew").css({ "background-color": "red", "border": "red" });
+		e.preventDefault();
+	}
+	if($("#shaft_frequency").val() == 0.0){
+		$("#dataInfoAlreadyExistsH4").text($("#tmp4Zero").text());
 		$("#warningsDivNew").css({ "background-color": "red", "border": "red" });
 		e.preventDefault();
 	}
