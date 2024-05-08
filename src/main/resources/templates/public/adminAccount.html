@@ -24,7 +24,7 @@
 							</div>
 							<div class="col-9">
 								<input type='text' th:value="${user_register}" id="user_register" maxlength="16"
-									autocomplete="off" style="width: 100%;" readonly>
+									autocomplete="off" style="width: 100%; background-color: lightgrey;" disabled>
 							</div>
 						</div>
 						<div class="row justify-content-center align-items-center mb-4">
@@ -62,7 +62,7 @@
 							</div>
 							<div class="col-9">
 								<input type='text' th:value="${maxdataset_register}" id="maxdataset_register"
-									maxlength="4" autocomplete="off" style="width: 100%; background-color: lightgrey;"
+									maxlength="4" autocomplete="off" style="width: 100%; background-color: lightgrey; cursor: not-allowed;"
 									class="onlyNumsPlus" disabled>
 							</div>
 						</div>
@@ -117,6 +117,7 @@
 				$("#adminUsersBtt").css({"display": "inline"});
 				$("#maxdataset_register").prop('disabled', false);
 				$("#maxdataset_register").css({"background-color": "white"});
+				$("#maxdataset_register").css({"cursor": "text"});
 			}
 			$("#logout").css({"display": "inline"});
 		});
