@@ -24,6 +24,12 @@ public class MappingConstants {
 	/** UPDATE_ACCOUNT */
 	public static final String UPDATE_ACCOUNT = "/updateAccount";
 	
+	/** ADMIN_USERS */
+	public static final String ADMIN_USERS = "/adminUsers";
+	
+	/** DELETE_USER */
+	public static final String DELETE_USER = "/deleteUser";
+	
 	/** LOGOUT_ROOT */
 	public static final String LOGOUT_ROOT = "/logout";
 	

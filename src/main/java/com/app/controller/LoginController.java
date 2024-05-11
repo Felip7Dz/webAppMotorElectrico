@@ -23,6 +23,9 @@ import com.app.service.LoginService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * Clase LoginController para gestionar lo relacionado a la gestion de usuarios.
+ */
 @Controller
 @RequestMapping(MappingConstants.ROOT)
 public class LoginController {
@@ -39,6 +42,12 @@ public class LoginController {
         this.messageSource = ms;
     }
 
+	/**
+	 * Instantiates a new login controller.
+	 *
+	 * @param loginService the login service
+	 * @param passwEncoder the passw encoder
+	 */
 	public LoginController(LoginService loginService, BCryptPasswordEncoder passwEncoder) {
 		this.loginService = loginService;
 		this.passwEncoder = passwEncoder;
@@ -52,6 +61,14 @@ public class LoginController {
 		return this.messageSource.getMessage(messageKey, args, LocaleContextHolder.getLocale());
 	}
 
+	/**
+	 * Login.
+	 *
+	 * @param model the model
+	 * @param error the error
+	 * @param request the request
+	 * @return vista de inicio de sesion
+	 */
 	@GetMapping(MappingConstants.LOGIN_ROOT)
 	public String login(Model model, @RequestParam(name = "error", required = false) String error, HttpServletRequest request) {
 		if (error != null) {
@@ -60,11 +77,24 @@ public class LoginController {
 		return ViewConstants.VIEW_LOGIN_PAGE;
 	}
 
+	/**
+	 * Logout.
+	 *
+	 * @return vista de inicio de sesion
+	 */
 	@GetMapping(MappingConstants.LOGOUT_ROOT)
 	public String logout() {
 		return ViewConstants.REDIRECT_LOGIN_PAGE;
 	}
 
+	/**
+	 * Metodo para registrarse.
+	 *
+	 * @param user the user
+	 * @param model the model
+	 * @param request the request
+	 * @return vista de inicio de sesion
+	 */
 	@PostMapping(MappingConstants.REGISTER_ROOT)
 	public String register(UserDTO user, Model model, HttpServletRequest request) {
 		try {
@@ -86,6 +116,14 @@ public class LoginController {
 		return ViewConstants.VIEW_LOGIN_PAGE;
 	}
 	
+	/**
+	 * Cargar la vista de administracion de la cuenta de usuario.
+	 *
+	 * @param usuario the usuario
+	 * @param request the request
+	 * @param model the model
+	 * @return vista de edicion de usuario
+	 */
 	@GetMapping(MappingConstants.ADMIN_ACCOUNT)
 	public String adminAccount(@RequestParam(name = "usuario", required = false) String usuario, HttpServletRequest request, Model model) {
 		Principal tmp = request.getUserPrincipal();
@@ -108,9 +146,18 @@ public class LoginController {
 		model.addAttribute("mail_register", usr.getEmail());
 		model.addAttribute("maxdataset_register", usr.getMaxdataset());
 		model.addAttribute("loggedUser", request.getUserPrincipal().getName());
+		
 		return ViewConstants.VIEW_MANAGE_ACCOUNT_PAGE;
 	}
 	
+	/**
+	 * Metodo de actualizacion de la cuenta de usuario.
+	 *
+	 * @param user2Update the user 2 update
+	 * @param request the request
+	 * @param model the model
+	 * @return vista de edicion del usuario
+	 */
 	@PostMapping(MappingConstants.UPDATE_ACCOUNT)
 	public String updateAccount(UserDTO user2Update, HttpServletRequest request, Model model) {
 		Principal loggedUser = request.getUserPrincipal();
@@ -151,7 +198,14 @@ public class LoginController {
 	}
 	
 
-	@GetMapping("/adminUsers")
+	/**
+	 * Metodo para cargar la vista de Administracion de  usuarioss.
+	 *
+	 * @param request the request
+	 * @param model the model
+	 * @return vista de administracion de usuarios
+	 */
+	@GetMapping(MappingConstants.ADMIN_USERS)
 	public String adminUsers(HttpServletRequest request, Model model) {
 		Principal loggedUser = request.getUserPrincipal();
 		if(!loggedUser.getName().equals("admin")) {
@@ -167,16 +221,22 @@ public class LoginController {
 		
 		model.addAttribute("userCreated", listUsers);
 		
-		return "public/adminUsers";
+		return ViewConstants.VIEW_ADMIN_USERS_PAGE;
 	}
 	
-	@PostMapping("/deleteUser")
+	/**
+	 * Delete user.
+	 *
+	 * @param item the item
+	 * @return vista de administracion de usuarios
+	 */
+	@PostMapping(MappingConstants.DELETE_USER)
 	public String deleteUser(@RequestParam("item") String item) {
 		try {
 			loginService.deleteUser(item);
 		} catch (ConnectException e) {
 			System.err.println("Error al conectar con la API: " + e.getMessage());
 		}
-		return "redirect:/webAppMotorElectrico/adminUsers";
+		return ViewConstants.REDIRECT_ADMIN_USERS_PAGE;
 	}
 }

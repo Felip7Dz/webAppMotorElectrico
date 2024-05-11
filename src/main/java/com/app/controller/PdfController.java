@@ -33,6 +33,9 @@ import com.app.service.ElectricService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * Clase PdfController para gestionar la generacion de informes PDF.
+ */
 @Controller
 public class PdfController {
 
@@ -48,6 +51,11 @@ public class PdfController {
 
 	private String sessionActual = "";
 
+	/**
+	 * Instantiates a new pdf controller.
+	 *
+	 * @param electricService the electric service
+	 */
 	public PdfController(ElectricService electricService) {
 		this.electricService = electricService;
 	}
@@ -60,6 +68,14 @@ public class PdfController {
 		return this.messageSource.getMessage(messageKey, args, LocaleContextHolder.getLocale());
 	}
 
+	/**
+	 * Generar informe de explicabilidad.
+	 *
+	 * @param request the request
+	 * @param data datos del analisis 
+	 * @return archivo pdf con informe generado
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@GetMapping(MappingConstants.GENERATE_EXP)
 	public ResponseEntity<String> generateExp(HttpServletRequest request, RunResponseDTO data) throws IOException {
 		Principal test = request.getUserPrincipal();
@@ -281,6 +297,14 @@ public class PdfController {
 		return ResponseEntity.ok().headers(headers).body(pdfBase64);
 	}
 
+	/**
+	 * Generar informe de interpretabilidad.
+	 *
+	 * @param request the request
+	 * @param data datos del analisis 
+	 * @return archivo pdf con informe generado
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@PostMapping(MappingConstants.GENERATE_INT)
 	public ResponseEntity<String> generateInt(HttpServletRequest request, @RequestBody InterpretabilityReportDTO data)
 			throws IOException {
@@ -536,6 +560,16 @@ public class PdfController {
 		return ResponseEntity.ok().headers(headers).body(pdfBase64);
 	}
 
+	/**
+	 * Split text to fit width.
+	 *
+	 * @param text the text
+	 * @param font the font
+	 * @param fontSize the font size
+	 * @param maxWidth the max width
+	 * @return lista con las lineas de texto justificadas 
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private List<String> splitTextToFitWidth(String text, PDFont font, float fontSize, float maxWidth)
 			throws IOException {
 		List<String> lines = new ArrayList<>();

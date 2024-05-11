@@ -17,15 +17,30 @@ import org.springframework.web.client.RestTemplate;
 
 import com.app.dto.UserDTO;
 
+/**
+ * Clase LoginService para la conexion con la API de los metodos de gestion de usuarios.
+ */
 @Service
 public class LoginService {
 
 	private final RestTemplate restTemplate;
 
+	/**
+	 * Instantiates a new login service.
+	 *
+	 * @param restTemplate the rest template
+	 */
 	public LoginService(RestTemplate restTemplate) {
 		this.restTemplate = restTemplate;
 	}
 
+	/**
+	 * Crea el usuario en la bbdd.
+	 *
+	 * @param info informacion del usuario
+	 * @return respuesta de la API
+	 * @throws ConnectException the connect exception
+	 */
 	public String createUserInDB(UserDTO info) throws ConnectException {
 		String url = "http://127.0.0.1:5000/registerUser";
 		String response = null;
@@ -50,6 +65,13 @@ public class LoginService {
 		}
 	}
 
+	/**
+	 * Check user in DB.
+	 *
+	 * @param usuario el usuario
+	 * @return info del usuario
+	 * @throws ConnectException the connect exception
+	 */
 	public String checkUserInDB(String usuario) throws ConnectException {
 		String apiUrl = "http://127.0.0.1:5000/checkUser/" + usuario;
 
@@ -71,6 +93,13 @@ public class LoginService {
 		}
 	}
 
+	/**
+	 * Gets the current user.
+	 *
+	 * @param usuario el usuario
+	 * @return the current user
+	 * @throws ConnectException the connect exception
+	 */
 	public UserDTO getCurrentUser(String usuario) throws ConnectException {
 		String url = "http://127.0.0.1:5000/getUser/" + usuario;
 		UserDTO response = null;
@@ -89,6 +118,12 @@ public class LoginService {
 		}
 	}
 
+	/**
+	 * Update current user.
+	 *
+	 * @param user2Update the user to update
+	 * @throws ConnectException the connect exception
+	 */
 	public void updateCurrentUser(UserDTO user2Update) throws ConnectException {
 		String url = "http://127.0.0.1:5000/updateUser/" + user2Update.getUsuario();
 
@@ -107,6 +142,12 @@ public class LoginService {
 		}
 	}
 
+	/**
+	 * Gets the all users.
+	 *
+	 * @return lista de todos los usuarios
+	 * @throws ConnectException the connect exception
+	 */
 	public List<UserDTO> getAllUsers() throws ConnectException {
 		String url = "http://127.0.0.1:5000/getAllUsers";
         ArrayList<UserDTO> listUsers = new ArrayList<>();
@@ -124,6 +165,12 @@ public class LoginService {
         return listUsers;
     }
 
+	/**
+	 * Delete user.
+	 *
+	 * @param user the user
+	 * @throws ConnectException the connect exception
+	 */
 	public void deleteUser(String user) throws ConnectException {
 	    String url = "http://127.0.0.1:5000/deleteUser/" + user;
 

@@ -15,6 +15,12 @@ public class ViewConstants {
 	/** REDIRECT_LOGIN_PAGE */
 	public static final String REDIRECT_LOGIN_PAGE = "redirect:/webAppMotorElectrico/login";
 	
+	/** VIEW_ADMIN_USERS_PAGE */
+	public static final String VIEW_ADMIN_USERS_PAGE = "public/adminUsers";
+	
+	/** REDIRECT_ADMIN_USERS_PAGE */
+	public static final String REDIRECT_ADMIN_USERS_PAGE = "redirect:/webAppMotorElectrico/adminUsers";
+	
 	/** VIEW_HOME_PAGE */
 	public static final String VIEW_HOME_PAGE = "public/home";
 	

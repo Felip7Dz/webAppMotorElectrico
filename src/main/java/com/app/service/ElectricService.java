@@ -31,15 +31,29 @@ import com.app.dto.DatasetsResponseDTO;
 import com.app.dto.RunRequestDTO;
 import com.app.dto.RunResponseDTO;
 
+/**
+ * Clase ElectricService para la conexion con la API de los metodos de gestion de la apliacacion.
+ */
 @Service
 public class ElectricService {
 
 	private final RestTemplate restTemplate;
 
+	/**
+	 * Instantiates a new electric service.
+	 *
+	 * @param restTemplate the rest template
+	 */
 	public ElectricService(RestTemplate restTemplate) {
 		this.restTemplate = restTemplate;
 	}
 
+	/**
+	 * Gets the all datasets.
+	 *
+	 * @return lista con todos los datasets
+	 * @throws ConnectException the connect exception
+	 */
 	public List<String> getAllDatasets() throws ConnectException {
 		String url = "http://127.0.0.1:5000/getModelsList";
 		DatasetsResponseDTO response = null;
@@ -58,6 +72,13 @@ public class ElectricService {
 		}
 	}
 
+	/**
+	 * Gets the saved datasets by the user.
+	 *
+	 * @param user the user
+	 * @return lista de los datasets guardados por el usuario
+	 * @throws ConnectException the connect exception
+	 */
 	public List<String> getSavedDatasets(String user) throws ConnectException {
 		String url = "http://127.0.0.1:5000/getSavedModelsList/" + user;
 		DatasetsResponseDTO response = null;
@@ -76,6 +97,12 @@ public class ElectricService {
 		}
 	}
 	
+	/**
+	 * Gets the all saved datasets para la vista del usuario administrador.
+	 *
+	 * @return lista con todos los datasets guardados por usuarios
+	 * @throws ConnectException the connect exception
+	 */
 	public List<String> getAllSavedDatasets() throws ConnectException {
 		String url = "http://127.0.0.1:5000/getAllSavedModelsList";
 		DatasetsResponseDTO response = null;
@@ -94,6 +121,13 @@ public class ElectricService {
 		}
 	}
 
+	/**
+	 * Borra el dataset.
+	 *
+	 * @param item el dataset
+	 * @param user el usuario
+	 * @throws ConnectException the connect exception
+	 */
 	public void delete(String item, String user) throws ConnectException {
 		String url = "http://127.0.0.1:5000/deleteDataset/" + user;
 
@@ -115,6 +149,13 @@ public class ElectricService {
 		}
 	}
 
+	/**
+	 * Gets the dataset info.
+	 *
+	 * @param name nombre del dataset
+	 * @return the dataset info
+	 * @throws ConnectException the connect exception
+	 */
 	public DatasetInformationDTO getDatasetInfo(String name) throws ConnectException {
 		String url = "http://127.0.0.1:5000/getDatasetByName/" + name;
 		DatasetInformationDTO response = null;
@@ -133,6 +174,14 @@ public class ElectricService {
 		}
 	}
 
+	/**
+	 * Creates the dataset in DB.
+	 *
+	 * @param info del dataset a guardar
+	 * @param user the user
+	 * @return flag de guardado
+	 * @throws ConnectException the connect exception
+	 */
 	public String createDatasetInDB(DatasetInformationDTO info, String user) throws ConnectException {
 		String url = "http://127.0.0.1:5000/createDataset/" + user;
 		String response = null;
@@ -157,6 +206,13 @@ public class ElectricService {
 		}
 	}
 
+	/**
+	 * Update dataset in DB.
+	 *
+	 * @param info del dataset a actualizar
+	 * @param user the user
+	 * @throws ConnectException the connect exception
+	 */
 	public void updateDatasetInDB(DatasetInformationDTO info, String user) throws ConnectException {
 		String url = "http://127.0.0.1:5000/updateDataset/" + info.getId()+ "/" + user;
 
@@ -175,6 +231,14 @@ public class ElectricService {
 		}
 	}
 
+	/**
+	 * Ejecutar el analisis.
+	 *
+	 * @param data2Run the data to run
+	 * @param user the user
+	 * @param flag the flag
+	 * @return datos de la respuesta del analisis
+	 */
 	public RunResponseDTO run(RunRequestDTO data2Run, String user, int flag) {
 		String url = "http://127.0.0.1:5000/analyzeData/" + user + "/" + flag;
 
@@ -196,6 +260,13 @@ public class ElectricService {
 	    return responseDTO;
 	}
 	
+	/**
+	 * Gets the image.
+	 *
+	 * @param sessionID usuario que ejecuto el analisis
+	 * @param flag the flag
+	 * @return imagen con las graficas del analisis
+	 */
 	public BufferedImage getImage(String sessionID, int flag) {
 		String url = "http://127.0.0.1:5000/getImage/" + sessionID + "/" + flag;
 
@@ -212,6 +283,15 @@ public class ElectricService {
 		}
 	}
 	
+	/**
+	 * Upload data sample.
+	 *
+	 * @param file the file
+	 * @param fileName the file name
+	 * @param id the id
+	 * @param user the user
+	 * @return the response entity
+	 */
 	public ResponseEntity<String> uploadDataSample(MultipartFile file, String fileName, int id, String user) {
 		String apiUrl = "http://127.0.0.1:5000/saveData/" + id + "/" + user;
 
@@ -248,6 +328,15 @@ public class ElectricService {
 		}
 	}
 	
+	/**
+	 * Delete data sample.
+	 *
+	 * @param healthy nombre del archivo healthy
+	 * @param regular nombre del archivo regular
+	 * @param id the id
+	 * @param user the user
+	 * @throws ConnectException the connect exception
+	 */
 	public void deleteSample(String healthy, String regular, int id, String user) throws ConnectException {
 	    String url = "http://127.0.0.1:5000/deleteSample/" + id + "/" + user;
 

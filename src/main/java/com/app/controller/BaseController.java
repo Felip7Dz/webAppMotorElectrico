@@ -41,6 +41,9 @@ import com.app.service.LoginService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * Clase BaseController que controla todo el funcionamiento de la aplicacion.
+ */
 @Controller
 @RequestMapping(MappingConstants.ROOT)
 public class BaseController {
@@ -66,6 +69,12 @@ public class BaseController {
 	private int numOfUserDataset = 0;
 	private int numMaxDataset = 0;
 
+	/**
+	 * Instantiates a new base controller.
+	 *
+	 * @param electricService the electric service
+	 * @param loginService the login service
+	 */
 	public BaseController(ElectricService electricService, LoginService loginService) {
 		this.electricService = electricService;
 		this.loginService = loginService;
@@ -79,6 +88,13 @@ public class BaseController {
 		return this.messageSource.getMessage(messageKey, args, LocaleContextHolder.getLocale());
 	}
 
+	/**
+	 * Home.
+	 *
+	 * @param model the model
+	 * @param request the request
+	 * @return vista de home
+	 */
 	@GetMapping(MappingConstants.HOME_ROOT)
 	public String home(Model model, HttpServletRequest request) {
 		Principal test = request.getUserPrincipal();
@@ -140,6 +156,12 @@ public class BaseController {
 		return ViewConstants.VIEW_HOME_PAGE;
 	}
 
+	/**
+	 * Borrar dataset.
+	 *
+	 * @param item dataset a borrar
+	 * @return vista de home
+	 */
 	@PostMapping(MappingConstants.DELETE_DATASET)
 	public String delete(@RequestParam("item") String item) {
 		try {
@@ -150,6 +172,13 @@ public class BaseController {
 		return ViewConstants.REDIRECT_HOME_PAGE;
 	}
 
+	/**
+	 * Vista de dataset precargados.
+	 *
+	 * @param selectedModel the selected model
+	 * @param model the model
+	 * @return the string
+	 */
 	@GetMapping(MappingConstants.PRE_LOADED)
 	public String preload(@RequestParam(name = "selectedModel", required = true) String selectedModel, Model model) {
 
@@ -171,6 +200,14 @@ public class BaseController {
 		return ViewConstants.VIEW_PRELOADED_PAGE;
 	}
 
+	/**
+	 * Ejecutar analisis sobre dataseet preloaded.
+	 *
+	 * @param data2Run the data 2 run
+	 * @param model the model
+	 * @return vista de dataset precargados
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@PostMapping(MappingConstants.RUN_PRELOADED)
 	public String runPreloaded(RunRequestDTO data2Run, Model model) throws IOException {
 		DatasetInformationDTO info = new DatasetInformationDTO();
@@ -285,6 +322,13 @@ public class BaseController {
 		return ViewConstants.VIEW_PRELOADED_PAGE;
 	}
 
+	/**
+	 * Encode image to base 64.
+	 *
+	 * @param image the image
+	 * @return the string
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	private String encodeImageToBase64(BufferedImage image) throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		ImageIO.write(image, "png", byteArrayOutputStream);
@@ -292,6 +336,13 @@ public class BaseController {
 		return Base64.getEncoder().encodeToString(bytes);
 	}
 
+	/**
+	 * Vista de datasets guardados.
+	 *
+	 * @param selectedSavedModel the selected saved model
+	 * @param model the model
+	 * @return vista de dataset guardados
+	 */
 	@GetMapping(MappingConstants.NEW_LOAD)
 	public String newload(@RequestParam(name = "selectedSavedModel", required = true) String selectedSavedModel,
 			Model model) {
@@ -343,6 +394,14 @@ public class BaseController {
 		return ViewConstants.VIEW_NEWLOADED_PAGE;
 	}
 
+	/**
+	 * Crear o editar dataset.
+	 *
+	 * @param infoForm informacion del dataset
+	 * @param model the model
+	 * @return vista de dataset guardado
+	 * @throws ConnectException the connect exception
+	 */
 	@GetMapping(MappingConstants.SAVE_DATASET)
 	public String saveDataset(DatasetInformationDTO infoForm, Model model) throws ConnectException {
 		if ("New Dataset".equals(infoForm.getNombre())) {
@@ -394,6 +453,15 @@ public class BaseController {
 		return ViewConstants.REDIRECT_NEWLOADED_PAGE + infoForm.getNombre();
 	}
 
+	/**
+	 * Cargar nuevos archivos.
+	 *
+	 * @param dataFiles the data files
+	 * @param name the name
+	 * @param id the id
+	 * @param model the model
+	 * @return vista de dataset guardados
+	 */
 	@PostMapping(MappingConstants.UPLOAD_NEW_DATASET)
 	public String guardarNewArchivos(@RequestParam("healthyData2Save") MultipartFile dataFiles,
 			@RequestParam("name2send") String name, @RequestParam("id2send") int id, Model model) {
@@ -428,6 +496,13 @@ public class BaseController {
 		return ViewConstants.REDIRECT_NEWLOADED_PAGE + name;
 	}
 
+	/**
+	 * Borrar datos cargados.
+	 *
+	 * @param nombre the nombre
+	 * @param id the id
+	 * @return vista de dataset guardados
+	 */
 	@PostMapping(MappingConstants.DELETE_SAMPLE)
 	public String deleteSample(@RequestParam("nombre") String nombre, @RequestParam("id") int id) {
 		String healthyName = "healthy" + nombre + ".csv";
@@ -446,6 +521,16 @@ public class BaseController {
 		return ViewConstants.REDIRECT_NEWLOADED_PAGE + nombre;
 	}
 
+	/**
+	 * Ejecutar analisis sobre dataset guardados.
+	 *
+	 * @param dataFiles the data files
+	 * @param data2Run the data 2 run
+	 * @param dataUpload2Run the data upload 2 run
+	 * @param model the model
+	 * @return vista de dataset guardados
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	@PostMapping(MappingConstants.RUN_NEWLOAD)
 	public String runNewload(@RequestParam(name = "uploadDataSampleInput", required = false) MultipartFile dataFiles,
 			RunRequestDTO data2Run, RunUploadFileRequestDTO dataUpload2Run, Model model) throws IOException {

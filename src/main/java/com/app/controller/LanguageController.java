@@ -14,12 +14,23 @@ import com.app.constants.ViewConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Clase LanguageController para cambiar el idioma.
+ */
 @Controller
 @RequestMapping(MappingConstants.ROOT)
 public class LanguageController {
 	
     private final CookieLocaleResolver localeResolver = new CookieLocaleResolver();
 
+	/**
+	 * Metodo para cambiar el idioma.
+	 *
+	 * @param request the request
+	 * @param response the response
+	 * @param lang idioma al que se va a cambiar
+	 * @return vista de home
+	 */
 	@GetMapping(MappingConstants.CHANGE_LOCALE)
 	public String changeLocale(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(required = true) String lang) {
@@ -29,6 +40,11 @@ public class LanguageController {
 		return ViewConstants.REDIRECT_HOME_PAGE;
 	}
 
+	/**
+	 * Creacion de la cookie de idioma
+	 *
+	 * @return the locale resolver
+	 */
 	public CookieLocaleResolver getLocaleResolver() {
 		return localeResolver;
 	}
